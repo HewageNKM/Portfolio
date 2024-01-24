@@ -1,6 +1,6 @@
 const Button = (props) => {
     return (
-        <button className={"bg-orange-400 p-3 rounded-full font-medium text-white flex gap-2 justify-center items-center hover:bg-orange-500"}>
+        <button className={"bg-orange-400 p-4 w-auto rounded-full font-medium text-white flex gap-2 justify-center items-center hover:bg-orange-500"}>
             {props.name}
             {props.imgURL && <img
                 src={props.imgURL}

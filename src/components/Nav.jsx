@@ -6,6 +6,7 @@ const Nav = () => {
     let [isDarkMode, setIsDarkMode] = useState(false);
     let [mode, setMode] = useState('Light');
     let [color, setColor] = useState('orange-400');
+
     function toggleDarkMode() {
         if (isDarkMode) {
             document.documentElement.classList.remove('dark');
@@ -29,7 +30,7 @@ const Nav = () => {
                         <li className="hover:border-b-4"><a href="#contact">Contact</a></li>
                     </ul>
                     <div className="flex justify-end p-2 lg:hidden">
-                        <img src={icons.hamburger} alt="hamburger" className="w-12 h-12 cursor-pointer" />
+                        <img src={icons.hamburger} alt="hamburger" className="w-12 h-12 cursor-pointer"/>
                     </div>
                 </div>
                 <label className="lg:relative lg:mx-auto lg:inline-flex cursor-pointer absolute top-0 m-3">
