@@ -20,6 +20,13 @@ concurrency:
   group: 'pages'
   cancel-in-progress: true
 
+# Secrets
+env:
+  VITE_RECAPTCHA_SITE_KEY: ${{secrets.RECAPTCHA_SITE_KEY}}
+  VITE_EMAIL_JS_PUBLIC_KEY: ${{secrets.EMAIL_JS_PUBLIC_KEY}}
+  VITE_EMAIL_JS_TEMPLATE_ID: ${{secrets.EMAIL_JS_TEMPLATE_ID}}
+  VITE_EMAIL_JS_SERVICE_ID: ${{secrets.EMAIL_JS_SERVICE_ID}}
+
 jobs:
   # Single deploy job since we're just deploying
   deploy:
@@ -46,11 +53,6 @@ jobs:
         with:
           # Upload dist repository
           path: './dist'
-      - env:
-          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
-          VITE_EMAIL_JS_PUBLIC_KEY: ${{ secrets.EMAIL_JS_PUBLIC_KEY }}
-          VITE_EMAIL_JS_TEMPLATE_ID: ${{ secrets.EMAIL_JS_TEMPLATE_ID }}
-          VITE_EMAIL_JS_SERVICE_ID: ${{ secrets.EMAIL_JS_SERVICE_ID }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
