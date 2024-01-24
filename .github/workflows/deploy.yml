@@ -37,11 +37,6 @@ jobs:
           cache: 'npm'
       - name: Install dependencies
         run: npm install
-      - env:
-          VITE_RECAPTCHA_SITE_KEY: ${{secrets.RECAPTCHA_SITE_KEY}}
-          VITE_EMAIL_JS_PUBLIC_KEY: ${{secrets.EMAIL_JS_PUBLIC_KEY}}
-          VITE_EMAIL_JS_TEMPLATE_ID: ${{secrets.EMAIL_JS_TEMPLATE_ID}}
-          VITE_EMAIL_JS_SERVICE_ID: ${{secrets.EMAIL_JS_SERVICE_ID}}
       - name: Build
         run: npm run build
       - name: Setup Pages
@@ -51,6 +46,11 @@ jobs:
         with:
           # Upload dist repository
           path: './dist'
+        env:
+          VITE_RECAPTCHA_SITE_KEY: ${{ secrets.RECAPTCHA_SITE_KEY }}
+          VITE_EMAIL_JS_PUBLIC_KEY: ${{ secrets.EMAIL_JS_PUBLIC_KEY }}
+          VITE_EMAIL_JS_TEMPLATE_ID: ${{ secrets.EMAIL_JS_TEMPLATE_ID }}
+          VITE_EMAIL_JS_SERVICE_ID: ${{ secrets.EMAIL_JS_SERVICE_ID }}
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
