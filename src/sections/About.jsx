@@ -15,7 +15,7 @@ const About = () => {
                     Cutting-Edge Technologies To Bring Them To Life. In My Work, I Blend The Power Of MERN For Web
                     Development And Jetpack Compose For Native Android App creation.</p>
                 <div className="flex space-x-20 justify-start items-center m-2 p-4">
-                    <Button name="Hire me" imgURL={icons.right_arrow}/>
+                    <Button name="My CV" imgURL={icons.right_arrow} width="7.3rem"/>
                 </div>
             </div>
         </div>

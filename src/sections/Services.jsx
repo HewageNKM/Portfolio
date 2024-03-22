@@ -10,7 +10,7 @@ const Services = () => {
                 Craftsman-built mobile and web apps with Jetpack Compose! I bring your vision to life with stunning UIs,
                 intuitive flow, and efficient code. Less boilerplate, more magic. ✨ Let's build the future of your
                 brand, together</p>
-            <ul className="gap-[10rem] items-center justify-center flex lg:flex-row flex-col">
+            <ul className="md:gap-[10rem] gap-[5rem] items-center justify-center flex lg:flex-row flex-col">
                 <li><ServiceCard label={services[0].label} imgURL={services[0].imgURL}
                                  description={services[0].description} icon={icons.orange_arrow}/></li>
                 <li><ServiceCard label={services[1].label} imgURL={services[1].imgURL}
