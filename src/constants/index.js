@@ -9,7 +9,7 @@ import {full_stack, android_apps} from "../assets/images"
      {
          label: 'Flutter Development',
          imgURL: android_apps,
-         description: "Ditch bulky XML layouts and say hello to Jetpack Compose! It's Android's new way to build stunning UIs with less code and lightning speed. Think intuitive Kotlin, powerful tools, and beautiful screens that adapt to any device. Imagine building your dream app faster, smoother, and with way less hassle. That's Compose in a nutshell. Ready to revolutionize your Android development?."
+         description: "Say goodbye to cumbersome layout files and embrace Flutter! It's the new way to craft dazzling UIs with minimal code and blazing speed. Harness the power of Dart and Flutter's intuitive framework to create stunning screens that seamlessly adapt to any device. Flutter offers a streamlined development experience, empowering you with powerful tools to bring your app visions to life. Picture yourself building your dream app quicker, smoother, and with unparalleled ease. That's the beauty of Flutter in a nutshell – revolutionizing your development journey."
      },
 ]
 export const icons = {
