@@ -21,7 +21,7 @@ const Hero = () => {
                     <h2 className="uppercase tracking-widest text-xs text-center text-blue-100 max-w-80">
                         Web Magic
                     </h2>
-                    <TextGenerateEffect words="Transforming Concept Into Seamless User Experience" className="text-center text-[40px] md:text-5xl lg:text-6xl"/>
+                    <TextGenerateEffect words="🛠️Build Your Ideas Into Seamless User Experience" className="text-center text-[40px] md:text-5xl lg:text-6xl"/>
                     <p className="md:tracking-wider text-center mb-4 text-sm md:text-lg lg:text-2xl">Hi, I&apos;m Nadun, a Software Engineer base in Sri Lanka</p>
                     <a href="#about">
                         <MagicButton title="Show My Work"  icon={<FaLocationArrow />} position="right"/>
@@ -29,7 +29,7 @@ const Hero = () => {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default Hero
