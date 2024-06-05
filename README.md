@@ -3,22 +3,15 @@
 
 Portfolio for demonstrate my skills and projects I have worked on.
 
+[Live Demo](https://hewagenkm.github.io)
+
 ## Technologies
 
 - Reactjs
 - TypeScript
 - Tailwind CSS
-- Google `reCAPCHA` Api
-
-## Screenshots
-
 
 ## Authors
 
 - [@Nadun Kawishika](https://www.github.com/HewageNKM)
-
-
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
 
