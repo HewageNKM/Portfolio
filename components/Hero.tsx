@@ -23,7 +23,7 @@ const Hero = () => {
                     </h2>
                     <TextGenerateEffect words="🛠️Build Your Ideas Into Seamless User Experience" className="text-center text-[40px] md:text-5xl lg:text-6xl"/>
                     <p className="md:tracking-wider text-center mb-4 text-sm md:text-lg lg:text-2xl">Hi, I&apos;m Nadun, a Software Engineer base in Sri Lanka</p>
-                    <a href="#about">
+                    <a href="#projects">
                         <MagicButton title="Show My Work"  icon={<FaLocationArrow />} position="right"/>
                     </a>
                 </div>
