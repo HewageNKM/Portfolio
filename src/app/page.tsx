@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 export default function Home() {
     return (
         <main
-            className="relative bg-black-100 flex flex-col justify-center items-center sm:px-10 px-5 mx-auto overflow-hidden">
+            className="relative bg-black-100 flex flex-col justify-center items-center sm:px-10 px-5 mx-auto overflow-clip">
             <div className="max-w-7xl w-full">
                 <NavBar navItems={navItems}/>
                 <Hero/>
