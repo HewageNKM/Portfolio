@@ -1,9 +1,10 @@
 import {git, linkedin, x} from "../assets";
+import arrow from "./arrow.json";
 export const socialMedia = [
     {
         id: 1,
         img: git,
-        link:"https://github.com/HewageNKM"
+        link: "https://github.com/HewageNKM"
     },
     {
         id: 2,
@@ -16,3 +17,5 @@ export const socialMedia = [
         link: "https://www.linkedin.com/in/nadun-malwenna-776b88282/"
     },
 ];
+
+export {arrow};
