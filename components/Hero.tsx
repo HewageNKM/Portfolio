@@ -8,8 +8,7 @@ const Hero = () => {
     const [resumeAnimation, setResumeAnimation] = React.useState(false);
 
     return (
-        <motion.div initial={{opacity: 0, y: '2vh'}}
-                    transition={{delay: .9, type: 'spring', stiffness: 100, damping: 10}} animate={{opacity: 1, y: 0}}
+        <motion.div initial={{opacity: 0, y: '1vh'}} transition={{delay: .6, type: 'spring', stiffness: 100, damping: 10}} animate={{opacity: 1, y: 0}}
                     className="px-10 mt-10 md:mt-20 pb-10 w-full flex-col flex justify-center items-center">
             <div className="flex flex-col transition-all flex-wrap justify-center items-center">
                 <h1 className="lg:text-[7rem] xl:text-[10rem] transition-all duration-500 text-[3rem] md:text-[5rem] text-center tracking-wider font-bold text-gray-900">Hello,

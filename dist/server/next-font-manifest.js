@@ -1,0 +1,1 @@
+self.__NEXT_FONT_MANIFEST="{\"pages\":{},\"app\":{\"/home/kawishika/Documents/Projects/Web/hewagenkm.github.io/app/layout\":[\"static/media/4de1fea1a954a5b6-s.p.woff2\"]},\"appUsingSizeAdjust\":true,\"pagesUsingSizeAdjust\":false}"
