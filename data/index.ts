@@ -1,5 +1,6 @@
 import {git, linkedin, x} from "../assets";
 import arrow from "./arrow.json";
+import party from "./party.json";
 export const socialMedia = [
     {
         id: 1,
@@ -18,4 +19,4 @@ export const socialMedia = [
     },
 ];
 
-export {arrow};
+export {arrow,party};
