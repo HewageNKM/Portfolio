@@ -1,6 +1,8 @@
 import {git, linkedin, x} from "../assets";
 import arrow from "./arrow.json";
 import party from "./party.json";
+import downloadArrow from "./downloadArrow.json";
+import projectArrow from "./projectArrow.json";
 export const socialMedia = [
     {
         id: 1,
@@ -19,4 +21,4 @@ export const socialMedia = [
     },
 ];
 
-export {arrow,party};
+export {arrow,party,downloadArrow,projectArrow};
