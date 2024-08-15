@@ -6,21 +6,25 @@ import Header from "@/components/Header";
 import Footer from "@/components/ui/Footer";
 
 const Page = () => {
+    const [selectedFilter, setSelectedFilter] = useState("All")
     const [filters, setFilters] = useState([])
     const fetchFilterItems = async () => {
         const filters = await getFilterMenuItems();
-        console.log(filters)
         setFilters(filters)
     }
     useEffect(() => {
         fetchFilterItems()
     }, [])
+    const onClick = (name) => {
+        setSelectedFilter(name)
+        console.log(name)
+    }
     return (
         <div className="w-full relative min-h-screen">
             <Header/>
-            <div className="w-full mt-20 justify-center gap-16 items-center flex flex-row ">
+            <div className="w-full flex-wrap mt-20 justify-center gap-5 items-center flex flex-row ">
                 {filters.map((name, index) => (
-                    <FilterCard key={index} name={name}/>
+                    <FilterCard onClick={()=>onClick(name)} key={index} name={name} selectedFilter={selectedFilter}/>
                 ))}
             </div>
             <Footer/>
