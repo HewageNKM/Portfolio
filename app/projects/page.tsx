@@ -20,7 +20,7 @@ const Page = () => {
         console.log(name)
     }
     return (
-        <div className="w-full relative min-h-screen">
+        <div className="w-full overflow-hidden relative min-h-screen">
             <Header/>
             <div className="w-full flex-wrap mt-20 justify-center gap-5 items-center flex flex-row ">
                 {filters.map((name, index) => (
