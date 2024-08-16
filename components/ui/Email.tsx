@@ -2,11 +2,13 @@
 import React, {useState} from "react";
 import {motion} from "framer-motion";
 import {BiCopy} from "react-icons/bi";
+import {useGlobalContext} from "@/context/GlobalProvider";
 
 const Email = () => {
     const [copied, setCopied] = useState(false)
-
+    const {setPlayPartyAnimation} = useGlobalContext();
     const copyEmail = async () => {
+        setPlayPartyAnimation(true)
         await navigator.clipboard.writeText(process.env.NEXT_PUBLIC_EMAIL)
         setCopied(true)
     }
