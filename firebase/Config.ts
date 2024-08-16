@@ -1,12 +1,7 @@
-// Import the functions you need from the SDKs you need
 import {initializeApp} from "firebase/app";
 import {getAnalytics, isSupported} from "firebase/analytics";
 import {get, getDatabase, ref} from "@firebase/database";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -18,7 +13,6 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 
@@ -33,30 +27,26 @@ export const getFilterMenuItems = async () => {
 
 export const getProjects = async (filter: string) => {
     try {
-        let projects = [];
-        const dataSnapshot = await get(projectRef);
-        projects = dataSnapshot.val();
-
-        if (filter == "all") {
-            return projects;
-        } else {
-            const filteredDataSnapshot = await get(projectRef);
-            projects = filteredDataSnapshot.val();
-            switch (filter) {
-                case "NextJS/React":
-                    projects = projects.filter((project: Project) => project.stack.includes("NextJS" || "React"))
-                    break;
-                case "React Native/Expo":
-                    projects = projects.filter((project: Project) => project.stack.includes("Expo" || "React Native") )
-                    break;
-                case "Jetpack Compose":
-                    projects = projects.filter((project: Project) => project.stack.includes("Jetpack Compose"))
-                    break;
-            }
+        let projects;
+        const filteredDataSnapshot = await get(projectRef);
+        projects = filteredDataSnapshot.val();
+        switch (filter) {
+            case "NextJS/React":
+                projects = projects.filter((project: Project) => project.stack.includes("NextJS" || "React"))
+                break;
+            case "React Native/Expo":
+                projects = projects.filter((project: Project) => project.stack.includes("Expo" || "React Native"))
+                break;
+            case "Jetpack Compose":
+                projects = projects.filter((project: Project) => project.stack.includes("Jetpack Compose"))
+                break;
+            case "All":
+                return projects;
+            default:
+                projects = []
         }
-        console.log(projects)
         return projects;
-    }catch (e) {
+    } catch (e) {
         console.log(e)
     }
 }

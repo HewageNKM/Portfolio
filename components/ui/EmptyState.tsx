@@ -1,19 +1,19 @@
 import React from 'react';
 import {BiSearch} from "react-icons/bi";
-
-const EmptyState = () => {
+import {motion} from "framer-motion";
+const EmptyState = ({title, subTitle}:{title:string, subTitle:string}) => {
     return (
-        <div className="flex flex-col justify-center items-center">
+        <motion.div initial={{opacity:0,y:'1vh'}}  transition={{delay: .2,type:"spring", damping:10, stiffness:100}} animate={{opacity:1,y:0}} className="flex w-full min-h-[50vh] flex-col justify-center items-center">
             <div>
                 <BiSearch className="w-10 h-10"/>
             </div>
-            <h2 className="text-lg font-bold md:text-xl">
-                Opps, No Projects Found!
+            <h2 className="text-lg mt-2 font-bold md:text-2xl">
+                {title}
             </h2>
-            <h3 className="md:text-sm text-base text-gray-500">
-                Try a different filter
+            <h3 className="md:text-lg text-sm text-gray-500">
+                {subTitle}
             </h3>
-        </div>
+        </motion.div>
     );
 };
 
