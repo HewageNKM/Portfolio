@@ -10,16 +10,16 @@ const ProjectCard = ({project}:{project:Project}) => {
                 <div className="mt-2">
                     <h1 className="text-lg md:text-xl font-bold tracking-wide text-white line-clamp-1">{project.name}</h1>
                     <p className="text-sm md:text-base text-gray-400">{project.description}</p>
-                    <h3>Stacks</h3>
-                    <div className="mt-2 flex flex-row gap-2 md:gap-5 flex-wrap">
+                    <h3 className="text-lg mt-2 font-semibold text-white">Stacks</h3>
+                    <div className="mt-2 flex flex-row gap-2 flex-wrap">
                         {project.stack.map((tech, index) => (
                             <span key={index}
                                   className="bg-gray-800 font-medium text-white p-1 md:p-2 rounded-lg text-xs md:text-sm">{tech}</span>
                         ))}
                     </div>
-                    <div className="w-full flex justify-end">
+                    <div className="w-full flex pb-1 justify-end">
                         <Link href={project.url} target="_blank"
-                              className="mt-2 block text-sm md:text-base text-blue-400 hover:underline">View
+                              className="mt-2 block text-sm md:text-lg text-blue-400 hover:underline">View
                             Project</Link>
                     </div>
                 </div>
