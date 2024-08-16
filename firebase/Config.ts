@@ -24,8 +24,39 @@ const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 
 const db = getDatabase(app);
 const filterRef = ref(db, 'filters');
+const projectRef = ref(db, "projects")
 
 export const getFilterMenuItems = async () => {
     const dataSnapshot = await get(filterRef);
     return dataSnapshot.val()
+}
+
+export const getProjects = async (filter: string) => {
+    try {
+        let projects = [];
+        const dataSnapshot = await get(projectRef);
+        projects = dataSnapshot.val();
+
+        if (filter == "all") {
+            return projects;
+        } else {
+            const filteredDataSnapshot = await get(projectRef);
+            projects = filteredDataSnapshot.val();
+            switch (filter) {
+                case "NextJS/React":
+                    projects = projects.filter((project: Project) => project.stack.includes("NextJS" || "React"))
+                    break;
+                case "React Native/Expo":
+                    projects = projects.filter((project: Project) => project.stack.includes("Expo" || "React Native") )
+                    break;
+                case "Jetpack Compose":
+                    projects = projects.filter((project: Project) => project.stack.includes("Jetpack Compose"))
+                    break;
+            }
+        }
+        console.log(projects)
+        return projects;
+    }catch (e) {
+        console.log(e)
+    }
 }
