@@ -17,7 +17,7 @@ const Hero = () => {
             <div className="md:mt-10 mt-5 flex justify-center items-center gap-10 md:gap-20">
                 <div>
                     <Link
-                          href="/contact"
+                          href="https://registry.jsonresume.org/HewageNKM"
                           className="flex hover:translate-x-2 transition-all duration-500 justify-center items-center">
                         <h2 className="border-b-[1.5px] text-gray-700 font-bold uppercase text-lg md:text-xl xl:text-3xl border-b-gray-900">
                             résumé
