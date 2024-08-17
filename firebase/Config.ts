@@ -1,6 +1,7 @@
 import {initializeApp} from "firebase/app";
 import {getAnalytics, isSupported, logEvent} from "firebase/analytics";
 import {get, getDatabase, ref} from "@firebase/database";
+import {getAuth, signInAnonymously} from "@firebase/auth";
 
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
@@ -15,6 +16,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
+const auth = getAuth(app);
+
+export const currentUser = getAuth(app).currentUser;
 
 const db = getDatabase(app);
 const filterRef = ref(db, 'filters');
@@ -56,4 +60,7 @@ export const getProjects = async (filter: string) => {
     } catch (e) {
         console.log(e)
     }
+}
+export const loginAnonymouslyUser = async () => {
+    return await signInAnonymously(auth);
 }
