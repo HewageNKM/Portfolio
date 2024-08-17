@@ -1,5 +1,5 @@
 import {initializeApp} from "firebase/app";
-import {getAnalytics, isSupported} from "firebase/analytics";
+import {getAnalytics, isSupported, logEvent} from "firebase/analytics";
 import {get, getDatabase, ref} from "@firebase/database";
 
 const firebaseConfig = {

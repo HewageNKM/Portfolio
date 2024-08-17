@@ -1,5 +1,4 @@
 "use client"
-import React, {useState} from "react";
 import {motion} from "framer-motion";
 import {BiCheck, BiCopy} from "react-icons/bi";
 import {useGlobalContext} from "@/context/GlobalProvider";
