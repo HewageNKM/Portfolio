@@ -2,6 +2,7 @@ import {initializeApp} from "firebase/app";
 import {getAnalytics, isSupported, logEvent} from "firebase/analytics";
 import {get, getDatabase, ref} from "@firebase/database";
 import {getAuth, signInAnonymously} from "@firebase/auth";
+import {initializeAppCheck,ReCaptchaV3Provider} from "@firebase/app-check";
 
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
@@ -17,6 +18,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
 const auth = getAuth(app);
+const appCheck = initializeAppCheck(app, {
+    // @ts-ignore
+    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true
+});
+
 
 export const currentUser = getAuth(app).currentUser;
 
@@ -25,8 +32,12 @@ const filterRef = ref(db, 'filters');
 const projectRef = ref(db, "projects")
 
 export const getFilterMenuItems = async () => {
-    const dataSnapshot = await get(filterRef);
-    return dataSnapshot.val()
+    try {
+        const dataSnapshot = await get(filterRef);
+        return dataSnapshot.val()
+    }catch (e) {
+        console.log(e)
+    }
 }
 
 export const getProjects = async (filter: string) => {
@@ -55,12 +66,15 @@ export const getProjects = async (filter: string) => {
             default:
                 projects = []
         }
-        console.log(projects)
         return projects;
     } catch (e) {
         console.log(e)
     }
 }
 export const loginAnonymouslyUser = async () => {
-    return await signInAnonymously(auth);
+    try {
+        return await signInAnonymously(auth);
+    }catch (e) {
+        console.log(e)
+    }
 }
