@@ -16,9 +16,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
+isSupported().then(yes => yes ? getAnalytics(app) : null);
 const auth = getAuth(app);
-const appCheck = initializeAppCheck(app, {
+initializeAppCheck(app, {
     // @ts-ignore
     provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
     isTokenAutoRefreshEnabled: true
