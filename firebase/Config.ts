@@ -1,8 +1,8 @@
 import {initializeApp} from "firebase/app";
-import {getAnalytics, isSupported, logEvent} from "firebase/analytics";
+import {getAnalytics, isSupported} from "firebase/analytics";
 import {get, getDatabase, ref} from "@firebase/database";
 import {getAuth, signInAnonymously} from "@firebase/auth";
-import {initializeAppCheck,ReCaptchaV3Provider} from "@firebase/app-check";
+import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
@@ -15,14 +15,16 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-const app = initializeApp(firebaseConfig);
-isSupported().then(yes => yes ? getAnalytics(app) : null);
-const auth = getAuth(app);
+export const app = initializeApp(firebaseConfig);
+
 initializeAppCheck(app, {
     // @ts-ignore
     provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
     isTokenAutoRefreshEnabled: true
 });
+
+isSupported().then(yes => yes ? getAnalytics(app) : null);
+const auth = getAuth(app);
 
 
 export const currentUser = getAuth(app).currentUser;
@@ -35,7 +37,7 @@ export const getFilterMenuItems = async () => {
     try {
         const dataSnapshot = await get(filterRef);
         return dataSnapshot.val()
-    }catch (e) {
+    } catch (e) {
         console.log(e)
     }
 }
@@ -74,7 +76,7 @@ export const getProjects = async (filter: string) => {
 export const loginAnonymouslyUser = async () => {
     try {
         return await signInAnonymously(auth);
-    }catch (e) {
+    } catch (e) {
         console.log(e)
     }
 }

@@ -1,7 +1,8 @@
 "use client";
 
 import React, {createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {currentUser, loginAnonymouslyUser} from "@/firebase/Config";
+import {app, currentUser, loginAnonymouslyUser} from "@/firebase/Config";
+import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 
 interface GlobalContextType {
     user: any;
