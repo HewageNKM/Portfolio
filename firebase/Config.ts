@@ -32,10 +32,16 @@ export const getProjects = async (filter: string) => {
         projects = filteredDataSnapshot.val();
         switch (filter) {
             case "NextJS/React":
-                projects = projects.filter((project: Project) => project.stack.includes("NextJS" || "React"))
+                let nextProjects = projects;
+                projects = projects.filter((project: Project) => project.stack.includes("React"));
+                nextProjects = nextProjects.filter((project: Project) => project.stack.includes("NextJS"));
+                projects = projects.concat(nextProjects)
                 break;
             case "React Native/Expo":
-                projects = projects.filter((project: Project) => project.stack.includes("Expo" || "React Native"))
+                let reactNativeProjects = projects;
+                projects = projects.filter((project: Project) => project.stack.includes("Expo"))
+                reactNativeProjects = projects.filter((project: Project) => project.stack.includes("React Native"));
+                projects = projects.concat(reactNativeProjects)
                 break;
             case "Jetpack Compose":
                 projects = projects.filter((project: Project) => project.stack.includes("Jetpack Compose"))
@@ -45,6 +51,7 @@ export const getProjects = async (filter: string) => {
             default:
                 projects = []
         }
+        console.log(projects)
         return projects;
     } catch (e) {
         console.log(e)
