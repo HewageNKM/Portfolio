@@ -5,6 +5,8 @@ import {Database, get, getDatabase, ref} from "@firebase/database";
 import {Auth, getAuth, signInAnonymously} from "@firebase/auth";
 import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 import {Project} from "@/interfaces";
+import {getAnalytics} from "@firebase/analytics";
+import { isSupported } from "firebase/analytics";
 
 
 const firebaseConfig = {
@@ -24,6 +26,8 @@ let db: Database | null = null;
 
 if (typeof window !== "undefined") {
     app = initializeApp(firebaseConfig);
+
+    isSupported().then((yes) => yes ? getAnalytics(app!) : null);
 
     initializeAppCheck(app, {
         //@ts-ignore
