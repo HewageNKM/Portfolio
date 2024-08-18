@@ -1,11 +1,11 @@
 "use client";
 
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { getAnalytics, isSupported } from "firebase/analytics";
-import { Database, get, getDatabase, ref } from "@firebase/database";
-import { Auth, getAuth, signInAnonymously } from "@firebase/auth";
-import { AppCheck, initializeAppCheck, ReCaptchaEnterpriseProvider } from "@firebase/app-check";
-import { Project } from "@/interfaces";
+import {FirebaseApp, initializeApp} from "firebase/app";
+import {getAnalytics, isSupported} from "firebase/analytics";
+import {Database, get, getDatabase, ref} from "@firebase/database";
+import {Auth, getAuth, signInAnonymously} from "@firebase/auth";
+import {initializeAppCheck, ReCaptchaEnterpriseProvider} from "@firebase/app-check";
+import {Project} from "@/interfaces";
 
 // Firebase configuration object
 const firebaseConfig = {
@@ -23,13 +23,13 @@ const firebaseConfig = {
 let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 let db: Database | null = null;
-let appCheck: AppCheck | null = null;
 
-if (typeof window !== "undefined" && !app) {
+if (typeof window !== "undefined") {
     app = initializeApp(firebaseConfig);
 
-    appCheck = initializeAppCheck(app, {
-        provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!),
+    initializeAppCheck(app, {
+        //@ts-ignore
+        provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
         isTokenAutoRefreshEnabled: true,
     });
 
