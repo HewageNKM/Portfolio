@@ -1,7 +1,7 @@
 "use client";
 
 import React, {createContext, useContext, useEffect, useState} from "react";
-import {currentUser, loginAnonymouslyUser} from "@/firebase/Config";
+import {loginAnonymouslyUser} from "@/firebase/Config";
 import {GlobalContextType} from "@/interfaces";
 
 const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
@@ -13,15 +13,11 @@ export const GlobalProvider = ({children}: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>();
 
     const logUser = async () => {
-        if (currentUser) {
-            setUser(currentUser);
-        } else {
-            const user = await loginAnonymouslyUser();
-            setUser(user);
-        }
+        const user = await loginAnonymouslyUser();
+        setUser(user);
     }
     useEffect(() => {
-        logUser().then(() => console.info("User Logged In"))
+        logUser().then(() => console.info("Anonymous User Logged In"));
     }, []);
     return (
         <GlobalContext.Provider value={{

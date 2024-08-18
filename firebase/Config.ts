@@ -37,12 +37,11 @@ if (typeof window !== "undefined") {
 
 // Function to get filter menu items
 export const getFilterMenuItems = async () => {
-    if (!db) return null; // Ensure db is defined
-
+    if (!db) return null; //
     try {
         const filterRef = ref(db, "filters");
         const dataSnapshot = await get(filterRef);
-        return dataSnapshot.val();
+        return dataSnapshot.val() || [];
     } catch (e) {
         console.error(e);
     }
@@ -82,16 +81,6 @@ export const loginAnonymouslyUser = async () => {
 
     try {
         return await signInAnonymously(auth);
-    } catch (e) {
-        console.error(e);
-    }
-};
-
-export const currentUser = () => {
-    if (!auth) return null; // Ensure auth is defined
-
-    try {
-        return auth.currentUser;
     } catch (e) {
         console.error(e);
     }

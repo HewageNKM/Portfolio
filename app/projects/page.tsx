@@ -36,7 +36,7 @@ const Page = () => {
                         transition={{delay: .6, type: 'spring', stiffness: 100, damping: 10}}
                         animate={{opacity: 1, y: 0}}
                         className="w-full flex-wrap pt-10 md:pt-20 justify-center h-full gap-5 items-center flex flex-row">
-                {filters.map((name, index) => (
+                {filters?.map((name, index) => (
                     <FilterCard handleClick={() => {
                         setSelectedFilter(name)
                     }} key={index} name={name} selectedFilter={selectedFilter}/>
@@ -45,7 +45,7 @@ const Page = () => {
             <motion.div initial={{opacity: 0, y: '1vh'}}
                         transition={{delay: .6, type: 'spring', stiffness: 100, damping: 10}}
                         animate={{opacity: 1, y: 0}} className="w-full flex-wrap md:pt-20 pt-10 justify-center gap-5 items-start flex flex-row">
-                {projects.length > 0 ? (projects.map((project,index)=>(
+                {projects?.length > 0 ? (projects.map((project,index)=>(
                     <ProjectCard project={project} key={index}/>
                 ))) : (<EmptyState subTitle="Still in Development" title="Opps, No Projects!"/>)}
             </motion.div>
