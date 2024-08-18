@@ -7,9 +7,10 @@ import Footer from "@/components/ui/Footer";
 import {motion} from "framer-motion";
 import ProjectCard from "@/components/ui/ProjectCard";
 import EmptyState from "@/components/ui/EmptyState";
+import {Project} from "@/interfaces";
 
 const Page = () => {
-    const [selectedFilter, setSelectedFilter] = useState("All")
+    const [selectedFilter, setSelectedFilter] = useState<string>("All")
     const [filters, setFilters] = useState([])
     const [projects, setProjects] = useState([] as Project[])
     const fetchFilterItems = async () => {
@@ -22,8 +23,12 @@ const Page = () => {
     }
     useEffect(() => {
         fetchFilterItems()
+    }, []);
+
+    useEffect(() => {
         fetchProjects()
     }, [selectedFilter])
+
     return (
         <main className="w-full relative min-h-[100vh]">
             <Header/>

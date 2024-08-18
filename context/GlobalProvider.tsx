@@ -1,16 +1,8 @@
 "use client";
 
 import React, {createContext, Dispatch, SetStateAction, useContext, useEffect, useState} from "react";
-import {app, currentUser, loginAnonymouslyUser} from "@/firebase/Config";
-import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
-
-interface GlobalContextType {
-    user: any;
-    playPartyAnimation: boolean;
-    setPlayPartyAnimation: Dispatch<SetStateAction<boolean>>;
-    emailCopied: boolean;
-    setEmailCopied: Dispatch<SetStateAction<boolean>>;
-}
+import {currentUser, loginAnonymouslyUser} from "@/firebase/Config";
+import {GlobalContextType} from "@/interfaces";
 
 const GlobalContext = createContext<GlobalContextType>({} as GlobalContextType);
 export const useGlobalContext = () => useContext(GlobalContext)
@@ -21,16 +13,17 @@ export const GlobalProvider = ({children}: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>();
 
     const logUser = async () => {
-        if(currentUser){
+        if (currentUser) {
             setUser(currentUser);
             console.log("Current User Logged In")
-        }else {
+        } else {
             const user = await loginAnonymouslyUser();
+            console.log("New User Logged In")
             setUser(user);
         }
     }
     useEffect(() => {
-        logUser().then(() => console.log("New User Logged In"))
+        logUser().then(() => console.log("User Logged In"))
     }, []);
     return (
         <GlobalContext.Provider value={{

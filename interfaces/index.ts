@@ -1,7 +1,18 @@
-interface Project {
+import {Dispatch, SetStateAction} from "react";
+
+export interface Project {
     name: string;
     description: string;
     stack: string[];
     thumbnail: string;
     url: string;
+}
+
+
+export interface GlobalContextType {
+    user: any;
+    playPartyAnimation: boolean;
+    setPlayPartyAnimation: Dispatch<SetStateAction<boolean>>;
+    emailCopied: boolean;
+    setEmailCopied: Dispatch<SetStateAction<boolean>>;
 }

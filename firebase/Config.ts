@@ -1,9 +1,13 @@
-import {initializeApp} from "firebase/app";
-import {getAnalytics, isSupported} from "firebase/analytics";
-import {get, getDatabase, ref} from "@firebase/database";
-import {getAuth, signInAnonymously} from "@firebase/auth";
-import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
+"use client";
 
+import { FirebaseApp, initializeApp } from "firebase/app";
+import { getAnalytics, isSupported } from "firebase/analytics";
+import { Database, get, getDatabase, ref } from "@firebase/database";
+import { Auth, getAuth, signInAnonymously } from "@firebase/auth";
+import { AppCheck, initializeAppCheck, ReCaptchaEnterpriseProvider } from "@firebase/app-check";
+import { Project } from "@/interfaces";
+
+// Firebase configuration object
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,68 +19,87 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-export const app = initializeApp(firebaseConfig);
+// Initialize Firebase only if running in the client environment
+let app: FirebaseApp | null = null;
+let auth: Auth | null = null;
+let db: Database | null = null;
+let appCheck: AppCheck | null = null;
 
-initializeAppCheck(app, {
-    // @ts-ignore
-    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
-    isTokenAutoRefreshEnabled: true
-});
+if (typeof window !== "undefined" && !app) {
+    app = initializeApp(firebaseConfig);
 
-isSupported().then(yes => yes ? getAnalytics(app) : null);
-const auth = getAuth(app);
+    appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!),
+        isTokenAutoRefreshEnabled: true,
+    });
 
+    isSupported().then((yes) => yes ? getAnalytics(app!) : null);
 
-export const currentUser = getAuth(app).currentUser;
-
-const db = getDatabase(app);
-const filterRef = ref(db, 'filters');
-const projectRef = ref(db, "projects")
-
-export const getFilterMenuItems = async () => {
-    try {
-        const dataSnapshot = await get(filterRef);
-        return dataSnapshot.val()
-    } catch (e) {
-        console.log(e)
-    }
+    auth = getAuth(app);
+    db = getDatabase(app);
 }
 
-export const getProjects = async (filter: string) => {
+// Function to get filter menu items
+export const getFilterMenuItems = async () => {
+    if (!db) return null; // Ensure db is defined
+
     try {
-        let projects;
+        const filterRef = ref(db, "filters");
+        const dataSnapshot = await get(filterRef);
+        return dataSnapshot.val();
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+// Function to get projects based on a filter
+export const getProjects = async (filter: string) => {
+    if (!db) return null; // Ensure db is defined
+
+    try {
+        const projectRef = ref(db, "projects");
         const filteredDataSnapshot = await get(projectRef);
-        projects = filteredDataSnapshot.val();
+        let projects: Project[] = filteredDataSnapshot.val() || [];
+
         switch (filter) {
             case "NextJS/React":
-                let nextProjects = projects;
-                projects = projects.filter((project: Project) => project.stack.includes("React"));
-                nextProjects = nextProjects.filter((project: Project) => project.stack.includes("NextJS"));
-                projects = projects.concat(nextProjects)
-                break;
+                const reactProjects = projects.filter((project: Project) => project.stack.includes("React"));
+                const nextJSProjects = projects.filter((project: Project) => project.stack.includes("NextJS"));
+                return [...reactProjects, ...nextJSProjects];
             case "React Native/Expo":
-                let reactNativeProjects = projects;
-                projects = projects.filter((project: Project) => project.stack.includes("Expo"))
-                reactNativeProjects = projects.filter((project: Project) => project.stack.includes("React Native"));
-                projects = projects.concat(reactNativeProjects)
-                break;
+                const expoProjects = projects.filter((project: Project) => project.stack.includes("Expo"));
+                const reactNativeProjects = projects.filter((project: Project) => project.stack.includes("React Native"));
+                return [...expoProjects, ...reactNativeProjects];
             case "Jetpack Compose":
-                projects = projects.filter((project: Project) => project.stack.includes("Jetpack Compose"))
-                break;
+                return projects.filter((project: Project) => project.stack.includes("Jetpack Compose"));
             case "All":
                 return projects;
             default:
-                projects = []
+                return [];
         }
-        return projects;
     } catch (e) {
-        console.log(e)
+        console.error(e);
     }
-}
+};
+
+// Function to log in a user anonymously
 export const loginAnonymouslyUser = async () => {
+    if (!auth) return null; // Ensure auth is defined
+
     try {
         return await signInAnonymously(auth);
     } catch (e) {
-        console.log(e)
+        console.error(e);
     }
-}
+};
+
+// Function to get the current user
+export const currentUser = () => {
+    if (!auth) return null; // Ensure auth is defined
+
+    try {
+        return auth.currentUser;
+    } catch (e) {
+        console.error(e);
+    }
+};
