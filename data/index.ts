@@ -1,5 +1,6 @@
 import {git, linkedin, x} from "../assets";
 import party from "./party.json";
+import Loader from "./Loader.json";
 
 export const socialMedia = [
     {
@@ -19,4 +20,4 @@ export const socialMedia = [
     },
 ];
 
-export {party};
+export {party,Loader};

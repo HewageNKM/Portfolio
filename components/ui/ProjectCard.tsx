@@ -1,12 +1,14 @@
 import React from 'react';
 import Link from "next/link";
 import {motion} from "framer-motion";
+import {Project} from "@/interfaces";
+import Image from "next/image";
 
 const ProjectCard = ({project}:{project:Project}) => {
     return (
         <motion.div initial={{opacity:0,y:'2vh'}} animate={{opacity:1,y:0}} transition={{delay:.3}} className="w-[90vw] md:w-[50vw] lg:w-[30vw]">
             <div className="bg-gray-900 h-full flex w-full flex-col rounded-xl p-2 md:p-4">
-                <img src={project.thumbnail} alt={project.name} className="object-cover w-[90vw] h-[40vh] rounded-xl"/>
+                <Image src={project.thumbnail} alt={project.name} className="object-cover w-[90vw] h-[40vh] rounded-xl"/>
                 <div className="mt-2">
                     <h1 className="text-lg md:text-xl font-bold tracking-wide text-white line-clamp-1">{project.name}</h1>
                     <p className="text-sm md:text-base text-gray-400">{project.description}</p>

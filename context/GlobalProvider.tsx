@@ -10,14 +10,11 @@ export const useGlobalContext = () => useContext(GlobalContext)
 export const GlobalProvider = ({children}: { children: React.ReactNode }) => {
     const [play, setPlay] = useState<boolean>(false);
     const [emailCopied, setEmailCopied] = useState<boolean>(false);
-    const [user, setUser] = useState<any>();
 
-    const logUser = async () => {
-        const user = await loginAnonymouslyUser();
-        setUser(user);
-    }
     useEffect(() => {
-        logUser().then(() => console.info("Anonymous User Logged In"));
+        loginAnonymouslyUser().then(() => {
+            console.log("User Logged in")
+        });
     }, []);
     return (
         <GlobalContext.Provider value={{
@@ -25,7 +22,6 @@ export const GlobalProvider = ({children}: { children: React.ReactNode }) => {
             playPartyAnimation: play,
             emailCopied: emailCopied,
             setEmailCopied: setEmailCopied,
-            user: user
         }}>
             {children}
         </GlobalContext.Provider>

@@ -1,11 +1,13 @@
-"use client";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Footer from "@/components/ui/Footer";
+"use client"
 import {motion} from "framer-motion";
+import dynamic from "next/dynamic";
+const Header = dynamic(()=>import("@/components/Header"),{ssr:false});
+const Footer = dynamic(()=>import("@/components/ui/Footer"),{ssr:false});
+const Hero = dynamic(()=>import("@/components/Hero"),{ssr:false});
+
 export default function Home() {
     return (
-        <motion.main initial={{opacity:0}} animate={{opacity:1}} className="relative rounded-lg min-h-screen m-2">
+        <motion.main initial={{opacity:0}} animate={{opacity:1}} className="relative flex flex-col justify-between rounded-lg min-h-screen px-8 py-4">
             <Header/>
             <Hero/>
             <Footer/>

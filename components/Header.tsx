@@ -1,11 +1,13 @@
 "use client";
 import React from 'react';
-import Logo from "@/components/ui/Logo";
-import Email from "@/components/ui/Email";
 import Lottie from "lottie-react";
 import {party} from "@/data";
 import {useGlobalContext} from "@/context/GlobalProvider";
 import {motion} from "framer-motion";
+import dynamic from "next/dynamic";
+
+const Logo = dynamic(()=>import("@/components/ui/Logo"),{ssr:false})
+const Email = dynamic(()=>import("@/components/ui/Email"),{ssr:false})
 
 const Header = () => {
     const {playPartyAnimation} = useGlobalContext();

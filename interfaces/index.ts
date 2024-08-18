@@ -10,7 +10,6 @@ export interface Project {
 
 
 export interface GlobalContextType {
-    user: any;
     playPartyAnimation: boolean;
     setPlayPartyAnimation: Dispatch<SetStateAction<boolean>>;
     emailCopied: boolean;
