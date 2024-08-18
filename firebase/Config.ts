@@ -1,13 +1,12 @@
 "use client";
 
 import {FirebaseApp, initializeApp} from "firebase/app";
-import {getAnalytics, isSupported} from "firebase/analytics";
 import {Database, get, getDatabase, ref} from "@firebase/database";
 import {Auth, getAuth, signInAnonymously} from "@firebase/auth";
 import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 import {Project} from "@/interfaces";
 
-// Firebase configuration object
+
 const firebaseConfig = {
     databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -19,7 +18,6 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-// Initialize Firebase only if running in the client environment
 let app: FirebaseApp | null = null;
 let auth: Auth | null = null;
 let db: Database | null = null;
@@ -32,8 +30,6 @@ if (typeof window !== "undefined") {
         provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
         isTokenAutoRefreshEnabled: true,
     });
-
-    isSupported().then((yes) => yes ? getAnalytics(app!) : null);
 
     auth = getAuth(app);
     db = getDatabase(app);
@@ -52,7 +48,6 @@ export const getFilterMenuItems = async () => {
     }
 };
 
-// Function to get projects based on a filter
 export const getProjects = async (filter: string) => {
     if (!db) return null; // Ensure db is defined
 
@@ -82,7 +77,6 @@ export const getProjects = async (filter: string) => {
     }
 };
 
-// Function to log in a user anonymously
 export const loginAnonymouslyUser = async () => {
     if (!auth) return null; // Ensure auth is defined
 
@@ -93,7 +87,6 @@ export const loginAnonymouslyUser = async () => {
     }
 };
 
-// Function to get the current user
 export const currentUser = () => {
     if (!auth) return null; // Ensure auth is defined
 

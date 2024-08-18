@@ -17,7 +17,6 @@ const Footer = () => {
                 {socialMedia.map(({img, id, link}) => (
                     <Link href={link} key={id} target="_blank"
                           className="bg-gray-900 hover:bg-gray-700 transition-all  p-3 rounded-[4px]">
-
                         <Image src={img} width="auto" height="auto" alt="social_img" className="w-4 h-4 md:w-7 md:h-7"/>
                     </Link>
                 ))}
