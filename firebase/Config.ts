@@ -4,7 +4,7 @@ import {FirebaseApp, initializeApp} from "firebase/app";
 import {getAnalytics, isSupported} from "firebase/analytics";
 import {Database, get, getDatabase, ref} from "@firebase/database";
 import {Auth, getAuth, signInAnonymously} from "@firebase/auth";
-import {initializeAppCheck, ReCaptchaEnterpriseProvider} from "@firebase/app-check";
+import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 import {Project} from "@/interfaces";
 
 // Firebase configuration object
@@ -29,7 +29,7 @@ if (typeof window !== "undefined") {
 
     initializeAppCheck(app, {
         //@ts-ignore
-        provider: new ReCaptchaEnterpriseProvider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
+        provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY),
         isTokenAutoRefreshEnabled: true,
     });
 
