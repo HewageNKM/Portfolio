@@ -7,9 +7,10 @@ Portfolio for demonstrate my skills and projects I have worked on.
 
 ## Technologies
 
-- Reactjs
+- NextJS
 - TypeScript
 - Tailwind CSS
+- Firebase
 
 ## Authors
 
