@@ -6,7 +6,7 @@ import {Auth, getAuth, signInAnonymously} from "@firebase/auth";
 import {initializeAppCheck, ReCaptchaV3Provider} from "@firebase/app-check";
 import {Project} from "@/interfaces";
 import {getAnalytics} from "@firebase/analytics";
-import { isSupported } from "firebase/analytics";
+import {isSupported} from "firebase/analytics";
 
 
 const firebaseConfig = {
@@ -70,6 +70,12 @@ export const getProjects = async (filter: string) => {
                 return [...expoProjects, ...reactNativeProjects];
             case "Jetpack Compose":
                 return projects.filter((project: Project) => project.stack.includes("Jetpack Compose"));
+            case "Flutter":
+                return projects.filter((project: Project) => project.stack.includes("Flutter"));
+            case "Spring Boot/JavaEE":
+                const springBootProjects = projects.filter((project: Project) => project.stack.includes("Spring Boot"));
+                const javaEEProjects = projects.filter((project: Project) => project.stack.includes("JavaEE"));
+                return [...springBootProjects, ...javaEEProjects];
             case "All":
                 return projects;
             default:
