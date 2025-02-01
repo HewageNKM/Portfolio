@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "portfolio-hnkm",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
