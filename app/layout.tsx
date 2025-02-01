@@ -5,7 +5,7 @@ import "../styles/globals.css";
 const lato = Lato({weight: "400", subsets: ["latin"]});
 
 export const metadata: Metadata = {
-    title: "Nadun's Portfolio",
+    title: "Nadun Malwenna",
     description: "Nadun's Portfolio. A place to showcase my work and projects.",
     keywords: ["Nadun", "Portfolio", "Projects", "Web Development", "Software Engineering", "React", "Next.js",]
 
