@@ -1,0 +1,1 @@
+export const menu = [{label:"WORKS",url:"#works"}, {label:"MESSAGE",url:"#message"}]
