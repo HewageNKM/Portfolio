@@ -7,76 +7,53 @@ const headers = {
   Accept: "application/vnd.github.v3+json",
 };
 
-export async function getTotalRepos() {
+// Helper function to fetch user data
+async function fetchUserData(endpoint) {
   try {
-    const res = await fetch(`${GITHUB_API}/users/${username}`, { headers });
-    const data = await res.json();
-    return data.public_repos || 0;
+    const res = await fetch(endpoint, { headers });
+    if (!res.ok) {
+      throw new Error(`GitHub API error: ${res.statusText}`);
+    }
+    return await res.json();
   } catch (error) {
-    // @ts-ignore
-    console.log(error.MESSAGE);
+    console.error("Error fetching GitHub data:", error.message);
+    return null;
   }
+}
+
+export async function getTotalRepos() {
+  const data = await fetchUserData(`${GITHUB_API}/users/${username}`);
+  return data ? data.public_repos || 0 : 0;
 }
 
 export async function getFollowers() {
-  try {
-    const res = await fetch(`${GITHUB_API}/users/${username}`, { headers });
-    const data = await res.json();
-    return data.followers || 0;
-  } catch (error) {
-    // @ts-ignore
-    console.log(error.MESSAGE);
-  }
+  const data = await fetchUserData(`${GITHUB_API}/users/${username}`);
+  return data ? data.followers || 0 : 0;
 }
 
 export async function getTotalStars() {
-  try {
-    const res = await fetch(
-      `${GITHUB_API}/users/${username}/repos?per_page=100`,
-      { headers }
-    );
-    const repos = await res.json();
+  const repos = await fetchUserData(`${GITHUB_API}/users/${username}/repos?per_page=100`);
+  if (!repos) return 0;
 
-    let stars = 0;
-    // @ts-ignore
-    repos.forEach((repo) => {
-      stars += repo.stargazers_count || 0;
-    });
-
-    return stars;
-  } catch (error) {
-    // @ts-ignore
-    console.log(error.MESSAGE);
-  }
+  return repos.reduce((total, repo) => total + (repo.stargazers_count || 0), 0);
 }
 
 export async function getTotalCommits() {
-  try {
-    const res = await fetch(
-      `${GITHUB_API}/users/${username}/repos?per_page=100`,
-      { headers }
+  const repos = await fetchUserData(`${GITHUB_API}/users/${username}/repos?per_page=100`);
+  if (!repos) return 0;
+
+  let totalCommits = 0;
+
+  // To avoid multiple API calls for each repo's contributors, consider limiting the repositories or using pagination.
+  for (const repo of repos) {
+    const commitsRes = await fetchUserData(
+      `${GITHUB_API}/repos/${username}/${repo.name}/contributors`
     );
-    const repos = await res.json();
-
-    let totalCommits = 0;
-
-    for (const repo of repos) {
-      const commitsRes = await fetch(
-        `${GITHUB_API}/repos/${username}/${repo.name}/contributors`,
-        { headers }
-      );
-      const contributors = await commitsRes.json();
-
-      const self = contributors.find(
-        // @ts-ignore
-        (contributor) => contributor.login === username
-      );
+    if (commitsRes) {
+      const self = commitsRes.find((contributor) => contributor.login === username);
       totalCommits += self ? self.contributions : 0;
     }
-
-    return totalCommits;
-  } catch (error) {
-    // @ts-ignore
-    console.log(error.MESSAGE);
   }
+
+  return totalCommits;
 }

@@ -1,10 +1,90 @@
-const Footer = () => {
-    const year = new Date().getFullYear();
-    return (<footer className="flex flex-col py-2 px-4 w-full text-center">
-        <p className="uppercase font-medium">
-            Copyright © {year} Nadun Malwenna.
-        </p>
-    </footer>)
-}
+import { motion } from "framer-motion"; // For adding animations to components
+import { SiGithub, SiLinkedin, SiX } from "react-icons/si"; // Icons for LinkedIn, X (formerly Twitter), and GitHub
 
-export default Footer
+// Variants for animating the footer when it comes into view
+const footerVariants = {
+  hidden: { opacity: 0, y: 10 }, // Initial state: hidden with a slight upward position
+  visible: {
+    opacity: 1, // Fully visible
+    y: 0, // Original position
+    transition: {
+      duration: 0.6, // Duration of the transition
+      ease: "easeOut", // Smooth easing for the transition
+    },
+  },
+};
+
+// Variants for animating each item in the footer (links and icons)
+const itemVariants = {
+  hidden: { opacity: 0, y: 10 }, // Initial state: hidden with a slight upward position
+  visible: { opacity: 1, y: 0 }, // Fully visible with original position
+};
+
+const Footer = () => {
+  // Get the current year for the copyright notice
+  const year = new Date().getFullYear();
+
+  return (
+    <motion.footer
+      className="flex flex-col mt-20 relative py-2 px-4 w-full text-center"
+      initial="hidden" // Start with the "hidden" variant
+      animate="visible" // Animate to the "visible" variant
+      variants={footerVariants} // Apply footer-specific animation variants
+      viewport={{ once: true }} // Trigger the animation only once when the footer comes into view
+    >
+      {/* Container for the footer content */}
+      <motion.div
+        className="flex flex-row md:justify-between justify-center gap-5 items-center md:gap-1 flex-wrap"
+        variants={itemVariants} // Apply item-specific animation variants
+      >
+        {/* Navigation links */}
+        <motion.ul
+          className="flex flex-row font-bold text-lg items-center gap-3 md:gap-5 flex-wrap"
+          variants={itemVariants} // Apply item-specific animation variants
+        >
+          <motion.li variants={itemVariants}>
+            <a href="#hero">Home.</a> {/* Home link */}
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <a href="#works">Works.</a> {/* Works link */}
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <a href="#message">Contact.</a> {/* Contact link */}
+          </motion.li>
+        </motion.ul>
+
+        {/* Social media icons */}
+        <motion.ul
+          className="flex flex-row items-center gap-3 md:gap-5 flex-wrap"
+          variants={itemVariants} // Apply item-specific animation variants
+        >
+          <motion.li variants={itemVariants}>
+            <a
+              href="https://www.linkedin.com/in/nadun-malwenna"
+              target="_blank" // Open in a new tab
+            >
+              <SiLinkedin size={25} /> {/* LinkedIn icon */}
+            </a>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <a href="https://x.com/HewageNKM" target="_blank">
+              <SiX size={25} /> {/* X (formerly Twitter) icon */}
+            </a>
+          </motion.li>
+          <motion.li variants={itemVariants}>
+            <a href="https://github.com/HewageNKM" target="_blank">
+              <SiGithub size={25} /> {/* GitHub icon */}
+            </a>
+          </motion.li>
+        </motion.ul>
+      </motion.div>
+
+      {/* Copyright message */}
+      <motion.p className="uppercase font-bold mt-5" variants={itemVariants}>
+        Copyright © {year} Nadun Malwenna. {/* Dynamic year */}
+      </motion.p>
+    </motion.footer>
+  );
+};
+
+export default Footer;
