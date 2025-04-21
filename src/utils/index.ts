@@ -11,7 +11,6 @@ export async function getTotalRepos() {
   try {
     const res = await fetch(`${GITHUB_API}/users/${username}`, { headers });
     const data = await res.json();
-    console.log(data)
     return data.public_repos || 0;
   } catch (error) {
     // @ts-ignore
