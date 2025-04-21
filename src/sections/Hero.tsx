@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getFollowers, getTotalCommits, getTotalRepos, getTotalStars } from "../utils";
 import GitStatCard from "../components/GitStatCard";
-import { SiGit, SiGitconnected, SiGitee, SiGithub, SiPrecommit } from "react-icons/si";
-import { BsPeople, BsStars } from "react-icons/bs";
+import { SiGit,SiGithub } from "react-icons/si";
+import { BsPeople, BsStar } from "react-icons/bs";
 
 
 export default function Hero() {
@@ -17,10 +17,10 @@ export default function Hero() {
       setRepos(res)
     })
     getTotalCommits().then((res)=>{
-      setCommits(res)
+      setCommits(res || 0)
     })
     getTotalStars().then((res)=>{
-      setStars(res)
+      setStars(res || 0)
     })
     getFollowers().then((res)=>{
       setFollowers(res)
@@ -77,7 +77,7 @@ export default function Hero() {
             <GitStatCard value={followers} label="Github followers" img={BsPeople}/>
           </li>
           <li>
-          <GitStatCard value={stars} label="Github stars" img={BsStars}/>
+          <GitStatCard value={stars} label="Github stars" img={BsStar}/>
           </li>
           <li>
           <GitStatCard value={repos} label="Repositories" img={SiGit}/>

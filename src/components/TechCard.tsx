@@ -1,7 +1,7 @@
 import React from "react";
 
 interface TechCardProps {
-  img?: React.ElementType; // because you're passing icon components like SiSpring
+  img?: React.ElementType | string; // because you're passing icon components like SiSpring
   title: string;
 }
 

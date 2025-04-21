@@ -14,6 +14,7 @@ export async function getTotalRepos() {
     console.log(data)
     return data.public_repos || 0;
   } catch (error) {
+    // @ts-ignore
     console.log(error.MESSAGE);
   }
 }
@@ -24,6 +25,7 @@ export async function getFollowers() {
     const data = await res.json();
     return data.followers || 0;
   } catch (error) {
+    // @ts-ignore
     console.log(error.MESSAGE);
   }
 }
@@ -37,12 +39,14 @@ export async function getTotalStars() {
     const repos = await res.json();
 
     let stars = 0;
+    // @ts-ignore
     repos.forEach((repo) => {
       stars += repo.stargazers_count || 0;
     });
 
     return stars;
   } catch (error) {
+    // @ts-ignore
     console.log(error.MESSAGE);
   }
 }
@@ -65,6 +69,7 @@ export async function getTotalCommits() {
       const contributors = await commitsRes.json();
 
       const self = contributors.find(
+        // @ts-ignore
         (contributor) => contributor.login === username
       );
       totalCommits += self ? self.contributions : 0;
@@ -72,6 +77,7 @@ export async function getTotalCommits() {
 
     return totalCommits;
   } catch (error) {
+    // @ts-ignore
     console.log(error.MESSAGE);
   }
 }

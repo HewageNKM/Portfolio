@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { motion, useAnimationFrame } from "framer-motion";
 
 export default function GitStatCard({
   img: Icon,
@@ -13,7 +12,6 @@ export default function GitStatCard({
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    let start = 0;
     const duration = 2000;
     const startTime = performance.now();
 

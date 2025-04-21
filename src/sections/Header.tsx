@@ -36,7 +36,7 @@ const Header = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            {menu.map((item, idx) => (
+            {menu.map((item) => (
               <motion.a
                 key={item.label}
                 href={item.url}

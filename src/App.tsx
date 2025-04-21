@@ -2,6 +2,7 @@ import './App.css'
 import Footer from './sections/Footer';
 import Header from './sections/Header';
 import Hero from './sections/Hero';
+import Message from './sections/Message';
 import Projects from './sections/Projects';
 import Stack from './sections/Stack';
 const App = ()=>{
@@ -11,6 +12,7 @@ const App = ()=>{
     <Hero />
     <Stack />
     <Projects />
+    <Message />
     <Footer />
   </main>
   );
