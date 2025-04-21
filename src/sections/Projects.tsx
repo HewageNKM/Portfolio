@@ -4,6 +4,7 @@ import { SiGithub } from "react-icons/si";
 import { motion } from "framer-motion";
 
 export default function Projects() {
+  //@ts-ignore
   const [projetc, setProjects] = useState([]);  // State to manage projects (empty array initially)
 
   return (

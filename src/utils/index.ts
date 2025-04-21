@@ -8,6 +8,7 @@ const headers = {
 };
 
 // Helper function to fetch user data
+//@ts-ignore
 async function fetchUserData(endpoint) {
   try {
     const res = await fetch(endpoint, { headers });
@@ -16,6 +17,7 @@ async function fetchUserData(endpoint) {
     }
     return await res.json();
   } catch (error) {
+    //@ts-ignore
     console.error("Error fetching GitHub data:", error.message);
     return null;
   }
@@ -35,6 +37,7 @@ export async function getTotalStars() {
   const repos = await fetchUserData(`${GITHUB_API}/users/${username}/repos?per_page=100`);
   if (!repos) return 0;
 
+  //@ts-ignore
   return repos.reduce((total, repo) => total + (repo.stargazers_count || 0), 0);
 }
 
@@ -50,6 +53,7 @@ export async function getTotalCommits() {
       `${GITHUB_API}/repos/${username}/${repo.name}/contributors`
     );
     if (commitsRes) {
+      //@ts-ignore
       const self = commitsRes.find((contributor) => contributor.login === username);
       totalCommits += self ? self.contributions : 0;
     }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { VscMenu } from "react-icons/vsc";
+import { menu } from "../assets/contants";
 
 const Header = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
