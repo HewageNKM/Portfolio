@@ -2,7 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { VscMenu } from "react-icons/vsc";
 import { menu } from "../assets/contants";
-import { SlSettings } from "react-icons/sl";
 import { CiSettings } from "react-icons/ci";
 
 const Header = () => {
