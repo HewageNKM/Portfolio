@@ -1,10 +1,19 @@
-export default function TechCard({img,title}:{title:string}) {
+import React from "react";
+
+interface TechCardProps {
+  img?: React.ElementType; // because you're passing icon components like SiSpring
+  title: string;
+}
+
+export default function TechCard({ img: Icon, title }: TechCardProps) {
   return (
-    <div className="rounded-md flex flex-row justify-center content-center gap-1 shadow border-slate-100">
-        <figure>
-            {img}
+    <article className="flex items-center gap-3 px-3 py-2 border border-slate-300 rounded-lg shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-200 ease-in-out bg-white">
+      {Icon && (
+        <figure className="w-6 h-6 text-black">
+          <Icon className="w-full h-full" />
         </figure>
-        <p>{title}</p>
-    </div>
-  )
+      )}
+      <p className="text-slate-800 font-bold">{title}</p>
+    </article>
+  );
 }
