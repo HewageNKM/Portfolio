@@ -58,6 +58,7 @@ export default function Message() {
       });
 
       e.target.reset();
+      toast.success("Message sent successfully!");
     } catch (err) {
       console.log(err);
       //@ts-ignore

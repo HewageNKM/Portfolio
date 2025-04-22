@@ -15,7 +15,7 @@ const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
 const app = express();
 app.use(express.json());
 
-const allowedOrigins = ["http://localhost", "https://hewagenkm.github.io"];
+const allowedOrigins = ["https://hewagenkm.github.io"];
 app.use(cors({
     origin: (origin, callback) => {
         console.log("Origin:", origin);
