@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"; // For adding animations to components
-import { SiGithub, SiLinkedin, SiX } from "react-icons/si"; // Icons for LinkedIn, X (formerly Twitter), and GitHub
+import { mobileMenu, socials } from "../assets/contants";
 
 // Variants for animating the footer when it comes into view
 const footerVariants = {
@@ -42,15 +42,11 @@ const Footer = () => {
           className="flex flex-row font-bold text-lg items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
-          <motion.li variants={itemVariants}>
-            <a href="#hero">Home.</a> {/* Home link */}
-          </motion.li>
-          <motion.li variants={itemVariants}>
-            <a href="#works">Works.</a> {/* Works link */}
-          </motion.li>
-          <motion.li variants={itemVariants}>
-            <a href="#message">Contact.</a> {/* Contact link */}
-          </motion.li>
+          {mobileMenu.map((menu) => (
+            <motion.li variants={itemVariants}>
+              <a href={menu.url}>{menu.label}.</a> {/* Home link */}
+            </motion.li>
+          ))}
         </motion.ul>
 
         {/* Social media icons */}
@@ -58,24 +54,23 @@ const Footer = () => {
           className="flex flex-row items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
-          <motion.li variants={itemVariants}>
-            <a
-              href="https://www.linkedin.com/in/nadun-malwenna"
-              target="_blank" // Open in a new tab
-            >
-              <SiLinkedin size={25} /> {/* LinkedIn icon */}
-            </a>
-          </motion.li>
-          <motion.li variants={itemVariants}>
-            <a href="https://x.com/HewageNKM" target="_blank">
-              <SiX size={25} /> {/* X (formerly Twitter) icon */}
-            </a>
-          </motion.li>
-          <motion.li variants={itemVariants}>
-            <a href="https://github.com/HewageNKM" target="_blank">
-              <SiGithub size={25} /> {/* GitHub icon */}
-            </a>
-          </motion.li>
+          <motion.ul variants={itemVariants} className="flex gap-8 flex-row justify-center items-center">
+            {socials.map((social, index) => {
+              const Icon = social.icon;
+              return (
+                <motion.li variants={itemVariants} key={index}>
+                  <a
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-black text-xl hover:text-blue-600 transition-colors"
+                  >
+                    <Icon size={30}/>
+                  </a>
+                </motion.li>
+              );
+            })}
+          </motion.ul>
         </motion.ul>
       </motion.div>
 
