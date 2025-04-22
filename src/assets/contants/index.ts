@@ -16,7 +16,6 @@ import {
   SiTypescript,
   SiPython,
   SiPhp,
-  SiGo,
   SiTailwindcss,
   SiKotlin,
   SiDart,
@@ -58,7 +57,12 @@ export const stacks = [
   { label: "Java", img: "", ct: "lang" },
   { label: "PHP", img: SiPhp, ct: "lang" },
   { label: "C#", img: "", ct: "lang" },
-  { label: "Go", img: SiGo, ct: "lang" },
   { label: "Dart", img: SiDart, ct: "lang" },
   { label: "Kotlin", img: SiKotlin, ct: "lang" },
 ];
+
+export const themes = [
+  {label:"System",value:"sy"},
+  {label:"Dark",value:"dk"},
+  {label:"Light",value:"lt"},
+]

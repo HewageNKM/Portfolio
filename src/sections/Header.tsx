@@ -4,7 +4,7 @@ import { VscMenu } from "react-icons/vsc";
 import { menu } from "../assets/contants";
 import { CiSettings } from "react-icons/ci";
 
-const Header = () => {
+const Header = ({showSetting}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>}) => {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -75,6 +75,7 @@ const Header = () => {
 
           {/* Dark Mode Switch */}
           <motion.button
+          onClick={()=>showSetting(true)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}

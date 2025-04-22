@@ -38,7 +38,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.4 }}  // Animation with delay for each field
           viewport={{ once: true }}  // Trigger animation only once
         >
-          <p className="text-lg">
+          <p className="md:text-lg">
             Name <span className="text-red-500">*</span>
           </p>
           <input
@@ -47,7 +47,7 @@ export default function Message() {
             max={20}
             required
             placeholder="Name"
-            className="p-2 rounded bg-gray-100 text-white placeholder-gray-400 focus:ring-2"
+            className="p-2 rounded bg-gray-100 placeholder-gray-400 focus:ring-2"
           />
         </motion.label>
 
@@ -60,7 +60,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.6 }}  // Slight delay for the next input
           viewport={{ once: true }}  // Trigger animation only once
         >
-          <p className="text-lg">
+          <p className="md:text-lg">
             Subject <span className="text-red-500">*</span>
           </p>
           <input
@@ -69,7 +69,7 @@ export default function Message() {
             max={20}
             required
             placeholder="Subject"
-            className="p-2 rounded bg-gray-100 text-white placeholder-gray-400 focus:ring-2"
+            className="p-2 rounded bg-gray-100  placeholder-gray-400 focus:ring-2"
           />
         </motion.label>
 
@@ -82,7 +82,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.8 }}  // Further delay for next input field
           viewport={{ once: true }}  // Trigger animation only once
         >
-          <p className="text-lg">
+          <p className="md:text-lg">
             Email <span className="text-red-500">*</span>
           </p>
           <input
@@ -91,7 +91,7 @@ export default function Message() {
             max={20}
             required
             placeholder="Your email"
-            className="p-2 rounded bg-gray-100 text-white placeholder-gray-400 focus:ring-2"
+            className="p-2 rounded bg-gray-100 placeholder-gray-400 focus:ring-2"
           />
         </motion.label>
 
@@ -104,14 +104,14 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 1 }}  // Delay for the final input
           viewport={{ once: true }}  // Trigger animation only once
         >
-          <p className="text-lg">
+          <p className="md:text-lg">
             Message <span className="text-red-500">*</span>
           </p>
           <textarea
             rows={6}
             required
             placeholder="Your message"
-            className="p-2 rounded bg-gray-100 text-white placeholder-gray-400 focus:ring-2"
+            className="p-2 rounded bg-gray-100  placeholder-gray-400 focus:ring-2"
           />
         </motion.label>
 
