@@ -9,6 +9,7 @@ export default function Message() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [sending, setSending] = useState(false);
 
+    //@ts-ignore
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!executeRecaptcha) {
@@ -59,6 +60,7 @@ export default function Message() {
       e.target.reset();
     } catch (err) {
       console.log(err);
+      //@ts-ignore
       toast.error(err?.response?.data?.message || "Something went wrong!");
       return;
     } finally {
