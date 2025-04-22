@@ -19,6 +19,10 @@ import {
   SiTailwindcss,
   SiKotlin,
   SiDart,
+  SiHomepage,
+  SiLinkedin,
+  SiX,
+  SiGithub,
 } from "react-icons/si";
 
 export const menu = [
@@ -65,4 +69,26 @@ export const themes = [
   {label:"System",value:"sy"},
   {label:"Dark",value:"dk"},
   {label:"Light",value:"lt"},
+]
+
+export const mobileMenu = [
+  {label:'Home',icon:SiHomepage,url:"/"},
+  {label:'Works',icon:SiHomepage,url:"#works"},
+  {label:'Message',icon:SiHomepage,url:"#message"},
+  {label:'Blog',icon:SiHomepage,url:"/blog"}
+]
+
+export const socials = [
+  {
+    icon:SiLinkedin,
+    url:"https://www.linkedin.com/in/nadun-malwenna"
+  },
+  {
+    icon:SiX,
+    url:"https://x.com/HewageNKM"
+  },
+  {
+    icon:SiGithub,
+    url:"https://github.com/HewageNKM"
+  },
 ]

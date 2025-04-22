@@ -6,7 +6,7 @@ import { BsArrowRight } from "react-icons/bs";
 
 export const Setting = ({ showSetting }: { showSetting: React.Dispatch<React.SetStateAction<boolean>> }) => {
   return (
-    <BgShadow  onClose={() => showSetting(false)}>
+    <BgShadow align="justify-center"  onClose={() => showSetting(false)}>
       <div onClick={(e) => e.stopPropagation()} className="bg-white p-6 rounded-2xl shadow-lg flex-col flex items-start w-[90vw] md:w-[400px] max-w-full">
         <h3 className="text-xl font-bold flex flex-row items-center gap-2 mb-4">
           <CiSettings size={24} /> Settings

@@ -8,6 +8,7 @@ import Projects from './sections/Projects';
 import Stack from './sections/Stack';
 import { useState } from 'react';
 import { Setting } from './components/Setting';
+import { Menu } from './components/Menu';
 
 const App = ()=>{
   const [showSetting,setShowSetting] = useState(false)
@@ -15,7 +16,7 @@ const App = ()=>{
 
   return (
   <main className='h-screen relative font-serif flex md:gap-5 gap-3 flex-col p-5 xl:pt-10 xl:pb-4 xl:p-[20rem] w-full'>
-    <Header showSetting={setShowSetting}/>
+    <Header showMenu={setShowMenu} showSetting={setShowSetting}/>
     <Hero />
     <Stack />
     <Projects />
@@ -25,7 +26,7 @@ const App = ()=>{
       {showSetting && (<Setting showSetting={setShowSetting}/>)}
     </AnimatePresence>
     <AnimatePresence>
-      {showMenu && (<div></div>)}
+      {showMenu && (<Menu showMenu={setShowMenu} />)}
     </AnimatePresence>
   </main>
   );
