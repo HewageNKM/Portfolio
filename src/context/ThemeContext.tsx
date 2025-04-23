@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ setTheme, font, theme, setFont }}>
-      <main className={`${font}`}>{children}</main>
+      <main className={`${font} transition-all`}>{children}</main>
     </ThemeContext.Provider>
   );
 }

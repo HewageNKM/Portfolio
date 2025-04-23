@@ -13,7 +13,7 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
       className="flex w-full py-4 z-50"
     >
       <nav className="w-full">
-        <ul className="flex flex-row relative items-center justify-between w-full md:px-10 px-5">
+        <ul className="flex flex-row relative items-center justify-between w-full md:px-10 px-4">
           {/* Logo */}
           <motion.li
             className="flex flex-row gap-3 items-center"

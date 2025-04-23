@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="flex dark:text-white text-black flex-col mt-20 relative py-2 px-4 w-full text-center"
+      className="flex dark:text-white text-black flex-col mt-10 md:mt-20 md:px-10 relative py-2 px-4 w-full text-center"
       initial="hidden" // Start with the "hidden" variant
       animate="visible" // Animate to the "visible" variant
       variants={footerVariants} // Apply footer-specific animation variants
@@ -39,7 +39,7 @@ const Footer = () => {
       >
         {/* Navigation links */}
         <motion.ul
-          className="flex flex-row font-bold text-lg items-center gap-3 md:gap-5 flex-wrap"
+          className="flex flex-row font-bold justify-center text-lg items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
           {mobileMenu.map((menu) => (
@@ -54,7 +54,7 @@ const Footer = () => {
           className="flex flex-row items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
-          <motion.ul variants={itemVariants} className="flex gap-8 flex-row justify-center items-center">
+          <motion.ul variants={itemVariants} className="flex gap-10 flex-row justify-center items-center">
             {socials.map((social, index) => {
               const Icon = social.icon;
               return (

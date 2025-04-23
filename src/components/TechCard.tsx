@@ -13,7 +13,7 @@ export default function TechCard({ img: Icon, title }: TechCardProps) {
           <Icon className="w-full h-full" />
         </figure>
       )}
-      <p className="text-slate-800 font-bold">{title}</p>
+      <p className="text-slate-800 font-bold md:text-lg text-sm">{title}</p>
     </article>
   );
 }

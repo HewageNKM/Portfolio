@@ -68,7 +68,7 @@ export default function Stack() {
       </motion.h2>
 
       {/* Description text with animation */}
-      <motion.p className="text-black dark:text-white" variants={itemVariants}>
+      <motion.p className="text-black md:text-lg text-sm  dark:text-white" variants={itemVariants}>
         Over the years, these are some of the tech stacks I’ve worked with and
         continue to explore.
       </motion.p>
@@ -79,7 +79,7 @@ export default function Stack() {
           <motion.button
             key={cat.value}
             onClick={() => setSelectedCategory(cat.value)}  // Set selected category on click
-            className={`px-3 py-1 rounded-md border transition-all font-medium
+            className={`px-3 md:text-lg text-sm py-1 rounded-md border transition-all font-medium
               ${
                 selectedCategory === cat.value
                   ? "bg-black text-white dark:bg-white dark:text-black border-black"
@@ -123,10 +123,10 @@ export default function Stack() {
 
       {/* "And more" text with animation */}
       <motion.p
-        className="text-lg text-center mt-1 font-medium"
+        className="md:text-lg text-sm text-center mt-1 font-medium"
         variants={itemVariants}  // Apply item animation variants
       >
-        ... and more !
+        ... and more!
       </motion.p>
     </motion.section>
   );
