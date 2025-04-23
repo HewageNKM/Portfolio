@@ -81,7 +81,7 @@ export default function Message() {
        <Toaster position="top-right" />
       {/* Heading Animation */}
       <motion.h2
-        className="text-lg font-bold lg:text-xl"
+        className="text-lg dark:text-white text-black font-bold lg:text-xl"
         initial={{ y: -20, opacity: 0 }} // Start with slightly moved up and invisible
         whileInView={{ y: 0, opacity: 1 }} // Move to original position and fade in
         transition={{ duration: 0.6 }} // Duration for heading animation
@@ -108,7 +108,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.4 }} // Animation with delay for each field
           viewport={{ once: true }} // Trigger animation only once
         >
-          <p className="md:text-lg">
+          <p className="md:text-lg dark:text-white text-black">
             Name <span className="text-red-500">*</span>
           </p>
           <input
@@ -119,8 +119,8 @@ export default function Message() {
             required
             placeholder="Name"
             name="name"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed  bg-gray-100 placeholder-gray-400 focus:ring-2"
-          />
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            />
         </motion.label>
 
         {/* Subject Input */}
@@ -132,7 +132,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.6 }} // Slight delay for the next input
           viewport={{ once: true }} // Trigger animation only once
         >
-          <p className="md:text-lg">
+          <p className="md:text-lg dark:text-white text-black">
             Subject <span className="text-red-500">*</span>
           </p>
           <input
@@ -143,8 +143,8 @@ export default function Message() {
             max={20}
             required
             placeholder="Subject"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed  bg-gray-100  placeholder-gray-400 focus:ring-2"
-          />
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            />
         </motion.label>
 
         {/* Email Input */}
@@ -156,7 +156,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 0.8 }} // Further delay for next input field
           viewport={{ once: true }} // Trigger animation only once
         >
-          <p className="md:text-lg">
+          <p className="md:text-lg dark:text-white text-black">
             Email <span className="text-red-500">*</span>
           </p>
           <input
@@ -167,8 +167,8 @@ export default function Message() {
             max={20}
             required
             placeholder="Your email"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed  bg-gray-100 placeholder-gray-400 focus:ring-2"
-          />
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            />
         </motion.label>
 
         {/* Message Input */}
@@ -180,7 +180,7 @@ export default function Message() {
           transition={{ duration: 0.6, delay: 1 }} // Delay for the final input
           viewport={{ once: true }} // Trigger animation only once
         >
-          <p className="md:text-lg">
+          <p className="md:text-lg dark:text-white text-black">
             Message <span className="text-red-500">*</span>
           </p>
           <textarea
@@ -189,15 +189,15 @@ export default function Message() {
             name="message"
             required
             placeholder="Your message"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed  bg-gray-100  placeholder-gray-400 focus:ring-2"
-          />
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            />
         </motion.label>
 
          {/* Submit Button with spinner */}
          <motion.button
           disabled={sending}
           type="submit"
-          className="mt-4 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide py-2 px-6 bg-black text-white font-bold rounded hover:opacity-70 focus:outline-none focus:ring-2"
+          className="mt-4 dark:text-black dark:bg-white flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide py-2 px-6 bg-black text-white font-bold rounded hover:opacity-70 focus:outline-none focus:ring-2"
         >
           {sending ? (
             <>

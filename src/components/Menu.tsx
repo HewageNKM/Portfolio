@@ -1,4 +1,4 @@
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import BgShadow from "./BgShadow";
 import { mobileMenu, socials } from "../assets/contants";
 import { PiArrowRight } from "react-icons/pi";
@@ -10,7 +10,7 @@ const containerVariants = {
     opacity: 1,
     transition: {
       type: "spring",
-      stiffness: 180, // smoother than 300
+      stiffness: 180,
       damping: 35,
       staggerChildren: 0.08,
     },
@@ -27,7 +27,7 @@ const itemVariants = {
   visible: {
     x: 0,
     opacity: 1,
-    transition: { type: "tween", ease: "easeOut", duration: 0.6,delay:.5 },
+    transition: { type: "tween", ease: "easeOut", duration: 0.6, delay: 0.5 },
   },
 };
 
@@ -46,7 +46,7 @@ export const Menu = ({
         animate="visible"
         exit="exit"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-r-md p-4 justify-between gap-5 flex flex-row h-screen w-[85vw] md:w-[50vw]"
+        className="bg-white dark:bg-black dark:text-white rounded-r-md p-4 justify-between gap-5 flex flex-row h-screen w-[85vw] md:w-[50vw]"
       >
         <div className="flex w-full flex-col justify-between">
           <div className="flex w-full mt-5">
@@ -61,7 +61,7 @@ export const Menu = ({
                   <a
                     href={menu.url}
                     onClick={() => showMenu(false)}
-                    className="text-lg w-full bg-black text-white rounded-md p-2 md:text-xl items-center font-bold flex flex-row gap-0.5"
+                    className="text-lg w-full bg-black text-white dark:bg-white dark:text-black rounded-md p-2 md:text-xl items-center font-bold flex flex-row gap-0.5 transition-colors"
                   >
                     <p>{menu.label}</p>
                     <span>
@@ -90,7 +90,7 @@ export const Menu = ({
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-black text-xl hover:text-blue-600 transition-colors"
+                      className="text-black dark:text-white text-xl hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                     >
                       <Icon />
                     </a>
@@ -98,7 +98,7 @@ export const Menu = ({
                 );
               })}
             </ul>
-            <p className="text-sm font-bold mt-3 text-center">
+            <p className="text-sm font-bold mt-3 text-center text-black dark:text-white">
               © {year} Nadun Malwenna.
             </p>
           </motion.div>
@@ -107,7 +107,7 @@ export const Menu = ({
         {/* Close Button */}
         <motion.div
           onClick={() => showMenu(false)}
-          className="h-full w-[2rem] bg-black rounded-full text-white font-bold tracking-widest flex justify-center items-center cursor-pointer"
+          className="h-full w-[2rem] bg-black dark:bg-white dark:text-black text-white font-bold tracking-widest flex justify-center items-center cursor-pointer rounded-full"
           whileHover={{ scale: 1.1, backgroundColor: "#1a1a1a" }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, scale: 0.8 }}

@@ -14,8 +14,9 @@ import { Menu } from './components/Menu';
 const Home = () => {
   const [showSetting, setShowSetting] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+
   return (
-    <main className='h-screen relative font-serif flex md:gap-5 gap-3 flex-col p-5 xl:pt-10 xl:pb-4 xl:p-[20rem] w-full'>
+    <main className="dark:bg-black relative flex md:gap-5 gap-3 flex-col p-5 xl:pt-10 xl:pb-4 xl:p-[20rem] w-full">
       <Header showMenu={setShowMenu} showSetting={setShowSetting} />
       <Hero />
       <Stack />

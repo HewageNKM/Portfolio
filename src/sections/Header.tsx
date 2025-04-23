@@ -22,12 +22,12 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
           >
             <a
               href="/"
-              className="lg:text-3xl text-2xl font-extrabold tracking-wide"
+              className="lg:text-3xl dark:text-white text-black text-2xl font-extrabold tracking-wide"
             >
               NM.
             </a>
             <button
-              className="lg:hidden block"
+              className="lg:hidden block dark:text-white text-black"
               onClick={() => showMenu(true)}
             >
               <CgMenu size={30} />
@@ -36,7 +36,7 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
 
           {/* Navigation links */}
           <motion.li
-            className="lg:flex flex-row md:gap-5 gap-3 hidden lg:text-lg text-xs font-bold"
+            className="lg:flex dark:text-white text-black flex-row md:gap-5 gap-3 hidden lg:text-lg text-xs font-bold"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -59,7 +59,7 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="absolute top-1 hover:cursor-pointer -right-5 lg:-right-32 w-20 h-20"
+            className="absolute top-1 hover:cursor-pointer dark:text-white text-black -right-5 lg:-right-32 w-20 h-20"
           >
             <figure className="w-20 h-20">
               <CiSettings size={30} />

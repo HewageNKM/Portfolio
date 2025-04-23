@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="flex flex-col mt-20 relative py-2 px-4 w-full text-center"
+      className="flex dark:text-white text-black flex-col mt-20 relative py-2 px-4 w-full text-center"
       initial="hidden" // Start with the "hidden" variant
       animate="visible" // Animate to the "visible" variant
       variants={footerVariants} // Apply footer-specific animation variants
@@ -63,7 +63,7 @@ const Footer = () => {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-black text-xl"
+                    className="text-black dark:text-white text-xl"
                   >
                     <Icon size={30}/>
                   </a>

@@ -40,19 +40,9 @@ export default function Hero() {
       transition={{ duration: 0.8, ease: "easeOut" }} // Transition duration and easing for the animation
       className="w-full flex flex-col py-4 gap-3 md:px-10 px-8 mt-10" // Tailwind CSS classes for styling
     >
-      {/* About Me Header Animation */}
-      <motion.h3
-        className="text-2xl"
-        initial={{ opacity: 0, x: -20 }} // Starts slightly moved left and invisible
-        animate={{ opacity: 1, x: 0 }} // Animates to original position and becomes visible
-        transition={{ delay: 0.3, duration: 0.6, ease: "easeOut" }} // Transition delay and duration
-      >
-        👨🏼‍💻 About Me
-      </motion.h3>
-
       {/* Name Header Animation */}
       <motion.p
-        className="lg:text-3xl text-xl font-black mt-1"
+        className="lg:text-3xl text-xl dark:text-white text-black font-black mt-1"
         initial={{ opacity: 0, x: 20 }} // Starts slightly moved right and invisible
         animate={{ opacity: 1, x: 0 }} // Animates to original position and becomes visible
         transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }} // Transition delay and duration
@@ -62,7 +52,7 @@ export default function Hero() {
 
       {/* Description Text Animation */}
       <motion.p
-        className="font-medium lg:mt-3 mt-1 md:text-xl text-lg capitalize"
+        className="font-medium lg:mt-3 mt-1 dark:text-white text-black md:text-xl text-lg capitalize"
         initial={{ opacity: 0 }} // Starts invisible
         animate={{ opacity: 1 }} // Becomes visible
         transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }} // Transition delay and duration

@@ -61,14 +61,14 @@ export default function Stack() {
     >
       {/* Title of the section with animation */}
       <motion.h2
-        className="text-lg font-bold lg:text-xl"
+        className="text-lg text-black dark:text-white font-bold lg:text-xl"
         variants={itemVariants}  // Apply item animation variants
       >
         Things I Know.
       </motion.h2>
 
       {/* Description text with animation */}
-      <motion.p variants={itemVariants}>
+      <motion.p className="text-black dark:text-white" variants={itemVariants}>
         Over the years, these are some of the tech stacks I’ve worked with and
         continue to explore.
       </motion.p>
@@ -79,11 +79,13 @@ export default function Stack() {
           <motion.button
             key={cat.value}
             onClick={() => setSelectedCategory(cat.value)}  // Set selected category on click
-            className={`px-3 py-1 rounded-md border ${
-              selectedCategory === cat.value
-                ? "bg-black text-white border-black"
-                : "border-slate-300 hover:bg-slate-100"
-            } transition-all font-medium`}
+            className={`px-3 py-1 rounded-md border transition-all font-medium
+              ${
+                selectedCategory === cat.value
+                  ? "bg-black text-white dark:bg-white dark:text-black border-black"
+                  : "border-slate-300 text-black dark:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+              }
+            `}            
             whileTap={{ scale: 0.95 }}  // Slight scale down on tap
             whileHover={{ scale: 1.05 }}  // Slight scale up on hover
             initial={{ opacity: 0, scale: 0.95 }}  // Start with slight opacity and scale
@@ -121,7 +123,7 @@ export default function Stack() {
 
       {/* "And more" text with animation */}
       <motion.p
-        className="text-lg text-center mt-4 font-medium"
+        className="text-lg text-center mt-1 font-medium"
         variants={itemVariants}  // Apply item animation variants
       >
         ... and more !

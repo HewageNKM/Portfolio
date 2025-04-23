@@ -66,9 +66,27 @@ export const stacks = [
 ];
 
 export const themes = [
-  {label:"System",value:"sy"},
-  {label:"Dark",value:"dk"},
-  {label:"Light",value:"lt"},
+  {label:"Dark",value:"dark"},
+  {label:"Light",value:"light"},
+]
+
+export const fonts = [
+  {
+    label: "Mono",
+    value:"font-mono"
+  },
+  {
+    label: "Inter",
+    value:"font-inter"
+  },
+  {
+    label: "Roboto",
+    value:"font-roboto"
+  },
+  {
+    label: "Lora",
+    value:"font-lora"
+  }
 ]
 
 export const mobileMenu = [
@@ -92,3 +110,6 @@ export const socials = [
     url:"https://github.com/HewageNKM"
   },
 ]
+
+export const defaultFont = "font-mono";
+export const defaultTheme = "light";
