@@ -10,6 +10,7 @@ export const Setting = ({
 }: {
   showSetting: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  //@ts-ignore
   const { setFont, font, setTheme, theme } = useTheme();
 
   console.log(theme,font)
