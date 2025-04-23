@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { delay, motion } from "framer-motion";
 import BgShadow from "./BgShadow";
 import { mobileMenu, socials } from "../assets/contants";
 import { PiArrowRight } from "react-icons/pi";
@@ -12,7 +12,6 @@ const containerVariants = {
       type: "spring",
       stiffness: 180, // smoother than 300
       damping: 35,
-      when: "beforeChildren",
       staggerChildren: 0.08,
     },
   },
@@ -28,7 +27,7 @@ const itemVariants = {
   visible: {
     x: 0,
     opacity: 1,
-    transition: { type: "tween", ease: "easeOut", duration: 0.4 },
+    transition: { type: "tween", ease: "easeOut", duration: 0.6,delay:.5 },
   },
 };
 

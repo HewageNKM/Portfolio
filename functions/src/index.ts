@@ -16,6 +16,7 @@ const app = express();
 app.use(express.json());
 
 const allowedOrigins = ["https://hewagenkm.github.io"];
+
 app.use(cors({
     origin: (origin, callback) => {
         console.log("Origin:", origin);
