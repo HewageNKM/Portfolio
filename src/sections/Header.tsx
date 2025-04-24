@@ -48,7 +48,7 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
                 className="relative group h-7 transition-all uppercase duration-300"
               >
                 {item.label}.
-                <span className="block h-0.5 w-0 bg-black group-hover:w-full transition-all duration-300"></span>
+                <span className="block h-0.5 w-0 bg-black dark:bg-white group-hover:w-full transition-all duration-300"></span>
               </motion.a>
             ))}
           </motion.li>

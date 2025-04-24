@@ -69,7 +69,7 @@ export default function Projects() {
           <SiGithub /> {/* GitHub icon */}
         </motion.a>
         <motion.a
-          href="https://github.com/HewageNKM"
+          href="/projects"
           target="_blank"
           className="group dark:bg-white dark:text-black bg-black items-center mt-5 gap-2 rounded-md py-1 px-4 flex-row flex text-white font-medium hover:opacity-70"
           initial={{ opacity: 0 }} // Start with hidden opacity

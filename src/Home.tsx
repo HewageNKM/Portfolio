@@ -16,7 +16,7 @@ const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   return (
-    <main className="dark:bg-black relative flex md:gap-5 gap-3 flex-col p-5 xl:pt-10 xl:pb-4 xl:p-[20rem] w-full">
+    <main className="dark:bg-black relative flex md:gap-5 gap-3 flex-col p-5 pb-2 xl:pt-10 xl:p-[20rem] xl:pb-0.5 w-full">
       <Header showMenu={setShowMenu} showSetting={setShowSetting} />
       <Hero />
       <Stack />
