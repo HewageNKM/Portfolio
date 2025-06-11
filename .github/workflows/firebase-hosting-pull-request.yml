@@ -2,30 +2,45 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on PR
+
 on: pull_request
+
 permissions:
   checks: write
   contents: read
   pull-requests: write
-  
+
 jobs:
   build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout source
+        uses: actions/checkout@v4
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run build
+      - name: Build project
         env:
           VITE_GIT_USERNAME: ${{ secrets.VITE_GIT_USERNAME }}
           VITE_GIT_ACCESS_KEY: ${{ secrets.VITE_GIT_ACCESS_KEY }}
           VITE_RECAPCHA_SITE_KEY: ${{ secrets.VITE_RECAPCHA_SITE_KEY }}
           VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+        run: npm run build
 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy preview to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_HNKM_PORTFOLIO }}
           projectId: hnkm-portfolio
+
+      - name: Debug env vars
+        run: |
+          echo "GIT USERNAME: $VITE_GIT_USERNAME"
+          echo "SERVER URL: $VITE_SERVER_URL"
+        env:
+          VITE_GIT_USERNAME: ${{ secrets.VITE_GIT_USERNAME }}
+          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
