@@ -34,13 +34,5 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_HNKM_PORTFOLIO }}
-          projectId: hnkm-portfolio
-
-      - name: Debug env vars
-        run: |
-          echo "GIT USERNAME: $VITE_GIT_USERNAME"
-          echo "SERVER URL: $VITE_SERVER_URL"
-        env:
-          VITE_GIT_USERNAME: ${{ secrets.VITE_GIT_USERNAME }}
-          VITE_SERVER_URL: ${{ secrets.VITE_SERVER_URL }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PORTFOLIO_CD280 }}
+          projectId: portfolio-cd280
