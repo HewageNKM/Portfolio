@@ -24,6 +24,7 @@ import {
   SiX,
   SiGithub,
 } from "react-icons/si";
+import { ProjectItem } from "../../pages/Projects";
 
 export const menu = [
   { label: "WORKS", url: "#works" },
@@ -93,7 +94,7 @@ export const mobileMenu = [
   {label:'Home',icon:SiHomepage,url:"/"},
   {label:'Works',icon:SiHomepage,url:"#works"},
   {label:'Message',icon:SiHomepage,url:"#message"},
-  {label:'Blog',icon:SiHomepage,url:"/blog"}
+  {label:'Blog',icon:SiHomepage,url:"/blogs"}
 ]
 
 export const socials = [
@@ -110,6 +111,54 @@ export const socials = [
     url:"https://github.com/HewageNKM"
   },
 ]
+// Static project data based on the provided links
+export const initialProjectsData: ProjectItem[] = [
+  {
+    id: "neverbe-erp",
+    title: "NEVERBE-ERP",
+    description:
+      "An enterprise resource planning (ERP) system designed to streamline business processes and improve operational efficiency.",
+    githubUrl: "https://github.com/HewageNKM/NEVERBE-ERP",
+    //liveUrl: "https://your-neverbe-erp-live-url.com", // Replace with actual live URL
+    technologies: ["Next.js", "Firebase", "Tailwind CSS"], // Example: Uncomment and add technologies
+  },
+  {
+    id: "never-panel",
+    title: "NEVER-PANEL",
+    description:
+      "A versatile administrative panel for managing applications, users, and system settings with a clean interface.",
+    githubUrl: "https://github.com/HewageNKM/NEVER-PANEL",
+    //liveUrl: "https://your-never-panel-live-url.com", // Replace with actual live URL
+    technologies: ["Next.js", "Firebase", "Tailwind CSS"], // Example
+  },
+  {
+    id: "term-deposit-prediction",
+    title: "Term Deposit Prediction Model",
+    description:
+      "A machine learning model developed to predict the likelihood of bank clients subscribing to term deposits, aiding in targeted marketing campaigns.",
+    githubUrl: "https://github.com/HewageNKM/Term-Deposit-Prediction-Model",
+    // liveUrl: "https://your-ml-model-demo-url.com", // No obvious live demo for an ML model usually, but can be added if exists
+    technologies: ["Python", "Scikit-learn", "Pandas", "Jupyter Notebook"], // Example
+  },
+  {
+    id: "nev",
+    title: "NEVERBE-WEB",
+    description:
+      "A modern platform to explore unique places, events, and businesses in Sri Lanka. Built with a responsive design and scalable architecture, it offers an engaging user experience and streamlined content discovery.",
+    githubUrl: "https://github.com/HewageNKM/NEV",
+    liveUrl: "https://neverbe.lk", // Assuming this is your portfolio site itself
+    technologies: ["NEXT.js", "TypeScript", "Tailwind CSS", "Firebase"], // Example
+  },
+  {
+    id: "hwaytickets-erbe-web",
+    title: "HWayTickets",
+    description:
+      "An online ticket purchasing system developed using Spring Boot and a microservices architecture. The platform enables users to search, book, and manage tickets efficiently while ensuring scalability, maintainability, and service isolation.",
+    githubUrl: "https://github.com/HewageNKM/HWayTicketsERBE-WEB",
+    // liveUrl: "https://your-hwaytickets-live-url.com", // Replace with actual live URL if available
+    technologies: ["HTML", "CSS", "JavaScript", "Spring Boot"],
+  },
+];
 
 export const defaultFont = "font-mono";
 export const defaultTheme = "light";
