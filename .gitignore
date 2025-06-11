@@ -25,3 +25,4 @@ firebase.json
 *.sln
 *.sw?
 .env
+.env.production
