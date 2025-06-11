@@ -1,8 +1,20 @@
 import { useState } from "react";
 import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
+import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion } from "framer-motion";
 
+// Define an interface for the project structure
+interface Project {
+  id: string;
+  title: string;
+  description: string;
+  githubUrl: string;
+  liveUrl?: string;
+  technologies?: string[]; // Optional
+}
+
+// Animation variants for individual project cards and other items
 const itemVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 }, // Initially hidden with slight upward movement and scale down
   visible: {
@@ -17,9 +29,36 @@ const itemVariants = {
   },
 };
 
+// Sample data for featured projects
+const featuredProjectsData: Project[] = [
+  {
+    id: "erp",
+    title: "NEVERBE-ERP",
+    description: "A comprehensive enterprise resource planning system to streamline business operations.",
+    githubUrl: "https://github.com/HewageNKM/NEVERBE-ERP",
+    liveUrl: "https://erp.neverbe.lk",
+    technologies: ["Next.js", "Firebase", "Tailwind CSS"],
+  },
+  {
+    id: "portfolio",
+    title: "Personal Portfolio",
+    description: "This very website, designed to showcase my skills, projects, and journey as a developer.",
+    githubUrl: "https://github.com/HewageNKM/hewagenkm.github.io", // Assuming this is the repo
+    liveUrl: "https://hewagenkm.com", // Current site
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  },
+  {
+    id: "never-panel",
+    title: "NEVER-PANEL",
+    description: "A versatile administrative panel for managing applications and system settings.",
+    githubUrl: "https://github.com/HewageNKM/NEVER-PANEL",
+    liveUrl: "https://panel.neverbe.lk",
+    technologies: ["Next.js", "Firebase","Tailwind CSS"],
+  },
+];
+
 export default function Projects() {
-  //@ts-ignore
-  const [projetc, setProjects] = useState([]); // State to manage projects (empty array initially)
+  const [projects] = useState<Project[]>(featuredProjectsData); // Use featured projects
 
   return (
     <motion.section
@@ -42,8 +81,65 @@ export default function Projects() {
       </motion.h2>
       <motion.p className="md:text-lg text-sm dark:text-white text-black" variants={itemVariants}>Here are some of the recent projects I've worked on.</motion.p>
 
-      {/* Display message if there are no projects */}
-      {projetc.length <= 0 && (
+      {/* Grid for Project Cards */}
+      {projects.length > 0 ? (
+        <motion.ul
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
+          variants={{
+            visible: { transition: { staggerChildren: 0.1 } }
+          }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {projects.map((project) => (
+            <motion.li
+              key={project.id}
+              variants={itemVariants}
+              className="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between border border-gray-200 dark:border-gray-700"
+            >
+              <div>
+                <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">{project.title}</h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+                  {project.description}
+                </p>
+                {/* Optional: Display technologies
+                {project.technologies && project.technologies.length > 0 && (
+                  <div className="mb-3">
+                    <div className="flex flex-wrap gap-2">
+                      {project.technologies.map(tech => (
+                        <span key={tech} className="text-xs bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded-full text-gray-800 dark:text-gray-200">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )} */}
+              </div>
+              <div className="mt-auto pt-3 flex flex-wrap gap-3">
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-black dark:bg-white text-white dark:text-black rounded-md text-xs font-medium hover:opacity-80 transition-opacity"
+                >
+                  <SiGithub size={16} /> GitHub
+                </a>
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-black dark:text-white rounded-md text-xs font-medium hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
+                  >
+                    <FiExternalLink size={16} /> Live Demo
+                  </a>
+                )}
+              </div>
+            </motion.li>
+          ))}
+        </motion.ul>
+      ) : (
         <motion.p
           className="text-center dark:text-white text-black mt-3 text-sm md:text-lg font-bold"
           initial={{ opacity: 0 }} // Start with hidden opacity
@@ -55,12 +151,13 @@ export default function Projects() {
         </motion.p>
       )}
 
-      {/* Show All button to GitHub with smooth animation */}
+      {/* Buttons to view all projects and GitHub profile */}
       <div className="w-full flex mt-3 gap-5 flex-row justify-center">
         <motion.a
           href="https://github.com/HewageNKM"
           target="_blank"
-          className="group dark:bg-white dark:text-black bg-black items-center mt-5 gap-2 rounded-md py-1 px-4 flex-row flex text-white font-medium hover:opacity-70"
+          rel="noopener noreferrer" // Added for security
+          className="group dark:border-white dark:text-white border-black text-black border items-center mt-5 gap-2 rounded-md py-2 px-4 flex-row flex font-medium hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors"
           initial={{ opacity: 0 }} // Start with hidden opacity
           whileInView={{ opacity: 1 }} // Fade in when in view
           transition={{ duration: 0.8, delay: 0.4 }} // Animation duration with delay
@@ -70,8 +167,7 @@ export default function Projects() {
         </motion.a>
         <motion.a
           href="/projects"
-          target="_blank"
-          className="group dark:bg-white dark:text-black bg-black items-center mt-5 gap-2 rounded-md py-1 px-4 flex-row flex text-white font-medium hover:opacity-70"
+          className="group dark:bg-white dark:text-black bg-black items-center mt-5 gap-2 rounded-md py-2 px-4 flex-row flex text-white font-medium hover:opacity-80 transition-opacity"
           initial={{ opacity: 0 }} // Start with hidden opacity
           whileInView={{ opacity: 1 }} // Fade in when in view
           transition={{ duration: 0.8, delay: 0.4 }} // Animation duration with delay
