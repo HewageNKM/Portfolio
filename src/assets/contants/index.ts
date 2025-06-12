@@ -119,8 +119,8 @@ export const initialProjectsData: ProjectItem[] = [
     description:
       "An enterprise resource planning (ERP) system designed to streamline business processes and improve operational efficiency.",
     githubUrl: "https://github.com/HewageNKM/NEVERBE-ERP",
-    //liveUrl: "https://your-neverbe-erp-live-url.com", // Replace with actual live URL
-    technologies: ["Next.js", "Firebase", "Tailwind CSS"], // Example: Uncomment and add technologies
+    //liveUrl: "https://your-neverbe-erp-live-url.com",
+    technologies: ["Next.js", "Firebase", "Tailwind CSS"],
   },
   {
     id: "never-panel",
@@ -128,8 +128,8 @@ export const initialProjectsData: ProjectItem[] = [
     description:
       "A versatile administrative panel for managing applications, users, and system settings with a clean interface.",
     githubUrl: "https://github.com/HewageNKM/NEVER-PANEL",
-    //liveUrl: "https://your-never-panel-live-url.com", // Replace with actual live URL
-    technologies: ["Next.js", "Firebase", "Tailwind CSS"], // Example
+    //liveUrl: "https://your-never-panel-live-url.com",
+    technologies: ["Next.js", "Firebase", "Tailwind CSS"],
   },
   {
     id: "term-deposit-prediction",
@@ -137,17 +137,17 @@ export const initialProjectsData: ProjectItem[] = [
     description:
       "A machine learning model developed to predict the likelihood of bank clients subscribing to term deposits, aiding in targeted marketing campaigns.",
     githubUrl: "https://github.com/HewageNKM/Term-Deposit-Prediction-Model",
-    // liveUrl: "https://your-ml-model-demo-url.com", // No obvious live demo for an ML model usually, but can be added if exists
-    technologies: ["Python", "Scikit-learn", "Pandas", "Jupyter Notebook"], // Example
+    // liveUrl: "https://your-ml-model-demo-url.com",
+    technologies: ["Python", "Scikit-learn", "Pandas", "Jupyter Notebook","AWS"],
   },
   {
     id: "nev",
     title: "NEVERBE-WEB",
     description:
-      "A modern platform to explore unique places, events, and businesses in Sri Lanka. Built with a responsive design and scalable architecture, it offers an engaging user experience and streamlined content discovery.",
+      "NeverBe is an e‑commerce platform based in Delgoda, Sri Lanka, specializing in high-quality replica sneakers and accessories from top global brands like Nike, adidas, and New Balance. With fast domestic shipping and a focus on affordability, it has become a go-to for sneaker enthusiasts seeking both style and value.",
     githubUrl: "https://github.com/HewageNKM/NEV",
-    liveUrl: "https://neverbe.lk", // Assuming this is your portfolio site itself
-    technologies: ["NEXT.js", "TypeScript", "Tailwind CSS", "Firebase"], // Example
+    liveUrl: "https://neverbe.lk",
+    technologies: ["NEXT.js", "TypeScript", "Tailwind CSS", "Firebase"],
   },
   {
     id: "hwaytickets-erbe-web",
@@ -155,8 +155,17 @@ export const initialProjectsData: ProjectItem[] = [
     description:
       "An online ticket purchasing system developed using Spring Boot and a microservices architecture. The platform enables users to search, book, and manage tickets efficiently while ensuring scalability, maintainability, and service isolation.",
     githubUrl: "https://github.com/HewageNKM/HWayTicketsERBE-WEB",
-    // liveUrl: "https://your-hwaytickets-live-url.com", // Replace with actual live URL if available
-    technologies: ["HTML", "CSS", "JavaScript", "Spring Boot"],
+    // liveUrl: "https://your-hwaytickets-live-url.com",
+    technologies: ["Spring Boot", "Microservice", "MySQL"],
+  },
+  {
+    id: "vaive",
+    title: "VAIVE",
+    description:
+      "VAIVE is a collaborative platform aimed at promoting mental well-being through AI-driven chat support, self-assessment tools, and personalized wellness resources.",
+    githubUrl: "https://github.com/HewageNKM/VAIVE",
+    // liveUrl: "https://your-vaive-live-url.com", // Replace if available
+    technologies: [ "React Native", "Nativewind", "AppWrite", "AI APIs"],
   },
 ];
 

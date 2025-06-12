@@ -36,7 +36,7 @@ const featuredProjectsData: Project[] = [
     title: "NEVERBE-ERP",
     description: "A comprehensive enterprise resource planning system to streamline business operations.",
     githubUrl: "https://github.com/HewageNKM/NEVERBE-ERP",
-    liveUrl: "https://erp.neverbe.lk",
+    // liveUrl: "https://erp.neverbe.lk",
     technologies: ["Next.js", "Firebase", "Tailwind CSS"],
   },
   {
@@ -52,7 +52,7 @@ const featuredProjectsData: Project[] = [
     title: "NEVER-PANEL",
     description: "A versatile administrative panel for managing applications and system settings.",
     githubUrl: "https://github.com/HewageNKM/NEVER-PANEL",
-    liveUrl: "https://panel.neverbe.lk",
+    // liveUrl: "https://panel.neverbe.lk",
     technologies: ["Next.js", "Firebase","Tailwind CSS"],
   },
 ];
