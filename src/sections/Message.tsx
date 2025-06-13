@@ -9,11 +9,11 @@ export default function Message() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [sending, setSending] = useState(false);
 
-    //@ts-ignore
+  //@ts-ignore
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!executeRecaptcha) {
-      console.log("reCAPTCHA not ready!")
+      console.log("reCAPTCHA not ready!");
       toast.error("reCAPTCHA not ready!");
       return;
     }
@@ -45,13 +45,13 @@ export default function Message() {
         message: message,
       };
 
-      const url = import.meta.env.VITE_SERVER_URL
- 
+      const url = import.meta.env.VITE_SERVER_URL;
+
       await axios({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Client-IP":publicIp,
+          "X-Client-IP": publicIp,
         },
         url: `${url}mails`,
         data: JSON.stringify(newData),
@@ -78,7 +78,7 @@ export default function Message() {
       transition={{ duration: 0.8 }} // Duration for fade-in effect
       viewport={{ once: true }} // Ensures animation only triggers once when it enters the viewport
     >
-       <Toaster position="top-right" />
+      <Toaster position="top-right" />
       {/* Heading Animation */}
       <motion.h2
         className="text-lg dark:text-white text-black font-bold lg:text-xl"
@@ -120,7 +120,7 @@ export default function Message() {
             placeholder="Name"
             name="name"
             className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
-            />
+          />
         </motion.label>
 
         {/* Subject Input */}
@@ -144,7 +144,7 @@ export default function Message() {
             required
             placeholder="Subject"
             className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
-            />
+          />
         </motion.label>
 
         {/* Email Input */}
@@ -168,7 +168,7 @@ export default function Message() {
             required
             placeholder="Your email"
             className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
-            />
+          />
         </motion.label>
 
         {/* Message Input */}
@@ -190,11 +190,11 @@ export default function Message() {
             required
             placeholder="Your message"
             className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
-            />
+          />
         </motion.label>
 
-         {/* Submit Button with spinner */}
-         <motion.button
+        {/* Submit Button with spinner */}
+        <motion.button
           disabled={sending}
           type="submit"
           className="mt-4 dark:text-black dark:bg-white flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed tracking-wide py-2 px-6 bg-black text-white font-bold rounded hover:opacity-70 focus:outline-none focus:ring-2"
@@ -208,6 +208,22 @@ export default function Message() {
             "Send"
           )}
         </motion.button>
+        {/* Email Display */}
+        <motion.p
+          className="text-center md:text-left text-sm md:text-base dark:text-gray-300 text-gray-700"
+          initial={{ y: 20, opacity: 0 }} // Start with slight downward movement and invisible
+          whileInView={{ y: 0, opacity: 1 }} // Move to original position and fade in
+          transition={{ duration: 0.7, delay: 0.1 }} // Animation duration with a small delay
+          viewport={{ once: true }} // Trigger animation only once
+        >
+          You can also reach me directly at:{" "}
+          <a
+            href="mailto:info@hewagenkm.com"
+            className="font-semibold text-black dark:text-white hover:underline"
+          >
+            info@hewagenkm.com
+          </a>
+        </motion.p>
       </motion.form>
     </motion.section>
   );
