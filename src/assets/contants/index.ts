@@ -67,50 +67,50 @@ export const stacks = [
 ];
 
 export const themes = [
-  {label:"Dark",value:"dark"},
-  {label:"Light",value:"light"},
-]
+  { label: "Dark", value: "dark" },
+  { label: "Light", value: "light" },
+];
 
 export const fonts = [
   {
     label: "Mono",
-    value:"font-mono"
+    value: "font-mono",
   },
   {
     label: "Inter",
-    value:"font-inter"
+    value: "font-inter",
   },
   {
     label: "Roboto",
-    value:"font-roboto"
+    value: "font-roboto",
   },
   {
     label: "Lora",
-    value:"font-lora"
-  }
-]
+    value: "font-lora",
+  },
+];
 
 export const mobileMenu = [
-  {label:'Home',icon:SiHomepage,url:"/"},
-  {label:'Works',icon:SiHomepage,url:"#works"},
-  {label:'Message',icon:SiHomepage,url:"#message"},
-  {label:'Blog',icon:SiHomepage,url:"/blogs"}
-]
+  { label: "Home", icon: SiHomepage, url: "/" },
+  { label: "Works", icon: SiHomepage, url: "#works" },
+  { label: "Message", icon: SiHomepage, url: "#message" },
+  { label: "Blog", icon: SiHomepage, url: "/blogs" },
+];
 
 export const socials = [
   {
-    icon:SiLinkedin,
-    url:"https://www.linkedin.com/in/nadun-malwenna"
+    icon: SiLinkedin,
+    url: "https://www.linkedin.com/in/nadun-malwenna",
   },
   {
-    icon:SiX,
-    url:"https://x.com/HewageNKM"
+    icon: SiX,
+    url: "https://x.com/HewageNKM",
   },
   {
-    icon:SiGithub,
-    url:"https://github.com/HewageNKM"
+    icon: SiGithub,
+    url: "https://github.com/HewageNKM",
   },
-]
+];
 // Static project data based on the provided links
 export const initialProjectsData: ProjectItem[] = [
   {
@@ -132,13 +132,28 @@ export const initialProjectsData: ProjectItem[] = [
     technologies: ["Next.js", "Firebase", "Tailwind CSS"],
   },
   {
+    id: "portfolio",
+    title: "Personal Portfolio",
+    description:
+      "This very website, designed to showcase my skills, projects, and journey as a developer.",
+    githubUrl: "https://github.com/HewageNKM/hewagenkm.github.io", // Assuming this is the repo
+    liveUrl: "https://hewagenkm.com", // Current site
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
+  },
+  {
     id: "term-deposit-prediction",
     title: "Term Deposit Prediction Model",
     description:
       "A machine learning model developed to predict the likelihood of bank clients subscribing to term deposits, aiding in targeted marketing campaigns.",
     githubUrl: "https://github.com/HewageNKM/Term-Deposit-Prediction-Model",
     // liveUrl: "https://your-ml-model-demo-url.com",
-    technologies: ["Python", "Scikit-learn", "Pandas", "Jupyter Notebook","AWS"],
+    technologies: [
+      "Python",
+      "Scikit-learn",
+      "Pandas",
+      "Jupyter Notebook",
+      "AWS",
+    ],
   },
   {
     id: "nev",
@@ -165,7 +180,59 @@ export const initialProjectsData: ProjectItem[] = [
       "VAIVE is a collaborative platform aimed at promoting mental well-being through AI-driven chat support, self-assessment tools, and personalized wellness resources.",
     githubUrl: "https://github.com/HewageNKM/VAIVE",
     // liveUrl: "https://your-vaive-live-url.com", // Replace if available
-    technologies: [ "React Native", "Nativewind", "AppWrite", "AI APIs"],
+    technologies: ["React Native", "Nativewind", "AppWrite", "AI APIs"],
+  },
+    {
+    id: "hpos",
+    title: "HPOS",
+    description:
+      "HSPos-Server is a backend service for managing and processing point-of-sale operations. Built using Spring Boot, it provides a REST API to handle inventory, transactions, receipts, and user management. The server persists data in MySQL, employs JWT authentication. Deployed and hosted on AWS Elastic Beastalk.",
+    githubUrl: "https://github.com/HewageNKM/HSPos-Server",
+    // liveUrl: "https://your-vaive-live-url.com", // Replace if available
+    technologies: ["JQuery", "CSS", "HTML", "Spring Boot"],
+  },
+];
+
+export const experiences = [
+  {
+    role: "Software Engineer",
+    company: "DSM IT PVT LTD",
+    duration: "May 2025 - Present", // Replace with actual dates
+    description: [
+      "Developed and maintained web applications using modern technologies.",
+      "Collaborated with cross-functional teams to define, design, and ship new features.",
+      "Contributed to all phases of the development lifecycle.",
+    ],
+  },
+  {
+    role: "Associate Software Engineer (ASE)", // Assuming ASC stands for Associate Software Consultant
+    company: "DSM IT PVT LTD",
+    duration: "April 2023 - May 2025", // Replace with actual dates
+    description: [
+      "Assisted senior engineers in software development projects.",
+      "Participated in code reviews and testing processes.",
+      "Gained experience in various software development methodologies.",
+    ],
+  },
+  {
+    role: "Intern Software Engineer",
+    company: "DSM IT PVT LTD",
+    duration: "April 2022 - April 2023", // Replace with actual dates
+    description: [
+      "Supported the development team with coding and debugging tasks.",
+      "Learned about software development best practices and tools.",
+      "Contributed to small features and bug fixes.",
+    ],
+  },
+  {
+    role: "IT Support Assistant",
+    company: "DSM IT PVT LTD",
+    duration: "August 2019 - April 2022", // Replace with actual dates
+    description: [
+      "Provided technical assistance and support for incoming queries and issues related to computer systems, software, and hardware.",
+      "Responded to queries either in person or over the phone.",
+      "Maintained daily performance of computer systems.",
+    ],
   },
 ];
 

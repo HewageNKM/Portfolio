@@ -3,6 +3,7 @@ import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion } from "framer-motion";
+import { initialProjectsData } from "../assets/contants";
 
 // Define an interface for the project structure
 interface Project {
@@ -29,36 +30,8 @@ const itemVariants = {
   },
 };
 
-// Sample data for featured projects
-const featuredProjectsData: Project[] = [
-  {
-    id: "erp",
-    title: "NEVERBE-ERP",
-    description: "A comprehensive enterprise resource planning system to streamline business operations.",
-    githubUrl: "https://github.com/HewageNKM/NEVERBE-ERP",
-    // liveUrl: "https://erp.neverbe.lk",
-    technologies: ["Next.js", "Firebase", "Tailwind CSS"],
-  },
-  {
-    id: "portfolio",
-    title: "Personal Portfolio",
-    description: "This very website, designed to showcase my skills, projects, and journey as a developer.",
-    githubUrl: "https://github.com/HewageNKM/hewagenkm.github.io", // Assuming this is the repo
-    liveUrl: "https://hewagenkm.com", // Current site
-    technologies: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
-  },
-  {
-    id: "never-panel",
-    title: "NEVER-PANEL",
-    description: "A versatile administrative panel for managing applications and system settings.",
-    githubUrl: "https://github.com/HewageNKM/NEVER-PANEL",
-    // liveUrl: "https://panel.neverbe.lk",
-    technologies: ["Next.js", "Firebase","Tailwind CSS"],
-  },
-];
-
 export default function Projects() {
-  const [projects] = useState<Project[]>(featuredProjectsData); // Use featured projects
+  const [projects] = useState<Project[]>(initialProjectsData.slice(0, 3)); // Use featured projects
 
   return (
     <motion.section
