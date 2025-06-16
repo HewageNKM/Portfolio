@@ -44,7 +44,7 @@ export const Blogs = () => {
     setIsLoading(true);
     const fetchBlogs = async () => {
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       // Mock data
       const mockBlogs: BlogItem[] = [];
       setBlogs(mockBlogs);
@@ -53,6 +53,61 @@ export const Blogs = () => {
 
     fetchBlogs();
   }, []); // Empty dependency array ensures this runs only once on mount
+
+  // Effect for setting meta data
+  useEffect(() => {
+    const pageTitle = "Blogs | NKM Hewage";
+    const pageDescription =
+      "Explore a collection of insightful articles and blog posts by NKM Hewage on technology, software development, and more.";
+    const pageUrl = window.location.href;
+    // const siteName = "NKM Hewage's Portfolio"; // Uncomment and set if you have a specific site name
+
+    document.title = pageTitle;
+
+    const setMetaTag = (
+      nameOrProperty: string,
+      content: string,
+      isProperty = false
+    ) => {
+      const selector = isProperty
+        ? `meta[property="${nameOrProperty}"]`
+        : `meta[name="${nameOrProperty}"]`;
+      let element = document.head.querySelector(
+        selector
+      ) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement("meta");
+        if (isProperty) {
+          element.setAttribute("property", nameOrProperty);
+        } else {
+          element.setAttribute("name", nameOrProperty);
+        }
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+
+    setMetaTag("description", pageDescription);
+    setMetaTag(
+      "keywords",
+      "blog, articles, technology, software development, coding, web development, NKM Hewage"
+    );
+
+    // Open Graph Tags
+    // setMetaTag('og:site_name', siteName, true); // Uncomment if you have a siteName
+    setMetaTag("og:title", pageTitle, true);
+    setMetaTag("og:description", pageDescription, true);
+    setMetaTag("og:type", "website", true);
+    setMetaTag("og:url", pageUrl, true);
+    setMetaTag("og:image", "https://hewagenkm.com/og-image.png", true); // Add a URL to a relevant image
+
+    // Twitter Card Tags
+    setMetaTag("twitter:card", "summary", false); // Use 'summary_large_image' if you add an image
+    setMetaTag("twitter:title", pageTitle, false);
+    setMetaTag("twitter:description", pageDescription, false);
+    setMetaTag("twitter:image", "https://hewagenkm.com/og-image.png", false); // Replace with a relevant image
+  }, []); // Empty dependency array: run once on mount
 
   return (
     <motion.main
@@ -63,7 +118,9 @@ export const Blogs = () => {
       viewport={{ once: true }}
     >
       <motion.div variants={itemVariants}>
-        <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold mb-8">Blogs.</h1>
+        <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold mb-8">
+          Blogs.
+        </h1>
       </motion.div>
 
       {isLoading && (
@@ -91,8 +148,12 @@ export const Blogs = () => {
               variants={itemVariants} // Apply item variants to each blog post
             >
               <h2 className="text-2xl font-semibold mb-2">{blog.title}</h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-3">{blog.summary}</p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Published on: {blog.date}</p>
+              <p className="text-gray-700 dark:text-gray-300 mb-3">
+                {blog.summary}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Published on: {blog.date}
+              </p>
             </motion.li>
           ))}
         </motion.ul>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { SiGithub } from "react-icons/si"; // For GitHub icon
 import { motion } from "framer-motion"; // Import framer-motion
