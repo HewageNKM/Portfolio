@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { SiGithub } from "react-icons/si"; // For GitHub icon
 import { motion } from "framer-motion"; // Import framer-motion
@@ -42,6 +42,56 @@ const itemVariants = {
 
 export const Projects = () => {
   const [projects] = useState<ProjectItem[]>(initialProjectsData);
+
+  // Effect for setting meta data
+  useEffect(() => {
+    const pageTitle = "Projects | NKM Hewage";
+    const pageDescription =
+      "Discover a showcase of projects by NKM Hewage, highlighting skills in web development, software engineering, and various technologies.";
+    const pageUrl = window.location.href;
+
+    document.title = pageTitle;
+
+    const setMetaTag = (
+      nameOrProperty: string,
+      content: string,
+      isProperty = false
+    ) => {
+      const selector = isProperty
+        ? `meta[property="${nameOrProperty}"]`
+        : `meta[name="${nameOrProperty}"]`;
+      let element = document.head.querySelector(selector) as HTMLMetaElement | null;
+
+      if (!element) {
+        element = document.createElement("meta");
+        if (isProperty) {
+          element.setAttribute("property", nameOrProperty);
+        } else {
+          element.setAttribute("name", nameOrProperty);
+        }
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+
+    setMetaTag("description", pageDescription);
+    setMetaTag(
+      "keywords",
+      "projects, portfolio, web development, software engineering, coding, NKM Hewage, full-stack, frontend, backend, technology showcase"
+    );
+
+    setMetaTag("og:title", pageTitle, true);
+    setMetaTag("og:description", pageDescription, true);
+    setMetaTag("og:type", "website", true); // Could also be 'profile' if it's more of a personal portfolio page
+    setMetaTag("og:url", pageUrl, true);
+    setMetaTag('og:image', 'https://hewagenkm.com/og-image.png', true); // Replace with a relevant image for your projects page
+
+    // Twitter Card Tags
+    setMetaTag("twitter:card", "summary", false); // Use 'summary_large_image' if you add a prominent image
+    setMetaTag("twitter:title", pageTitle, false);
+    setMetaTag("twitter:description", pageDescription, false);
+    setMetaTag('twitter:image', 'https://hewagenkm.com/og-image.png', false); // Replace with a relevant image
+  }, []); // Empty dependency array: run once on mount
 
   return (
     <motion.main
