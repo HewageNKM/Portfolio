@@ -3,6 +3,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { SiGithub } from "react-icons/si"; // For GitHub icon
 import { motion } from "framer-motion"; // Import framer-motion
 import { initialProjectsData } from "../assets/contants";
+import Footer from "../sections/Footer";
 
 // Define an interface for the project structure
 export interface ProjectItem {
@@ -60,7 +61,9 @@ export const Projects = () => {
       const selector = isProperty
         ? `meta[property="${nameOrProperty}"]`
         : `meta[name="${nameOrProperty}"]`;
-      let element = document.head.querySelector(selector) as HTMLMetaElement | null;
+      let element = document.head.querySelector(
+        selector
+      ) as HTMLMetaElement | null;
 
       if (!element) {
         element = document.createElement("meta");
@@ -84,25 +87,27 @@ export const Projects = () => {
     setMetaTag("og:description", pageDescription, true);
     setMetaTag("og:type", "website", true); // Could also be 'profile' if it's more of a personal portfolio page
     setMetaTag("og:url", pageUrl, true);
-    setMetaTag('og:image', 'https://hewagenkm.com/og-image.png', true); // Replace with a relevant image for your projects page
+    setMetaTag("og:image", "https://hewagenkm.com/og-image.png", true); // Replace with a relevant image for your projects page
 
     // Twitter Card Tags
     setMetaTag("twitter:card", "summary", false); // Use 'summary_large_image' if you add a prominent image
     setMetaTag("twitter:title", pageTitle, false);
     setMetaTag("twitter:description", pageDescription, false);
-    setMetaTag('twitter:image', 'https://hewagenkm.com/og-image.png', false); // Replace with a relevant image
+    setMetaTag("twitter:image", "https://hewagenkm.com/og-image.png", false); // Replace with a relevant image
   }, []); // Empty dependency array: run once on mount
 
   return (
     <motion.main
-      className="flex flex-col min-h-screen dark:bg-black md:px-40 md:py-20 p-8 text-gray-900 dark:text-gray-100"
+      className="flex flex-col md:px-40 pt-20 min-h-screen dark:bg-black text-gray-900 dark:text-gray-100"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
       viewport={{ once: true }}
     >
       <motion.div className="mb-12" variants={itemVariants}>
-        <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold">Projects.</h1>
+        <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold">
+          Projects.
+        </h1>
       </motion.div>
 
       {projects.length > 0 ? (
@@ -192,6 +197,7 @@ export const Projects = () => {
           </p>
         </motion.div>
       )}
+      <Footer />
     </motion.main>
   );
 };

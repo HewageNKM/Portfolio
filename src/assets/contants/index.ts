@@ -27,8 +27,8 @@ import {
 import { ProjectItem } from "../../pages/Projects";
 
 export const menu = [
-  { label: "WORKS", url: "#works" },
-  { label: "MESSAGE", url: "#message" },
+  { label: "WORKS", url: "/#works" },
+  { label: "MESSAGE", url: "/#message" },
 ];
 
 export const stacks = [
@@ -92,9 +92,9 @@ export const fonts = [
 
 export const mobileMenu = [
   { label: "Home", icon: SiHomepage, url: "/" },
-  { label: "Works", icon: SiHomepage, url: "#works" },
-  { label: "Message", icon: SiHomepage, url: "#message" },
-  { label: "Blog", icon: SiHomepage, url: "/blogs" },
+  { label: "Works", icon: SiHomepage, url: "/#works" },
+  { label: "Message", icon: SiHomepage, url: "/#message" },
+  { label: "Blogs", icon: SiHomepage, url: "/#blogs" },
 ];
 
 export const socials = [
