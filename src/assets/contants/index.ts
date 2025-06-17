@@ -27,8 +27,9 @@ import {
 import { ProjectItem } from "../../pages/Projects";
 
 export const menu = [
-  { label: "WORKS", url: "/#works" },
-  { label: "MESSAGE", url: "/#message" },
+  { label: "WORKS", url: "/projects" },
+  { label: "MESSAGE", url: "#message" },
+  { label: "BLOGS", url: "/blogs" },
 ];
 
 export const stacks = [
@@ -92,7 +93,7 @@ export const fonts = [
 
 export const mobileMenu = [
   { label: "Home", icon: SiHomepage, url: "/" },
-  { label: "Works", icon: SiHomepage, url: "/works" },
+  { label: "Works", icon: SiHomepage, url: "/projects" },
   { label: "Message", icon: SiHomepage, url: "/#message" },
   { label: "Blogs", icon: SiHomepage, url: "/blogs" },
 ];
@@ -182,7 +183,7 @@ export const initialProjectsData: ProjectItem[] = [
     // liveUrl: "https://your-vaive-live-url.com", // Replace if available
     technologies: ["React Native", "Nativewind", "AppWrite", "AI APIs"],
   },
-    {
+  {
     id: "hpos",
     title: "HPOS",
     description:
