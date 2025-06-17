@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./Home";
 import NotFound from "./pages/NotFound";
 import { Projects } from "./pages/Projects";
-import { Blogs } from "./pages/Blog";
+import { Blogs } from "./pages/Blogs";
 
 export default function App() {
   return (

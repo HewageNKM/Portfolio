@@ -92,9 +92,9 @@ export const fonts = [
 
 export const mobileMenu = [
   { label: "Home", icon: SiHomepage, url: "/" },
-  { label: "Works", icon: SiHomepage, url: "/#works" },
+  { label: "Works", icon: SiHomepage, url: "/works" },
   { label: "Message", icon: SiHomepage, url: "/#message" },
-  { label: "Blogs", icon: SiHomepage, url: "/#blogs" },
+  { label: "Blogs", icon: SiHomepage, url: "/blogs" },
 ];
 
 export const socials = [
