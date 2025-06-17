@@ -195,7 +195,7 @@ export const initialProjectsData: ProjectItem[] = [
 
 export const experiences = [
   {
-    role: "Software Engineer",
+    role: "Associate Software Engineer",
     company: "DSM IT PVT LTD",
     duration: "April 2025 - Present",
     description: [
