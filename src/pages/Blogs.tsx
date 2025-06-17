@@ -169,9 +169,9 @@ export const Blogs = () => {
           </motion.div>
         )}
       </div>
-
-      {/* Footer pinned to bottom if content is short */}
-      <Footer />
+      <div className="md:px-40">
+        <Footer />
+      </div>
     </motion.div>
   );
 };
