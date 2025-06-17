@@ -205,7 +205,7 @@ export const experiences = [
     ],
   },
   {
-    role: "Front End Engineer",
+    role: "Front-End Developer",
     company: "Sentura Technologies",
     duration: "August 2024 - March 2025",
     description: [
