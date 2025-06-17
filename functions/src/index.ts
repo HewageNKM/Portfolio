@@ -15,24 +15,48 @@ const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
 const app = express();
 app.use(express.json());
 
-const allowedOrigins = ["https://hewagenkm.github.io","https://hewagenkm.com"];
+const allowedOrigins = ["https://hewagenkm.com"];
 
-app.use(cors({
+app.use(
+  cors({
     origin: (origin, callback) => {
-        console.log("Origin:", origin);
+      console.log("Origin:", origin);
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: ["GET", "POST","PUT","DELETE"],
-    allowedHeaders: ["Content-Type", "X-Client-IP", "Authorization"]
-  }));
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "X-Client-IP", "Authorization"],
+  })
+);
 
 app.get("/v1/health", (_, res) => {
   console.log("Health check received.");
   res.json({ message: "Server is Running Healthy!" });
+});
+
+app.get("/v1/projects", async (req, res) => {
+  try {
+    const clientIP = req.headers["x-client-ip"];
+
+    if (!clientIP) {
+      return res.status(400).json({ error: "Missing client IP address." });
+    }
+
+    const isLimited = await isRateLimited(clientIP as string);
+
+    // Check rate limit
+    if (isLimited) {
+      return res.status(429).json({ error: "Rate limit exceeded." });
+    }
+
+
+  } catch (error) {
+    console.error("Error processing mail request:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
 });
 
 app.post("/v1/mails", async (req, res) => {
@@ -108,8 +132,8 @@ const RATE_LIMIT_COLLECTION = "rateLimits";
 // Helper function to check rate limit
 export const isRateLimited = async (ip: string): Promise<boolean> => {
   const currentTime = Date.now();
-  const timeWindow = 60 * 1000; // 1 minute rate limit window
-  const maxRequests = 2; // Allow max 5 requests per minute
+  const timeWindow = 60 * 1000;
+  const maxRequests = 2;
 
   console.log(`Checking rate limit for IP: ${ip}`);
 
