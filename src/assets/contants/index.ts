@@ -197,41 +197,21 @@ export const experiences = [
   {
     role: "Software Engineer",
     company: "DSM IT PVT LTD",
-    duration: "May 2025 - Present", // Replace with actual dates
+    duration: "April 2025 - Present",
     description: [
-      "Developed and maintained web applications using modern technologies.",
-      "Collaborated with cross-functional teams to define, design, and ship new features.",
-      "Contributed to all phases of the development lifecycle.",
+      "Developing and maintaining web applications using modern technologies.",
+      "Collaborating with cross-functional teams to define, design, and ship new features.",
+      "Contributing to all phases of the development lifecycle.",
     ],
   },
   {
-    role: "Associate Software Engineer (ASE)", // Assuming ASC stands for Associate Software Consultant
-    company: "DSM IT PVT LTD",
-    duration: "April 2023 - May 2025", // Replace with actual dates
+    role: "Front End Engineer",
+    company: "Sentura Technologies",
+    duration: "August 2024 - March 2025",
     description: [
-      "Assisted senior engineers in software development projects.",
-      "Participated in code reviews and testing processes.",
-      "Gained experience in various software development methodologies.",
-    ],
-  },
-  {
-    role: "Intern Software Engineer",
-    company: "DSM IT PVT LTD",
-    duration: "April 2022 - April 2023", // Replace with actual dates
-    description: [
-      "Supported the development team with coding and debugging tasks.",
-      "Learned about software development best practices and tools.",
-      "Contributed to small features and bug fixes.",
-    ],
-  },
-  {
-    role: "IT Support Assistant",
-    company: "DSM IT PVT LTD",
-    duration: "August 2019 - April 2022", // Replace with actual dates
-    description: [
-      "Provided technical assistance and support for incoming queries and issues related to computer systems, software, and hardware.",
-      "Responded to queries either in person or over the phone.",
-      "Maintained daily performance of computer systems.",
+      "Developed responsive UI components using React and TypeScript.",
+      "Worked closely with designers to ensure design fidelity and performance.",
+      "Optimized front-end performance and maintained component libraries.",
     ],
   },
 ];
