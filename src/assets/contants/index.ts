@@ -218,4 +218,4 @@ export const experiences = [
 ];
 
 export const defaultFont = "font-mono";
-export const defaultTheme = "light";
+export const defaultTheme = "dark";
