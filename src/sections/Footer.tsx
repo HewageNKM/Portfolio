@@ -39,7 +39,7 @@ const Footer = () => {
       >
         {/* Navigation links */}
         <motion.ul
-          className="flex flex-row font-bold justify-center text-lg items-center gap-3 md:gap-5 flex-wrap"
+          className="flex flex-row font-bold justify-center md:text-lg text-sm items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
           {mobileMenu.map((menu) => (
@@ -65,7 +65,7 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     className="text-black dark:text-white text-xl"
                   >
-                    <Icon size={30}/>
+                    <Icon size={20}/>
                   </a>
                 </motion.li>
               );
@@ -75,7 +75,7 @@ const Footer = () => {
       </motion.div>
 
       {/* Copyright message */}
-      <motion.p className="uppercase font-bold mt-5" variants={itemVariants}>
+      <motion.p className="uppercase font-bold md:text-lg text-sm text-center mt-5" variants={itemVariants}>
         Copyright © {year} Nadun Malwenna. {/* Dynamic year */}
       </motion.p>
     </motion.footer>

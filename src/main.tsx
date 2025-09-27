@@ -12,6 +12,7 @@ createRoot(document.getElementById("root")!).render(
         scriptProps={{
           async: true,
           defer: true,
+          appendTo: "body",
         }}
         reCaptchaKey={import.meta.env.VITE_RECAPCHA_SITE_KEY}
       >
