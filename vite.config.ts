@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     Sitemap({
       hostname: "https://hewagenkm.com",
-      dynamicRoutes: ["/", "/projects", "/blogs"],
+      dynamicRoutes: ["/", "/projects", "/blogs", "/contact"],
       robots: [
         {
           userAgent: "*",

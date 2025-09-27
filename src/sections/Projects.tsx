@@ -36,7 +36,7 @@ export default function Projects() {
   return (
     <motion.section
       id="works"
-      className="flex flex-col md:px-10 mt-8 md:mt-12 gap-4 py-2 px-4 "
+      className="flex flex-col mt-10 p-3 gap-4"
       initial={{ opacity: 0 }} // Start with hidden opacity
       whileInView={{ opacity: 1 }} // Fade in when in view
       transition={{ duration: 0.8 }} // Animation duration for opacity

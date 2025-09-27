@@ -25,17 +25,6 @@ import {
   SiGithub,
 } from "react-icons/si";
 import { ProjectItem } from "../../pages/Projects";
-
-export const menu = [
-  { label: "WORKS", url: "/projects" },
-  { label: "BLOGS", url: "/blogs" },
-  {
-    label: "Resume",
-    url: "https://registry.jsonresume.org/HewageNKM",
-  },
-  { label: "MESSAGE", url: "#message" },
-];
-
 export const stacks = [
   // Backend Frameworks
   { label: "Spring Boot", img: SiSpring, ct: "be" },
@@ -94,12 +83,27 @@ export const fonts = [
     value: "font-lora",
   },
 ];
+export const achievements = [
+  {
+    title: "IBM Full Stack Software Developer Certificate",
+    description:
+      "Successfully completed the professional certificate program on Coursera, gaining expertise in cloud computing, frontend, backend, DevOps, and full-stack development practices.",
+    date: "2025", // You can replace with exact completion date
+    issuer: "Coursera & IBM",
+    link: "https://www.coursera.org/professional-certificates/ibm-full-stack-cloud-developer", // Optional: your certificate link
+  },
+];
 
-export const mobileMenu = [
+export const MenuItems = [
   { label: "Home", icon: SiHomepage, url: "/" },
   { label: "Works", icon: SiHomepage, url: "/projects" },
-  { label: "Message", icon: SiHomepage, url: "/#message" },
   { label: "Blogs", icon: SiHomepage, url: "/blogs" },
+  {
+    label: "Resume",
+    icon: SiHomepage,
+    url: "https://registry.jsonresume.org/HewageNKM",
+  },
+  { label: "Contact", icon: SiHomepage, url: "/contact" },
 ];
 
 export const socials = [
