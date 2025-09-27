@@ -1,13 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import Sitemap from "vite-plugin-sitemap";
 
-
-// https://vite.dev/config/
 export default defineConfig({
-  base:"/",
+  base: "/",
   plugins: [
     react(),
     tailwindcss(),
+    Sitemap({
+      hostname: "https://hewagenkm.com",
+      dynamicRoutes: ["/", "/projects", "/blogs"],
+      robots: [
+        {
+          userAgent: "*",
+          allow: "/",
+          disallow: ["/secured/*", "/auth/*"],
+        },
+      ],
+    }),
   ],
-})
+});
