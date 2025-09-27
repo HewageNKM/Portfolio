@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"; // For adding animations to components
-import { mobileMenu, socials } from "../assets/contants";
+import { MenuItems, socials } from "../assets/contants";
 
 // Variants for animating the footer when it comes into view
 const footerVariants = {
@@ -26,7 +26,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="flex dark:text-white text-black flex-col mt-10 md:mt-20 md:px-10 relative px-4 w-full text-center"
+      className="flex dark:text-white text-black flex-col mt-10 md:mt-20 md:px-16 relative px-4 w-full text-center"
       initial="hidden" // Start with the "hidden" variant
       animate="visible" // Animate to the "visible" variant
       variants={footerVariants} // Apply footer-specific animation variants
@@ -42,7 +42,7 @@ const Footer = () => {
           className="flex flex-row font-bold justify-center md:text-lg text-sm items-center gap-3 md:gap-5 flex-wrap"
           variants={itemVariants} // Apply item-specific animation variants
         >
-          {mobileMenu.map((menu) => (
+          {MenuItems.map((menu) => (
             <motion.li variants={itemVariants}>
               <a href={menu.url}>{menu.label}.</a> {/* Home link */}
             </motion.li>

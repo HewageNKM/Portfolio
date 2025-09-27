@@ -38,7 +38,7 @@ export default function Hero() {
       initial={{ opacity: 0, y: 50 }} // Initial state: start invisible and slightly below
       animate={{ opacity: 1, y: 0 }} // Animate to full opacity and original vertical position
       transition={{ duration: 0.8, ease: "easeOut" }} // Transition duration and easing for the animation
-      className="w-full flex flex-col md:py-4 py-2 gap-3 md:px-10 px-4 mt-2 md:mt-10" // Tailwind CSS classes for styling
+      className="w-full flex flex-col p-3 md:mt-10 mt-2" // Tailwind CSS classes for styling
     >
       {/* Name Header Animation */}
       <motion.p
@@ -47,7 +47,7 @@ export default function Hero() {
         animate={{ opacity: 1, x: 0 }} // Animates to original position and becomes visible
         transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }} // Transition delay and duration
       >
-      Hey!, I'm Nadun 👀
+      Hey!, I'm Nadun Malwenna
       </motion.p>
 
       {/* Description Text Animation */}

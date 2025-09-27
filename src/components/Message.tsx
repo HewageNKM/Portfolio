@@ -72,7 +72,7 @@ export default function Message() {
   return (
     <motion.section
       id="message"
-      className="w-full flex flex-col py-4 gap-6 md:px-10 px-4 mt-10"
+      className="w-full flex flex-col gap-6 p-3 mt-10"
       initial={{ opacity: 0 }} // Section starts invisible
       whileInView={{ opacity: 1 }} // Fades in when it comes into view
       transition={{ duration: 0.8 }} // Duration for fade-in effect

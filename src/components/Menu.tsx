@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import BgShadow from "./BgShadow";
-import { mobileMenu, socials } from "../assets/contants";
+import {MenuItems, socials } from "../assets/contants";
 import { PiArrowRight } from "react-icons/pi";
 
 const containerVariants = {
@@ -51,7 +51,7 @@ export const Menu = ({
         <div className="flex w-full flex-col justify-between">
           <div className="flex w-full mt-5">
             <ul className="flex h-full flex-col gap-2 w-full">
-              {mobileMenu.map((menu, index) => (
+              {MenuItems.map((menu, index) => (
                 <motion.li
                   key={index}
                   variants={itemVariants}

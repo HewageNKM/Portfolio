@@ -53,7 +53,7 @@ export default function Stack() {
 
   return (
     <motion.section
-      className="flex flex-col gap-4 py-2 md:px-10 px-5"
+      className="flex flex-col p-3 mt-10"
       initial="hidden"
       animate="visible"
       variants={containerVariants}  // Apply container animation variants

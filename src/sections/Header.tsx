@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { menu } from "../assets/contants";
+import { MenuItems } from "../assets/contants";
 import { CgMenu } from "react-icons/cg";
 
 const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>,showMenu:React.Dispatch<React.SetStateAction<boolean>>}) => {
@@ -12,7 +12,7 @@ const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<bool
       className="flex w-full py-4 z-50"
     >
       <nav className="w-full">
-        <ul className="flex flex-row relative items-center justify-between w-full md:px-10 px-4">
+        <ul className="flex flex-row relative items-center justify-between w-full px-5 lg:px-20">
           {/* Logo */}
           <motion.li
             className="flex flex-row gap-3 items-center"
@@ -40,7 +40,7 @@ const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<bool
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
           >
-            {menu.map((item) => (
+            {MenuItems.map((item) => (
               <motion.a
                 key={item.label}
                 href={item.url}

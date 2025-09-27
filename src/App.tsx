@@ -5,6 +5,7 @@ import NotFound from "./pages/NotFound";
 import { Projects } from "./pages/Projects";
 import { Blogs } from "./pages/Blogs";
 import PageLayout from "./layout/PageLayout";
+import { ContactMe } from "./pages/ContactMe";
 
 export default function App() {
   return (
@@ -13,7 +14,8 @@ export default function App() {
         <Route path="/" element={<PageLayout><Home /></PageLayout>} />
         <Route path="/projects" element={<PageLayout><Projects /></PageLayout>} />
         <Route path="/blogs" element={<PageLayout><Blogs /></PageLayout>}/>
-        <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
+        <Route path="/contact" element={<PageLayout><ContactMe /></PageLayout>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
