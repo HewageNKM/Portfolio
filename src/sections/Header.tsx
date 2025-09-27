@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import { menu } from "../assets/contants";
-import { CiSettings } from "react-icons/ci";
 import { CgMenu } from "react-icons/cg";
 
-const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>,showMenu:React.Dispatch<React.SetStateAction<boolean>>}) => {
+const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>,showMenu:React.Dispatch<React.SetStateAction<boolean>>}) => {
 
   return (
     <motion.header
@@ -52,19 +51,6 @@ const Header = ({showSetting,showMenu}:{showSetting:React.Dispatch<React.SetStat
               </motion.a>
             ))}
           </motion.li>
-
-          {/* Dark Mode Switch */}
-          <motion.button
-          onClick={()=>showSetting(true)}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="absolute top-1 hover:cursor-pointer dark:text-white text-black -right-5 lg:-right-32 w-20 h-20"
-          >
-            <figure className="w-20 h-20">
-              <CiSettings size={30} />
-            </figure>
-          </motion.button>
         </ul>
       </nav>
     </motion.header>

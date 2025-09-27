@@ -53,7 +53,7 @@ export default function Message() {
           "Content-Type": "application/json",
           "X-Client-IP": publicIp,
         },
-        url: `${url}mails`,
+        url: `${url}/mails`,
         data: JSON.stringify(newData),
       });
 
