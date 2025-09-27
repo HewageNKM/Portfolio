@@ -28,8 +28,12 @@ import { ProjectItem } from "../../pages/Projects";
 
 export const menu = [
   { label: "WORKS", url: "/projects" },
-  { label: "MESSAGE", url: "#message" },
   { label: "BLOGS", url: "/blogs" },
+  {
+    label: "Resume",
+    url: "https://registry.jsonresume.org/HewageNKM",
+  },
+  { label: "MESSAGE", url: "#message" },
 ];
 
 export const stacks = [

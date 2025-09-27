@@ -1,13 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
 @import "tailwindcss";
-
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme{
-    --font-roboto: "Roboto", sans-serif; 
-    --font-inter: "Inter", sans-serif;
-    --font-lora: "Lora", serif;
+:root {
+  --font-roboto: "Roboto", sans-serif; 
+  --font-inter: "Inter", sans-serif;
+  --font-lora: "Lora", serif;
+
+  --color-bg-dark: #000;
+  --color-bg-light: #ffffff;
+  --color-text-dark: #ffffff;
+  --color-text-light: #000;
+}
+
+body {
+  font-family: var(--font-inter);
+  background-color: var(--color-bg-light);
+  color: var(--color-text-light);
+}
+
+.dark body {
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-dark);
 }

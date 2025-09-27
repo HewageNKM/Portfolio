@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import Footer from "../sections/Footer";
 import SEO from "../components/SEO";
 
 interface BlogItem {
@@ -31,7 +30,7 @@ export const Blogs = () => {
         url="https://hewagenkm.com/blogs"
       />
       <motion.div
-        className="flex flex-col min-h-screen dark:bg-black text-gray-900 dark:text-gray-100"
+        className="flex flex-col min-h-screen dark:text-gray-100"
         initial="hidden"
         animate="visible"
         variants={{
@@ -77,10 +76,6 @@ export const Blogs = () => {
               )}
             </ul>
           )}
-        </div>
-
-        <div className="md:px-40">
-          <Footer />
         </div>
       </motion.div>
     </>
