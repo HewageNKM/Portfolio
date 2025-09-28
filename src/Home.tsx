@@ -5,6 +5,8 @@ import Stack from "./sections/Stack";
 import Experience from "./sections/Experience";
 import SEO from "./components/SEO";
 import Achievements from "./sections/Achievements";
+import Services from "./sections/Services";
+import Education from "./sections/Education";
 const Home = () => {
 
   return (
@@ -54,7 +56,9 @@ const Home = () => {
 
       <main className="relative flex md:gap-5 gap-3 flex-col p-5 pb-2 xl:pt-10 xl:p-[16rem] xl:pb-0.5 w-full">
         <Hero />
+        <Services />
         <Experience />
+        <Education />
         <Achievements />
         <Stack />
         <Projects />

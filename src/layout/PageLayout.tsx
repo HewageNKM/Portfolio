@@ -1,6 +1,6 @@
 import { ReactNode, useState, useRef } from "react";
-import Footer from "../sections/Footer";
-import Header from "../sections/Header";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import { AnimatePresence } from "framer-motion";
 import { Setting } from "../components/Setting";
 import { Menu } from "../components/Menu";

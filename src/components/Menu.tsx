@@ -46,7 +46,7 @@ export const Menu = ({
         animate="visible"
         exit="exit"
         onClick={(e) => e.stopPropagation()}
-        className="bg-white dark:bg-black dark:text-white rounded-r-md p-4 justify-between gap-5 flex flex-row h-screen w-[85vw] md:w-[50vw]"
+        className="bg-white dark:bg-[#111111] dark:text-white rounded-r-md p-4 justify-between gap-5 flex flex-row h-screen w-[85vw] md:w-[50vw]"
       >
         <div className="flex w-full flex-col justify-between">
           <div className="flex w-full mt-5">
