@@ -6,7 +6,7 @@ export default function Achievements() {
   return (
     <motion.section
       id="achievements"
-      className="w-full flex flex-col p-3 gap-6 mt-10"
+      className="w-full flex flex-col p-3 gap-8 mt-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
@@ -15,8 +15,7 @@ export default function Achievements() {
       <motion.h2
         className="text-lg dark:text-white text-black font-bold lg:text-xl"
         initial={{ y: -20, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6 }}
+        animate={{ y: 0, opacity: 1 }}
       >
         My Achievements.
       </motion.h2>

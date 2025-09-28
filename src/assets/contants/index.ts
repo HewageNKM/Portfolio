@@ -23,41 +23,125 @@ import {
   SiLinkedin,
   SiX,
   SiGithub,
+  SiSqlite,
+  SiHtml5,
+  SiCss3,
 } from "react-icons/si";
 import { ProjectItem } from "../../pages/Projects";
 export const stacks = [
   // Backend Frameworks
-  { label: "Spring Boot", img: SiSpring, ct: "be" },
-  { label: "Express", img: SiExpress, ct: "be" },
-  { label: "Flask", img: SiFlask, ct: "be" },
-  { label: "Django", img: SiDjango, ct: "be" },
-  { label: "Laravel", img: SiLaravel, ct: "be" },
-  { label: ".NET", img: SiDotnet, ct: "be" },
+  { label: "Spring Boot", img: SiSpring, ct: ["be"] },
+  { label: "Express", img: SiExpress, ct: ["be"] },
+  { label: "Flask", img: SiFlask, ct: ["be"] },
+  { label: "Django", img: SiDjango, ct: ["be"] },
+  { label: "Laravel", img: SiLaravel, ct: ["be"] },
+  { label: ".NET", img: SiDotnet, ct: ["be"] },
 
   // Frontend Frameworks
-  { label: "React / Native", img: SiReact, ct: "fe" },
-  { label: "Flutter", img: SiFlutter, ct: "fe" },
-  { label: "Angular", img: SiAngular, ct: "fe" },
-  { label: "TailwindCSS", img: SiTailwindcss, ct: "fe" },
+  { label: "React / Native", img: SiReact, ct: ["fe", "mob"] },
+  { label: "Flutter", img: SiFlutter, ct: ["fe", "mob"] },
+  { label: "Angular", img: SiAngular, ct: ["fe"] },
+  { label: "TailwindCSS", img: SiTailwindcss, ct: ["fe"] },
 
   // Databases
-  { label: "MySQL", img: SiMysql, ct: "be" },
-  { label: "MongoDB", img: SiMongodb, ct: "be" },
-
+  { label: "MySQL", img: SiMysql, ct: ["be"] },
+  { label: "MongoDB", img: SiMongodb, ct: ["be"] },
+  { label: "SQLite", img: SiSqlite, ct: ["be", "mob"] },
   // Cloud Services
-  { label: "AWS", img: SiAmazon, ct: "cd" },
-  { label: "Firebase", img: SiFirebase, ct: "cd" },
-  { label: "Azure", img: "", ct: "cd" },
+  { label: "AWS", img: SiAmazon, ct: ["cd"] },
+  { label: "Firebase", img: SiFirebase, ct: ["cd"] },
+  { label: "Azure", img: "", ct: ["cd"] },
 
   // Languages
-  { label: "JavaScript", img: SiJavascript, ct: "lang" },
-  { label: "TypeScript", img: SiTypescript, ct: "lang" },
-  { label: "Python", img: SiPython, ct: "lang" },
-  { label: "Java", img: "", ct: "lang" },
-  { label: "PHP", img: SiPhp, ct: "lang" },
-  { label: "C#", img: "", ct: "lang" },
-  { label: "Dart", img: SiDart, ct: "lang" },
-  { label: "Kotlin", img: SiKotlin, ct: "lang" },
+  { label: "JavaScript", img: SiJavascript, ct: ["lang"] },
+  { label: "TypeScript", img: SiTypescript, ct: ["lang"] },
+  { label: "Python", img: SiPython, ct: ["lang"] },
+  { label: "Java", img: "", ct: ["lang"] },
+  { label: "PHP", img: SiPhp, ct: ["lang"] },
+  { label: "C#", img: "", ct: ["lang"] },
+  { label: "Dart", img: SiDart, ct: ["lang", "mob"] },
+  { label: "Kotlin", img: SiKotlin, ct: ["lang", "mob"] },
+  { label: "HTML", img: SiHtml5, ct: ["lang"] },
+  { label: "CSS", img: SiCss3, ct: ["lang"] },
+  { label: "SQL", img: "", ct: ["lang"] },
+];
+
+export const services = [
+  {
+    icon: SiReact,
+    title: "Web Development",
+    description:
+      "Crafting responsive and dynamic web applications using modern frontend and backend technologies.",
+    items: [
+      "Frontend Development (React, Angular, Next.js)",
+      "Backend Development (Spring Boot, Node.js, Django, Laravel)",
+      "Database Management (MySQL, MongoDB, PostgreSQL)",
+    ],
+  },
+  {
+    icon: SiFlutter,
+    title: "Mobile App Development",
+    description:
+      "Building intuitive and high-performance mobile applications for various platforms.",
+    items: [
+      "Cross-Platform (React Native, Flutter)",
+      "Native Android (Kotlin, Java)",
+    ],
+  },
+  {
+    icon: SiAmazon,
+    title: "Cloud Services & DevOps",
+    description:
+      "Deploying and managing applications on cloud platforms with robust CI/CD pipelines.",
+    items: [
+      "Cloud Platforms (AWS, Firebase, Azure)",
+      "CI/CD (GitHub Actions, Jenkins)",
+      "Containerization (Docker)",
+    ],
+  },
+  {
+    icon: SiSpring,
+    title: "API Development & Integration",
+    description:
+      "Creating and integrating RESTful APIs for seamless communication between systems.",
+    items: [
+      "RESTful API Design",
+      "Third-party API Integration",
+      "Microservices Architecture",
+    ],
+  },
+  {
+    icon: SiJavascript,
+    title: "Technical Writing & Documentation",
+    description:
+      "Producing clear, concise, and comprehensive technical documentation.",
+    items: ["API Documentation", "User Manuals", "System Design Documents"],
+  },
+];
+
+export const educations = [
+  {
+    degree: "BSc in Software Engineering",
+    institution: "Kingston University, London Offerd by ESOFT UNI",
+    duration: "2025 - 2026 (Expected)",
+    details: [
+      "Specialized in software development, algorithms, and system design.",
+      "Completed projects in web and mobile application development.",
+      "Active member of the coding club and tech community.",
+    ],
+    gpa: "Pending",
+  },
+  {
+    degree: "Higher National Diploma in Software Engineering",
+    institution: "Institute of Software Engineering (ISE)",
+    duration: "2022 - 2025",
+    details: [
+      "Focused on practical software engineering skills and project management.",
+      "Gained hands-on experience with various programming languages and frameworks.",
+      "Collaborated on team projects simulating real-world software development scenarios.",
+    ],
+    gpa: "3.27/4.0",
+  },
 ];
 
 export const themes = [
