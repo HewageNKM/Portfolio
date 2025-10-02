@@ -27,7 +27,7 @@ const SEO = ({
   const defaultUrl = "https://hewagenkm.com";
 
   const formattedTitle = customTitle
-    ? `${customTitle} | Nadun Malwenna`
+    ? `${customTitle}`
     : defaultTitle;
   const description = customDescription || defaultDescription;
   const keywords = customKeywords || defaultKeywords;
