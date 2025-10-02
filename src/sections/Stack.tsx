@@ -1,10 +1,8 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Zap, Code, Database, Smartphone, Cloud, PenTool } from 'lucide-react'; // Using lucide-react for icons
+import { Zap, Code, Database, Smartphone, Cloud, PenTool } from "lucide-react"; // Using lucide-react for icons
 import { stacks } from "../assets/contants";
 import TechCard from "../components/TechCard";
-
-
 
 // --- MAIN COMPONENT CODE ---
 
@@ -41,7 +39,8 @@ const itemVariants = {
   },
 };
 
-export default function App() { // Renamed to App for single file export
+export default function App() {
+  // Renamed to App for single file export
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const filteredStacks =
@@ -52,6 +51,7 @@ export default function App() { // Renamed to App for single file export
   return (
     <div className="font-sans">
       <motion.section
+        id="stack"
         className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto"
         initial="hidden"
         animate="visible"
@@ -108,7 +108,12 @@ export default function App() { // Renamed to App for single file export
             <motion.li
               key={index}
               variants={itemVariants}
-              whileHover={{ scale: 1.05, y: -4, boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)" }}
+              whileHover={{
+                scale: 1.05,
+                y: -4,
+                boxShadow:
+                  "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+              }}
               className="rounded-xl overflow-hidden cursor-pointer"
             >
               <TechCard title={item.label} img={item.img} />

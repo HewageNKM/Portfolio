@@ -29,7 +29,7 @@ const itemVariants = {
 export default function Education() {
   return (
     <motion.section
-      id="education"
+      id="educations"
       className="w-full flex flex-col p-3 gap-8 mt-10"
       initial="hidden"
       animate="visible"
