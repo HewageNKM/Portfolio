@@ -8,7 +8,6 @@ import Achievements from "./sections/Achievements";
 import Services from "./sections/Services";
 import Education from "./sections/Education";
 const Home = () => {
-
   return (
     <>
       <SEO
@@ -18,38 +17,36 @@ const Home = () => {
         schema={[
           {
             "@context": "https://schema.org",
-            "@type": "WebSite",
-            url: "https://hewagenkm.com",
-            name: "Nadun Malwenna - Portfolio",
-            publisher: { "@type": "Person", name: "Nadun Malwenna" },
-          },
-          {
-            "@context": "https://schema.org",
             "@type": "WebPage",
             name: "Nadun Malwenna - Portfolio",
             url: "https://hewagenkm.com",
+            headline: "Nadun Malwenna - Software Engineer",
             description:
-              "Explore the portfolio of Nadun Malwenna, software engineer specializing in full-stack development, mobile apps, and web solutions.",
+              "Portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile apps, and cloud solutions.",
           },
           {
             "@context": "https://schema.org",
-            "@type": "Person",
-            name: "Nadun Malwenna",
-            url: "https://hewagenkm.com",
-            jobTitle: "Software Engineer",
-            knowsAbout: [
-              "Full-Stack Development",
-              "Mobile Apps",
-              "React",
-              "Spring Boot",
-              "Cloud Computing",
-              "Machine Learning",
-            ],
-            sameAs: [
-              "https://github.com/HewageNKM",
-              "https://linkedin.com/in/nadun-malwenna",
-              "https://x.com/HewageNKM",
-            ],
+            "@type": "CollectionPage",
+            name: "Projects - Nadun Malwenna",
+            description:
+              "Explore software engineering projects by Nadun Malwenna, including web apps, mobile apps, and full-stack solutions.",
+            url: "https://hewagenkm.com/projects",
+            author: {
+              "@type": "Person",
+              name: "Nadun Malwenna",
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "Nadun Malwenna's Blog",
+            description:
+              "Read blogs and articles by Nadun Malwenna about full-stack development, mobile apps, and cloud solutions.",
+            url: "https://hewagenkm.com/blogs",
+            author: {
+              "@type": "Person",
+              name: "Nadun Malwenna",
+            },
           },
         ]}
       />

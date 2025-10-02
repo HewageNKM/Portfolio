@@ -42,7 +42,6 @@ export const Projects = () => {
 
   return (
     <>
-      {" "}
       <SEO
         title="Projects"
         description="Discover a showcase of projects by Nadun Malwenna, highlighting skills in web development, full-stack engineering, and modern technologies."
@@ -53,6 +52,7 @@ export const Projects = () => {
             "@context": "https://schema.org",
             "@type": "CollectionPage",
             name: "Projects - Nadun Malwenna",
+            headline: "Projects by Nadun Malwenna",
             description:
               "Portfolio projects by Nadun Malwenna, showcasing skills in full-stack development, web apps, mobile apps, and open-source contributions.",
             url: "https://hewagenkm.com/projects",

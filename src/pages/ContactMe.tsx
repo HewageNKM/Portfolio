@@ -29,6 +29,40 @@ export const ContactMe = () => {
         description="Get in touch with Nadun Malwenna for collaborations, inquiries, or just to say hello. Fill out the contact form or reach out directly."
         keywords="contact, Nadun Malwenna, email, inquiry, collaboration, software engineer"
         url="https://hewagenkm.com/contact"
+        schema={
+          [
+            {
+              "@context": "https://schema.org",
+              "@type": "ContactPage",
+              name: "Contact Nadun Malwenna",
+              headline: "Contact Nadun Malwenna",
+              description:
+                "Reach out to Nadun Malwenna for professional inquiries, project collaborations, or general questions.",
+              url: "https://hewagenkm.com/contact",
+              potentialAction: {
+                "@type": "CommunicateAction",
+                name: "Contact Form",
+                target: {
+                  "@type": "EntryPoint",
+                  actionPlatform: [
+                    "http://schema.org/DesktopWebPlatform",
+                    "http://schema.org/MobileWebPlatform",
+                  ],
+                },
+              },
+              contactPoint: [
+                {
+                  "@type": "ContactPoint",
+                  telephone: import.meta.env.VITE_WHATSAPP_NUMBER,
+                  contactType: "customer service",
+                  areaServed: "LK",
+                  availableLanguage: ["en", "si"],
+                },
+              ],
+            },
+          ]
+
+        }
       />
       <motion.div
         className="flex flex-col min-h-screen dark:text-gray-100"
