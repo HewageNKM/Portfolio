@@ -4,7 +4,7 @@ import { experiences } from "../assets/contants";
 const Experience = () => {
   return (
     <motion.section
-      id="experience"
+      id="experiences"
       className="w-full flex flex-col p-3 gap-8 mt-10"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
