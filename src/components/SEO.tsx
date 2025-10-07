@@ -45,6 +45,8 @@ const SEO = ({
       <meta name="keywords" content={keywords} />
       <meta name="author" content="Nadun Malwenna" />
       <meta name="copyright" content="Nadun Malwenna" />
+      <meta name="application-name" content="Nadun Malwenna" />
+      <meta name="apple-mobile-web-app-title" content="Nadun Malwenna" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
       {/* Robots */}
