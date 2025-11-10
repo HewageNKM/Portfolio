@@ -47,3 +47,5 @@ body {
       transparent 20px
     );
 }
+
+.grecaptcha-badge { visibility: hidden; }

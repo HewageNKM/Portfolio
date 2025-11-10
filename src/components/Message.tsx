@@ -119,7 +119,7 @@ export default function Message() {
             required
             placeholder="Name"
             name="name"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
           />
         </motion.label>
 
@@ -143,7 +143,7 @@ export default function Message() {
             max={20}
             required
             placeholder="Subject"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
           />
         </motion.label>
 
@@ -167,7 +167,7 @@ export default function Message() {
             max={20}
             required
             placeholder="Your email"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
           />
         </motion.label>
 
@@ -189,7 +189,7 @@ export default function Message() {
             name="message"
             required
             placeholder="Your message"
-            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-100 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
+            className="p-2 rounded disabled:opacity-50 disabled:cursor-not-allowed bg-gray-200 dark:bg-zinc-800 text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-2 focus:outline-none"
           />
         </motion.label>
 
