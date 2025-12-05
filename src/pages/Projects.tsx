@@ -2,7 +2,6 @@ import { useState } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { SiGithub } from "react-icons/si";
 import { motion } from "framer-motion";
-import { initialProjectsData } from "../assets/contants";
 import SEO from "../components/SEO"; // ✅ Reuse SEO
 
 // Define an interface for the project structure
@@ -37,8 +36,29 @@ const itemVariants = {
   },
 };
 
+import axios from "axios";
+import { useEffect } from "react";
+import { API_BASE_URL } from "../config";
+
+// ... (imports)
+
 export const Projects = () => {
-  const [projects] = useState<ProjectItem[]>(initialProjectsData);
+  const [projects, setProjects] = useState<ProjectItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/projects`);
+        setProjects(response.data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <>
@@ -82,7 +102,9 @@ export const Projects = () => {
             </h1>
           </motion.div>
 
-          {projects.length > 0 ? (
+          {isLoading ? (
+            <p>Loading projects...</p>
+          ) : projects.length > 0 ? (
             <motion.ul
               className="grid grid-cols-1 md:grid-cols-2 gap-8"
               variants={containerVariants}

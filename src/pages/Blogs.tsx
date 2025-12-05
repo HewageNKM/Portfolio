@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import SEO from "../components/SEO";
 
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../config";
+
 interface BlogItem {
   id: string;
   title: string;
@@ -14,11 +18,17 @@ export const Blogs = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate fetching blogs
-    setTimeout(() => {
-      setBlogs([]);
-      setIsLoading(false);
-    }, 1500);
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/blogs`);
+        setBlogs(response.data);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchBlogs();
   }, []);
 
   return (
@@ -95,13 +105,15 @@ export const Blogs = () => {
                   key={blog.id}
                   className="border p-4 rounded-lg hover:shadow-lg transition-shadow"
                 >
-                  <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                  <p className="text-gray-600 dark:text-gray-400 mb-4">
-                    {blog.summary}
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500">
-                    {new Date(blog.date).toLocaleDateString()}
-                  </p>
+                  <Link to={`/blogs/${blog.id}`}>
+                    <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                      {blog.summary}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-500">
+                      {new Date(blog.date).toLocaleDateString()}
+                    </p>
+                  </Link>
                 </li>
               ))}
               {!isLoading && blogs.length === 0 && (
