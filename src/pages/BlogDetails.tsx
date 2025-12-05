@@ -10,6 +10,7 @@ interface Blog {
   title: string;
   summary: string;
   content: string;
+  tags?: string[];
   date: string;
 }
 
@@ -91,6 +92,18 @@ const BlogDetails = () => {
           <p className="text-gray-500 dark:text-gray-400 mb-8">
             {new Date(blog.date).toLocaleDateString()}
           </p>
+          {blog.tags && blog.tags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-8">
+              {blog.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm"
+                >
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
           <div
             className="prose dark:prose-invert max-w-none"
             dangerouslySetInnerHTML={{ __html: blog.content }}
