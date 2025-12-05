@@ -9,9 +9,8 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 admin.initializeApp();
 const db = admin.firestore();
 
-// Access the reCAPTCHA secret key from Firebase environment config
-const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
 const geminiApiKey = process.env.GEMINI_API_KEY;
+const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
 
 const app = express();
 app.use(express.json());
@@ -198,7 +197,7 @@ app.post("/v1/ai/generate", validateFirebaseIdToken, async (req, res) => {
     }
 
     const genAI = new GoogleGenerativeAI(geminiApiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const result = await model.generateContent(prompt);
     const response = await result.response;

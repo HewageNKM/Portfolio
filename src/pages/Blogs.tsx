@@ -10,6 +10,7 @@ interface BlogItem {
   id: string;
   title: string;
   summary: string;
+  tags?: string[];
   date: string;
 }
 
@@ -38,41 +39,38 @@ export const Blogs = () => {
         description="Explore a collection of insightful articles and blog posts by NKM Hewage on technology, software development, and more."
         keywords="blog, articles, technology, software development, coding, web development, NKM Hewage"
         url="https://hewagenkm.com/blogs"
-        schema={
-          [
-            {
-              "@context": "https://schema.org",
-              "@type": "Blog",
-              name: "Blogs by Nadun Malwenna",
-              description:
-                "Explore articles and insights on software development, technology, and personal projects from Nadun Malwenna.",
-              url: "https://hewagenkm.com/blogs",
-              headline: "Blogs by Nadun Malwenna",
-              author: {
-                "@type": "Person",
-                name: "Nadun Malwenna",
-              },
+        schema={[
+          {
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "Blogs by Nadun Malwenna",
+            description:
+              "Explore articles and insights on software development, technology, and personal projects from Nadun Malwenna.",
+            url: "https://hewagenkm.com/blogs",
+            headline: "Blogs by Nadun Malwenna",
+            author: {
+              "@type": "Person",
+              name: "Nadun Malwenna",
             },
-            ...blogs.map((blog) => ({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              headline: blog.title,
-              datePublished: blog.date,
-              dateModified: blog.date,
-              author: {
-                "@type": "Person",
-                name: "Nadun Malwenna",
-              },
-              description: blog.summary,
-              url: `https://hewagenkm.com/blogs/${blog.id}`,
-              mainEntityOfPage: {
-                "@type": "WebPage",
-                "@id": `https://hewagenkm.com/blogs/${blog.id}`,
-              },
-            })),
-          ]
-
-        }
+          },
+          ...blogs.map((blog) => ({
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            headline: blog.title,
+            datePublished: blog.date,
+            dateModified: blog.date,
+            author: {
+              "@type": "Person",
+              name: "Nadun Malwenna",
+            },
+            description: blog.summary,
+            url: `https://hewagenkm.com/blogs/${blog.id}`,
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://hewagenkm.com/blogs/${blog.id}`,
+            },
+          })),
+        ]}
       />
       <motion.div
         className="flex flex-col min-h-screen dark:text-gray-100"

@@ -13,8 +13,10 @@ const BlogEditor = () => {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
+  const [tags, setTags] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isTagLoading, setIsTagLoading] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -25,6 +27,7 @@ const BlogEditor = () => {
           setTitle(blog.title);
           setSummary(blog.summary);
           setContent(blog.content || "");
+          setTags(blog.tags ? blog.tags.join(", ") : "");
           setDate(blog.date.split("T")[0]);
         } catch (error) {
           console.error("Error fetching blog:", error);
@@ -41,7 +44,17 @@ const BlogEditor = () => {
     try {
       const token = await auth.currentUser?.getIdToken();
       const headers = { Authorization: `Bearer ${token}` };
-      const blogData = { title, summary, content, date: new Date(date).toISOString() };
+      const tagsArray = tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter((tag) => tag !== "");
+      const blogData = {
+        title,
+        summary,
+        content,
+        tags: tagsArray,
+        date: new Date(date).toISOString(),
+      };
 
       if (id) {
         await axios.put(`${API_BASE_URL}/blogs/${id}`, blogData, { headers });
@@ -69,8 +82,12 @@ const BlogEditor = () => {
     try {
       const token = await auth.currentUser?.getIdToken();
       const headers = { Authorization: `Bearer ${token}` };
-      const response = await axios.post(`${API_BASE_URL}/ai/generate`, { prompt: aiPrompt }, { headers });
-      
+      const response = await axios.post(
+        `${API_BASE_URL}/ai/generate`,
+        { prompt: aiPrompt },
+        { headers }
+      );
+
       const generatedText = response.data.text;
       setContent((prev) => prev + `\n<p>${generatedText}</p>`);
       toast.success("Content generated successfully");
@@ -84,10 +101,44 @@ const BlogEditor = () => {
     }
   };
 
+  const handleAutoGenerateTags = async () => {
+    if (!content && !title && !summary) {
+      toast.error("Please add some content, title or summary first");
+      return;
+    }
+    setIsTagLoading(true);
+    try {
+      const token = await auth.currentUser?.getIdToken();
+      const headers = { Authorization: `Bearer ${token}` };
+      const prompt = `Generate 5-10 SEO optimized tags for a blog post with the following details. Return ONLY the tags separated by commas, no other text.
+      
+      Title: ${title}
+      Summary: ${summary}
+      Content: ${content.replace(/<[^>]*>/g, "").substring(0, 1000)}...`; // Strip HTML and limit length
+
+      const response = await axios.post(
+        `${API_BASE_URL}/ai/generate`,
+        { prompt },
+        { headers }
+      );
+
+      const generatedTags = response.data.text.trim();
+      setTags(generatedTags);
+      toast.success("Tags generated successfully");
+    } catch (error) {
+      console.error("Tag Generation error:", error);
+      toast.error("Failed to generate tags");
+    } finally {
+      setIsTagLoading(false);
+    }
+  };
+
   return (
     <div className="p-8 min-h-screen dark:text-white">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">{id ? "Edit Blog" : "Create Blog"}</h1>
+        <h1 className="text-3xl font-bold">
+          {id ? "Edit Blog" : "Create Blog"}
+        </h1>
         <button
           type="button"
           onClick={() => setShowAiModal(true)}
@@ -97,9 +148,14 @@ const BlogEditor = () => {
         </button>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded shadow space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white dark:bg-gray-800 p-6 rounded shadow space-y-6"
+      >
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Title</label>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+            Title
+          </label>
           <input
             type="text"
             value={title}
@@ -109,7 +165,9 @@ const BlogEditor = () => {
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Summary</label>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+            Summary
+          </label>
           <textarea
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
@@ -119,7 +177,31 @@ const BlogEditor = () => {
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Date</label>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+            Tags
+          </label>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={tags}
+              onChange={(e) => setTags(e.target.value)}
+              className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              placeholder="Comma separated tags (e.g., tech, coding, web)"
+            />
+            <button
+              type="button"
+              onClick={handleAutoGenerateTags}
+              disabled={isTagLoading || !content}
+              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50 whitespace-nowrap"
+            >
+              {isTagLoading ? "Generating..." : "Auto Generate"}
+            </button>
+          </div>
+        </div>
+        <div>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+            Date
+          </label>
           <input
             type="date"
             value={date}
@@ -129,9 +211,16 @@ const BlogEditor = () => {
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">Content</label>
+          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+            Content
+          </label>
           <div className="bg-white dark:text-black">
-            <ReactQuill theme="snow" value={content} onChange={setContent} className="h-64 mb-12" />
+            <ReactQuill
+              theme="snow"
+              value={content}
+              onChange={setContent}
+              className="h-64 mb-12"
+            />
           </div>
         </div>
         <div className="flex justify-end pt-8">
@@ -156,7 +245,9 @@ const BlogEditor = () => {
       {showAiModal && (
         <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4 dark:text-white">AI Writing Assistant</h3>
+            <h3 className="text-xl font-bold mb-4 dark:text-white">
+              AI Writing Assistant
+            </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
               Describe what you want the AI to write about.
             </p>
