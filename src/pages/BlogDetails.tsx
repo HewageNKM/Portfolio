@@ -84,7 +84,7 @@ const BlogDetails = () => {
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex-grow md:px-40 md:py-20 p-8 max-w-4xl mx-auto">
+        <div className="flex-grow md:px-16 md:py-28 p-8 space-y-10">
           <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold mb-4">
             {blog.title}
           </h1>
