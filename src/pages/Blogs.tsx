@@ -4,7 +4,7 @@ import SEO from "../components/SEO";
 
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../AppSettings";
 
 interface BlogItem {
   id: string;

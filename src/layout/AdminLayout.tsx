@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../FirebaseClient";
 import {
   LayoutDashboard,
   FileText,

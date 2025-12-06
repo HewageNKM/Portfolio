@@ -3,9 +3,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { auth } from "../../firebase";
+import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../AppSettings";
 
 const BlogEditor = () => {
   const { id } = useParams();

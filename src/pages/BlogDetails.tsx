@@ -4,7 +4,7 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import "react-quill/dist/quill.snow.css";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../AppSettings";
 
 interface Blog {
   id: string;

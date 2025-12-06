@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";
 import TechCard from "../components/TechCard";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../AppSettings";
 
 interface TechStack {
   id: string;

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { auth } from "../../firebase";
+import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL } from "../../AppSettings";
 import { Pencil, Trash2 } from "lucide-react";
 
 interface Project {
