@@ -189,7 +189,6 @@ app.delete("/v1/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-// --- AI ENDPOINT ---
 
 app.post("/v1/ai/generate", validateFirebaseIdToken, async (req, res) => {
   try {
@@ -313,8 +312,6 @@ app.get("/v1/analytics", async (req, res) => {
 });
 
 
-// --- EDUCATION ENDPOINTS ---
-
 app.get("/v1/educations", async (req, res) => {
   try {
     const snapshot = await db.collection("educations").orderBy("startDate", "desc").get();
@@ -373,8 +370,6 @@ app.delete("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
     res.status(500).json({ error: (error as Error).message });
   }
 });
-
-// --- ACHIEVEMENTS ENDPOINTS ---
 
 app.get("/v1/achievements", async (req, res) => {
   try {
