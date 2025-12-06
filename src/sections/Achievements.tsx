@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import AchievementCard from "../components/AchievementCard";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../AppSettings";
 
 interface Achievement {
   id: string;

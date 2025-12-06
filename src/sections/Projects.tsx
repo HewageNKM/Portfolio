@@ -4,7 +4,7 @@ import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion } from "framer-motion";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL } from "../AppSettings";
 
 // Define an interface for the project structure
 interface Project {

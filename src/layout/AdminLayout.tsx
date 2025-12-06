@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../FirebaseClient";
 import {
   LayoutDashboard,
   FileText,
@@ -16,7 +16,7 @@ import {
 import toast from "react-hot-toast";
 
 const AdminLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -48,16 +48,16 @@ const AdminLayout = () => {
                     dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
     >
       {/* Mobile Sidebar Overlay */}
-      {!isSidebarOpen && (
+      {isSidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/50 md:hidden"
-          onClick={() => setIsSidebarOpen(true)}
+          onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static inset-y-0 left-0 z-30 w-64 bg-white/50 dark:bg-neutral-800/50 backdrop-blur-xl border-r border-neutral-200 dark:border-neutral-800 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed md:static inset-y-0 left-0 z-30 w-64 bg-white dark:bg-neutral-800/50 backdrop-blur-xl border-r border-neutral-200 dark:border-neutral-800 transform transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } md:translate-x-0 flex flex-col`}
       >

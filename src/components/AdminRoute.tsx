@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../FirebaseClient";
 
 import AdminLayout from "../layout/AdminLayout";
 
@@ -21,10 +21,18 @@ const AdminRoute = () => {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
   }
 
-  return isAuthenticated ? <AdminLayout /> : <Navigate to="/admin/login" replace />;
+  return isAuthenticated ? (
+    <AdminLayout />
+  ) : (
+    <Navigate to="/admin/login" replace />
+  );
 };
 
 export default AdminRoute;
