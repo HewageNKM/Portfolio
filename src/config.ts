@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://asia-northeast1-portfolio-cd280.cloudfunctions.net/api/v1";
+export const API_BASE_URL = "https://api-yamaf4rm2q-an.a.run.app/api/v1";
