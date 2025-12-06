@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
+import "react-quill/dist/quill.snow.css";
 import { API_BASE_URL } from "../config";
 
 interface Blog {
@@ -105,7 +106,7 @@ const BlogDetails = () => {
             </div>
           )}
           <div
-            className="prose dark:prose-invert max-w-none"
+            className="prose dark:prose-invert max-w-none ql-editor ql-snow"
             dangerouslySetInnerHTML={{ __html: blog.content }}
           />
         </div>

@@ -1,6 +1,17 @@
 import { motion } from "framer-motion";
-import { educations } from "../assets/contants";
+import { useEffect, useState } from "react";
 import EduCard from "../components/EduCard";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
+
+interface EducationItem {
+  id: string;
+  degree: string;
+  institution: string;
+  duration: string;
+  details: string[];
+  gpa?: string;
+}
 
 const containerVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -27,12 +38,38 @@ const itemVariants = {
 };
 
 export default function Education() {
+  const [educations, setEducations] = useState<EducationItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEducations = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/educations`);
+        // Transform data to match EduCard props
+        const transformedData = response.data.map((item: any) => ({
+          id: item.id,
+          degree: item.degree,
+          institution: item.institution,
+          duration: `${item.startDate} - ${item.endDate}`,
+          details: item.description ? item.description.split("\n") : [],
+          gpa: item.gpa,
+        }));
+        setEducations(transformedData);
+      } catch (error) {
+        console.error("Error fetching educations:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchEducations();
+  }, []);
+
   return (
     <motion.section
       id="educations"
       className="w-full flex flex-col p-3 gap-8 mt-10"
       initial="hidden"
-      animate="visible"
+      whileInView="visible" // Changed from animate to whileInView for scroll trigger
       variants={containerVariants}
       viewport={{ once: true }}
     >
@@ -61,29 +98,39 @@ export default function Education() {
       </motion.div>
 
       {/* Education Grid */}
-      <motion.ul
-        className="flex flex-col gap-8 mt-4"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {educations.map((edu, index) => (
-          <motion.li
-            key={index}
-            variants={itemVariants}
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg"
-          >
-            <EduCard
-              degree={edu.degree}
-              institution={edu.institution}
-              duration={edu.duration}
-              description={edu.details}
-              gpa={edu.gpa}
-            />
-          </motion.li>
-        ))}
-      </motion.ul>
+      {isLoading ? (
+        <p className="text-center text-gray-500">Loading education...</p>
+      ) : (
+        <motion.ul
+          className="flex flex-col gap-8 mt-4"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {educations.map((edu) => (
+            <motion.li
+              key={edu.id}
+              variants={itemVariants}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg"
+            >
+              <EduCard
+                degree={edu.degree}
+                institution={edu.institution}
+                duration={edu.duration}
+                description={edu.details}
+                gpa={edu.gpa}
+              />
+            </motion.li>
+          ))}
+          {educations.length === 0 && (
+            <p className="text-center text-gray-500">
+              No education details added yet.
+            </p>
+          )}
+        </motion.ul>
+      )}
     </motion.section>
   );
 }

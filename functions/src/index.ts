@@ -4,8 +4,9 @@ import axios from "axios";
 import express from "express";
 import cors from "cors";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { BetaAnalyticsDataClient } from "@google-analytics/data";
+const analyticsDataClient = new BetaAnalyticsDataClient();
 
-// Initialize Firebase Admin SDK
 admin.initializeApp();
 const db = admin.firestore();
 
@@ -71,12 +72,19 @@ app.get("/v1/health", (_, res) => {
 
 app.get("/v1/projects", async (req, res) => {
   try {
-    const snapshot = await db.collection("projects").orderBy("createdAt", "desc").get();
+    const { featured } = req.query;
+    let query: admin.firestore.Query = db.collection("projects").orderBy("createdAt", "desc");
+
+    if (featured === "true") {
+      query = query.where("isFeatured", "==", true);
+    }
+
+    const snapshot = await query.get();
     const projects = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    res.json(projects);
+    return res.json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error);
-    res.status(500).json({ error: (error as Error).message });
+    return res.status(500).json({ error: (error as Error).message });
   }
 });
 
@@ -209,6 +217,344 @@ app.post("/v1/ai/generate", validateFirebaseIdToken, async (req, res) => {
     return res.status(500).json({ error: (error as Error).message });
   }
 });
+
+app.get("/v1/analytics", async (req, res) => {
+  try {
+    const propertyId = process.env.GA4_PROPERTY_ID;
+
+    if (!propertyId) {
+      console.warn("GA4_PROPERTY_ID not set. Returning mock data.");
+      return res.json({
+        activeUsers: 0,
+        pageViews: 0,
+        engagementTime: "0s",
+        mock: true,
+      });
+    }
+
+    // 1. Get Active Users (Realtime) - Last 30 mins
+    const [realtimeResponse] = await analyticsDataClient.runRealtimeReport({
+      property: `properties/${propertyId}`,
+      dimensions: [{ name: "minutesAgo" }],
+      metrics: [{ name: "activeUsers" }],
+    });
+
+    // Sum active users across all minutes
+    const activeUsers = realtimeResponse.rows?.reduce(
+      (sum: number, row: any) => sum + parseInt(row.metricValues?.[0]?.value || "0", 10),
+      0
+    ) || 0;
+
+
+    // 2. Get Today's Stats
+    const [todayReport] = await analyticsDataClient.runReport({
+      property: `properties/${propertyId}`,
+      dateRanges: [{ startDate: "today", endDate: "today" }],
+      metrics: [
+        { name: "screenPageViews" },
+        { name: "averageSessionDuration" },
+      ],
+    });
+
+    // 3. Get Yesterday's Stats
+    const [yesterdayReport] = await analyticsDataClient.runReport({
+      property: `properties/${propertyId}`,
+      dateRanges: [{ startDate: "yesterday", endDate: "yesterday" }],
+      metrics: [
+        { name: "screenPageViews" },
+        { name: "averageSessionDuration" },
+      ],
+    });
+
+    const parseMetric = (report: any, index: number) =>
+      report.rows && report.rows.length > 0
+        ? parseFloat(report.rows[0].metricValues[index].value || "0")
+        : 0;
+
+    const todayPageViews = parseMetric(todayReport, 0);
+    const todayEngagement = parseMetric(todayReport, 1);
+
+    const yesterdayPageViews = parseMetric(yesterdayReport, 0);
+    const yesterdayEngagement = parseMetric(yesterdayReport, 1);
+
+    // Calculate percentage changes
+    const calculateChange = (current: number, previous: number) => {
+      if (previous === 0) return current > 0 ? 100 : 0;
+      return Math.round(((current - previous) / previous) * 100);
+    };
+
+    const pageViewsChange = calculateChange(todayPageViews, yesterdayPageViews);
+    const engagementChange = calculateChange(todayEngagement, yesterdayEngagement);
+
+    // Format engagement time (seconds to m:s)
+    const formatTime = (seconds: number) => {
+      const m = Math.floor(seconds / 60);
+      const s = Math.round(seconds % 60);
+      return `${m}m ${s}s`;
+    };
+
+    return res.json({
+      activeUsers,
+      pageViews: {
+        value: todayPageViews,
+        change: pageViewsChange,
+      },
+      engagementTime: {
+        value: formatTime(todayEngagement), // sending formatted string, or send seconds if frontend wants to format
+        seconds: todayEngagement,
+        change: engagementChange,
+      },
+      mock: false,
+    });
+  } catch (error) {
+    console.error("Error fetching analytics:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+
+// --- EDUCATION ENDPOINTS ---
+
+app.get("/v1/educations", async (req, res) => {
+  try {
+    const snapshot = await db.collection("educations").orderBy("startDate", "desc").get();
+    const educations = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.json(educations);
+  } catch (error) {
+    console.error("Error fetching educations:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.get("/v1/educations/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await db.collection("educations").doc(id).get();
+    if (!doc.exists) return res.status(404).json({ error: "Education not found" });
+    return res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error("Error fetching education:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.post("/v1/educations", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const data = req.body;
+    data.createdAt = admin.firestore.FieldValue.serverTimestamp();
+    const docRef = await db.collection("educations").add(data);
+    res.status(201).json({ id: docRef.id, ...data });
+  } catch (error) {
+    console.error("Error creating education:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.put("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
+    await db.collection("educations").doc(id).update(data);
+    res.json({ id, ...data });
+  } catch (error) {
+    console.error("Error updating education:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.delete("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.collection("educations").doc(id).delete();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting education:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+// --- ACHIEVEMENTS ENDPOINTS ---
+
+app.get("/v1/achievements", async (req, res) => {
+  try {
+    const snapshot = await db.collection("achievements").orderBy("date", "desc").get();
+    const achievements = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.json(achievements);
+  } catch (error) {
+    console.error("Error fetching achievements:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.get("/v1/achievements/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await db.collection("achievements").doc(id).get();
+    if (!doc.exists) return res.status(404).json({ error: "Achievement not found" });
+    return res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error("Error fetching achievement:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.post("/v1/achievements", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const data = req.body;
+    data.createdAt = admin.firestore.FieldValue.serverTimestamp();
+    const docRef = await db.collection("achievements").add(data);
+    res.status(201).json({ id: docRef.id, ...data });
+  } catch (error) {
+    console.error("Error creating achievement:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.put("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
+    await db.collection("achievements").doc(id).update(data);
+    res.json({ id, ...data });
+  } catch (error) {
+    console.error("Error updating achievement:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.delete("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.collection("achievements").doc(id).delete();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting achievement:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+
+// --- TECH STACKS ENDPOINTS ---
+
+app.get("/v1/tech-stacks", async (req, res) => {
+  try {
+    const snapshot = await db.collection("techStacks").orderBy("name", "asc").get();
+    const stacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.json(stacks);
+  } catch (error) {
+    console.error("Error fetching tech stacks:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.get("/v1/tech-stacks/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await db.collection("techStacks").doc(id).get();
+    if (!doc.exists) return res.status(404).json({ error: "Tech stack not found" });
+    return res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error("Error fetching tech stack:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.post("/v1/tech-stacks", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const data = req.body;
+    const docRef = await db.collection("techStacks").add(data);
+    res.status(201).json({ id: docRef.id, ...data });
+  } catch (error) {
+    console.error("Error creating tech stack:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.put("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    await db.collection("techStacks").doc(id).update(data);
+    res.json({ id, ...data });
+  } catch (error) {
+    console.error("Error updating tech stack:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.delete("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.collection("techStacks").doc(id).delete();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting tech stack:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+
+app.get("/v1/experiences", async (req, res) => {
+  try {
+    const snapshot = await db.collection("experiences").orderBy("createdAt", "desc").get();
+    const experiences = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    res.json(experiences);
+  } catch (error) {
+    console.error("Error fetching experiences:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.get("/v1/experiences/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const doc = await db.collection("experiences").doc(id).get();
+    if (!doc.exists) return res.status(404).json({ error: "Experience not found" });
+    return res.json({ id: doc.id, ...doc.data() });
+  } catch (error) {
+    console.error("Error fetching experience:", error);
+    return res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.post("/v1/experiences", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const data = req.body;
+    data.createdAt = admin.firestore.FieldValue.serverTimestamp();
+    const docRef = await db.collection("experiences").add(data);
+    res.status(201).json({ id: docRef.id, ...data });
+  } catch (error) {
+    console.error("Error creating experience:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.put("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
+    await db.collection("experiences").doc(id).update(data);
+    res.json({ id, ...data });
+  } catch (error) {
+    console.error("Error updating experience:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
+app.delete("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await db.collection("experiences").doc(id).delete();
+    res.status(204).send();
+  } catch (error) {
+    console.error("Error deleting experience:", error);
+    res.status(500).json({ error: (error as Error).message });
+  }
+});
+
 
 // --- MAILS ENDPOINT ---
 

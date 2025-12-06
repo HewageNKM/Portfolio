@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion } from "framer-motion";
-import { initialProjectsData } from "../assets/contants";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 // Define an interface for the project structure
 interface Project {
@@ -13,6 +14,7 @@ interface Project {
   githubUrl: string;
   liveUrl?: string;
   technologies?: string[]; // Optional
+  isFeatured?: boolean;
 }
 
 // Animation variants for individual project cards and other items
@@ -20,8 +22,8 @@ const itemVariants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 }, // Initially hidden with slight upward movement and scale down
   visible: {
     opacity: 1,
-    y: 0,  // Move to the original position
-    scale: 1,  // Scale to original size
+    y: 0, // Move to the original position
+    scale: 1, // Scale to original size
     transition: {
       type: "spring", // Use spring for smooth motion
       stiffness: 150, // Stiffness controls the spring effect strength
@@ -31,7 +33,24 @@ const itemVariants = {
 };
 
 export default function Projects() {
-  const [projects] = useState<Project[]>(initialProjectsData.slice(0, 3)); // Use featured projects
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeaturedProjects = async () => {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/projects?featured=true`
+        );
+        setProjects(response.data);
+      } catch (error) {
+        console.error("Error fetching featured projects:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchFeaturedProjects();
+  }, []);
 
   return (
     <motion.section
@@ -52,14 +71,23 @@ export default function Projects() {
       >
         My Works.
       </motion.h2>
-      <motion.p className="md:text-lg text-sm dark:text-white text-black" variants={itemVariants}>Here are some of the recent projects I've worked on.</motion.p>
+      <motion.p
+        className="md:text-lg text-sm dark:text-white text-black"
+        variants={itemVariants}
+      >
+        Here are some of the recent projects I've worked on.
+      </motion.p>
 
       {/* Grid for Project Cards */}
-      {projects.length > 0 ? (
+      {isLoading ? (
+        <p className="text-center dark:text-white text-black">
+          Loading projects...
+        </p>
+      ) : projects.length > 0 ? (
         <motion.ul
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
           variants={{
-            visible: { transition: { staggerChildren: 0.1 } }
+            visible: { transition: { staggerChildren: 0.1 } },
           }}
           initial="hidden"
           whileInView="visible"
@@ -72,8 +100,10 @@ export default function Projects() {
               className="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between border border-gray-200 dark:border-gray-700"
             >
               <div>
-                <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">{project.title}</h3>
-                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed">
+                <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
+                  {project.title}
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed line-clamp-3">
                   {project.description}
                 </p>
                 {/* Optional: Display technologies
