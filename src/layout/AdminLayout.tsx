@@ -16,7 +16,7 @@ import {
 import toast from "react-hot-toast";
 
 const AdminLayout = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -48,10 +48,10 @@ const AdminLayout = () => {
                     dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
     >
       {/* Mobile Sidebar Overlay */}
-      {!isSidebarOpen && (
+      {isSidebarOpen && (
         <div
           className="fixed inset-0 z-20 bg-black/50 md:hidden"
-          onClick={() => setIsSidebarOpen(true)}
+          onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
