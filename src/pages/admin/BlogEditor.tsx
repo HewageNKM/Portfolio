@@ -15,6 +15,7 @@ const BlogEditor = () => {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
   const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [isFeatured, setIsFeatured] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isTagLoading, setIsTagLoading] = useState(false);
 
@@ -29,6 +30,7 @@ const BlogEditor = () => {
           setContent(blog.content || "");
           setTags(blog.tags ? blog.tags.join(", ") : "");
           setDate(blog.date.split("T")[0]);
+          setIsFeatured(blog.isFeatured || false);
         } catch (error) {
           console.error("Error fetching blog:", error);
           toast.error("Failed to load blog");
@@ -54,6 +56,7 @@ const BlogEditor = () => {
         content,
         tags: tagsArray,
         date: new Date(date).toISOString(),
+        isFeatured,
       };
 
       if (id) {
@@ -134,7 +137,7 @@ const BlogEditor = () => {
   };
 
   return (
-    <div className="p-8 min-h-screen dark:text-white">
+    <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">
           {id ? "Edit Blog" : "Create Blog"}
@@ -142,7 +145,7 @@ const BlogEditor = () => {
         <button
           type="button"
           onClick={() => setShowAiModal(true)}
-          className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 flex items-center gap-2"
+          className="bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 px-4 py-2 rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-300 flex items-center gap-2 transition-colors"
         >
           <span>✨ AI Assist</span>
         </button>
@@ -150,34 +153,34 @@ const BlogEditor = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white dark:bg-gray-800 p-6 rounded shadow space-y-6"
+        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Title
           </label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Summary
           </label>
           <textarea
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
             rows={3}
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Tags
           </label>
           <div className="flex gap-2">
@@ -185,36 +188,36 @@ const BlogEditor = () => {
               type="text"
               value={tags}
               onChange={(e) => setTags(e.target.value)}
-              className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+              className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
               placeholder="Comma separated tags (e.g., tech, coding, web)"
             />
             <button
               type="button"
               onClick={handleAutoGenerateTags}
               disabled={isTagLoading || !content}
-              className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:opacity-50 whitespace-nowrap"
+              className="bg-neutral-800 dark:bg-neutral-200 text-white dark:text-neutral-900 px-4 py-2 rounded-lg hover:bg-neutral-700 dark:hover:bg-neutral-300 disabled:opacity-50 whitespace-nowrap transition-colors"
             >
               {isTagLoading ? "Generating..." : "Auto Generate"}
             </button>
           </div>
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Date
           </label>
           <input
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="w-full p-2 border rounded dark:bg-gray-700 dark:text-white"
+            className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
             required
           />
         </div>
         <div>
-          <label className="block text-gray-700 dark:text-gray-300 mb-2">
+          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Content
           </label>
-          <div className="bg-white dark:text-black">
+          <div className="bg-white dark:text-black rounded-lg overflow-hidden">
             <ReactQuill
               theme="snow"
               value={content}
@@ -227,14 +230,14 @@ const BlogEditor = () => {
           <button
             type="button"
             onClick={() => navigate("/admin/blogs")}
-            className="mr-4 px-4 py-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+            className="mr-4 px-4 py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-200 font-medium transition-colors"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
+            className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-6 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 font-medium transition-colors"
           >
             {isLoading ? "Saving..." : "Save"}
           </button>
@@ -243,31 +246,31 @@ const BlogEditor = () => {
 
       {/* AI Modal */}
       {showAiModal && (
-        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md">
-            <h3 className="text-xl font-bold mb-4 dark:text-white">
+        <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 backdrop-blur-sm">
+          <div className="bg-white dark:bg-neutral-800 p-6 rounded-xl shadow-xl w-full max-w-md border border-neutral-200 dark:border-neutral-700">
+            <h3 className="text-xl font-bold mb-4 text-neutral-900 dark:text-white">
               AI Writing Assistant
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-4">
               Describe what you want the AI to write about.
             </p>
             <textarea
               value={aiPrompt}
               onChange={(e) => setAiPrompt(e.target.value)}
-              className="w-full p-3 border rounded mb-4 dark:bg-gray-700 dark:text-white h-32"
+              className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg mb-4 dark:bg-neutral-700 dark:text-white h-32 focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
               placeholder="e.g., Write an introduction about the importance of web accessibility..."
             />
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowAiModal(false)}
-                className="px-4 py-2 text-gray-600 hover:text-gray-800 dark:text-gray-400"
+                className="px-4 py-2 text-neutral-600 hover:text-neutral-800 dark:text-neutral-400 font-medium transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAiGenerate}
                 disabled={isAiLoading || !aiPrompt.trim()}
-                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:opacity-50 flex items-center gap-2"
+                className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2 font-medium transition-colors"
               >
                 {isAiLoading ? "Generating..." : "Generate"}
               </button>

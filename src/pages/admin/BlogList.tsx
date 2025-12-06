@@ -11,6 +11,7 @@ interface Blog {
 }
 
 import { API_BASE_URL } from "../../config";
+import { Pencil, Trash2 } from "lucide-react";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -48,12 +49,12 @@ const BlogList = () => {
   };
 
   return (
-    <div className="p-8 min-h-screen dark:text-white">
+    <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Manage Blogs</h1>
         <Link
           to="/admin/blogs/new"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+          className="bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
         >
           Create New Blog
         </Link>
@@ -61,41 +62,48 @@ const BlogList = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="bg-white dark:bg-gray-800 rounded shadow overflow-hidden">
-          <table className="min-w-full">
-            <thead className="bg-gray-50 dark:bg-gray-700">
+        <div className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+          <table className="min-w-full text-left">
+            <thead className="bg-neutral-50 dark:bg-neutral-800/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-4 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                   Title
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-4 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                   Date
                 </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                <th className="px-6 py-4 text-right text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+            <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700">
               {blogs.map((blog) => (
-                <tr key={blog.id}>
-                  <td className="px-6 py-4 whitespace-nowrap">{blog.title}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                <tr
+                  key={blog.id}
+                  className="hover:bg-neutral-50/50 dark:hover:bg-neutral-700/50 transition-colors"
+                >
+                  <td className="px-6 py-4 whitespace-nowrap font-medium">
+                    {blog.title}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-neutral-600 dark:text-neutral-400">
                     {new Date(blog.date).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <Link
-                      to={`/admin/blogs/edit/${blog.id}`}
-                      className="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300 mr-4"
-                    >
-                      Edit
-                    </Link>
-                    <button
-                      onClick={() => handleDelete(blog.id)}
-                      className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
-                    >
-                      Delete
-                    </button>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                    <div className="flex items-center justify-end gap-2">
+                      <Link
+                        to={`/admin/blogs/edit/${blog.id}`}
+                        className="text-neutral-900 dark:text-white hover:underline mr-4 font-medium"
+                      >
+                        <Pencil size={18} />
+                      </Link>
+                      <button
+                        onClick={() => handleDelete(blog.id)}
+                        className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
