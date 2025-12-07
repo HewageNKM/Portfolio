@@ -11,7 +11,7 @@ interface Blog {
 }
 
 import { API_BASE_URL } from "../../AppSettings";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -54,9 +54,9 @@ const BlogList = () => {
         <h1 className="text-3xl font-bold">Manage Blogs</h1>
         <Link
           to="/admin/blogs/new"
-          className="bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+          className="bg-neutral-900 dark:bg-white flex flex-row gap-1 items-center dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
         >
-          Create New Blog
+          <PlusIcon size={18} /> New
         </Link>
       </div>
       {isLoading ? (

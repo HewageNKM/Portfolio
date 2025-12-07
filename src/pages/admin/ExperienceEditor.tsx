@@ -5,6 +5,8 @@ import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
 import { Save, ArrowLeft } from "lucide-react";
+import AiAssistButton from "../../components/admin/AiAssistButton";
+import AiGenerationModal from "../../components/admin/AiGenerationModal";
 
 const ExperienceEditor = () => {
   const { id } = useParams();
@@ -16,6 +18,29 @@ const ExperienceEditor = () => {
     description: "", // Stored as a string, will be split when used/saved
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  // AI State
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+
+  const handleAiClick = () => {
+    setAiPrompt(
+      `Write a professional job description with bullet points for a "${formData.role}" position at "${formData.company}". Focus on key achievements and responsibilities. Return ONLY a list of bullet points starting with "- ".`
+    );
+    setShowAiModal(true);
+  };
+
+  const handleAiGenerated = (text: string) => {
+    // If text doesn't start with dashes, try to format it or just append
+    const formattedText = text;
+    setFormData((prev) => ({
+      ...prev,
+      description: prev.description
+        ? prev.description + "\n" + formattedText
+        : formattedText,
+    }));
+    toast.success("Description generated");
+  };
 
   useEffect(() => {
     if (id) {
@@ -141,9 +166,16 @@ const ExperienceEditor = () => {
           </div>
 
           <div className="col-span-2">
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-              Description (Bullet Points)
-            </label>
+            <div className="flex justify-between items-center mb-2">
+              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
+                Description (Bullet Points)
+              </label>
+              <AiAssistButton
+                onClick={handleAiClick}
+                label="Generate Bullets"
+                disabled={!formData.role || !formData.company}
+              />
+            </div>
             <p className="text-xs text-neutral-500 mb-2">
               Enter each bullet point on a new line.
             </p>
@@ -170,6 +202,14 @@ const ExperienceEditor = () => {
           </button>
         </div>
       </form>
+
+      <AiGenerationModal
+        isOpen={showAiModal}
+        onClose={() => setShowAiModal(false)}
+        onGenerate={handleAiGenerated}
+        initialPrompt={aiPrompt}
+        title="Generate Experience Description"
+      />
     </div>
   );
 };
