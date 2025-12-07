@@ -39,6 +39,7 @@ export const Blogs = () => {
         description="Explore a collection of insightful articles and blog posts by NKM Hewage on technology, software development, and more."
         keywords="blog, articles, technology, software development, coding, web development, NKM Hewage"
         url="https://hewagenkm.com/blogs"
+        ogImage="https://hewagenkm.com/og-blogs.png"
         schema={[
           {
             "@context": "https://schema.org",
@@ -48,6 +49,7 @@ export const Blogs = () => {
               "Explore articles and insights on software development, technology, and personal projects from Nadun Malwenna.",
             url: "https://hewagenkm.com/blogs",
             headline: "Blogs by Nadun Malwenna",
+            primaryImageOfPage: "https://hewagenkm.com/og-blogs.png",
             author: {
               "@type": "Person",
               name: "Nadun Malwenna",

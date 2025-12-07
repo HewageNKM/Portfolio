@@ -22,13 +22,11 @@ const SEO = ({
     "Explore the portfolio of Nadun Malwenna, a passionate software engineer specializing in full-stack development, mobile applications, and creating innovative web solutions.";
   const defaultKeywords =
     "Nadun Malwenna, portfolio, software engineer, full-stack developer, mobile developer, web development, React, Node.js, JavaScript, TypeScript, personal projects, programming, coding";
-  const defaultOgImage = "https://hewagenkm.com/og-image.png";
-  const defaultTwitterImage = "https://hewagenkm.com/og-image.png";
+  const defaultOgImage = "https://hewagenkm.com/og-home.png";
+  const defaultTwitterImage = "https://hewagenkm.com/og-home.png";
   const defaultUrl = "https://hewagenkm.com";
 
-  const formattedTitle = customTitle
-    ? `${customTitle}`
-    : defaultTitle;
+  const formattedTitle = customTitle ? `${customTitle}` : defaultTitle;
   const description = customDescription || defaultDescription;
   const keywords = customKeywords || defaultKeywords;
   const ogImage = customOgImage || defaultOgImage;
@@ -62,6 +60,8 @@ const SEO = ({
       <meta property="og:title" content={formattedTitle} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />

@@ -93,28 +93,27 @@ export default function Stack() {
         </motion.div>
 
         {/* Category Filter Tabs */}
-        <motion.div
-          className="w-full overflow-x-auto scrollbar-hide px-2 md:px-0"
-          variants={itemVariants}
-        >
-          <div className="flex gap-2 bg-gray-200 dark:bg-gray-800 rounded-full p-2 w-max mx-auto shadow-inner">
-            {categories.map((cat) => (
-              <motion.button
-                key={cat.value}
-                onClick={() => setSelectedCategory(cat.value)}
-                className={`flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm md:text-base whitespace-nowrap transition-all
+        <motion.div className="w-full px-2 md:px-0" variants={itemVariants}>
+          <div className="bg-gray-200 dark:bg-gray-800 rounded-full p-2 shadow-inner w-full max-w-max mx-auto">
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+              {categories.map((cat) => (
+                <motion.button
+                  key={cat.value}
+                  onClick={() => setSelectedCategory(cat.value)}
+                  className={`flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm md:text-base whitespace-nowrap transition-all
             ${
               selectedCategory === cat.value
                 ? "bg-[#111] dark:bg-gray-500 text-white shadow-lg"
                 : "text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"
             }
           `}
-                whileTap={{ scale: 0.95 }}
-              >
-                <cat.icon className="w-4 h-4" />
-                {cat.label}
-              </motion.button>
-            ))}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <cat.icon className="w-4 h-4" />
+                  {cat.label}
+                </motion.button>
+              ))}
+            </div>
           </div>
         </motion.div>
 
@@ -145,7 +144,7 @@ export default function Stack() {
               </motion.li>
             ))}
             {filteredStacks.length === 0 && (
-              <p className="text-xl text-gray-500 dark:text-gray-400 italic mt-8 p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <p className="text-xl text-gray-500 dark:text-gray-400 italic mt-8 p-4 rounded-lg">
                 No stacks found for this category!
               </p>
             )}

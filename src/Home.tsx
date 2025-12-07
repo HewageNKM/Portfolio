@@ -15,8 +15,8 @@ const Home = () => {
         title="Nadun Malwenna - Portfolio"
         description="Explore my work as a software engineer specializing in full-stack development and mobile apps."
         keywords="software engineer, full-stack developer, mobile apps, cloud solutions, Nadun Malwenna"
+        ogImage="https://hewagenkm.com/og-home.png"
         schema={[
-          // ✅ WebPage
           {
             "@context": "https://schema.org",
             "@type": "WebPage",
@@ -25,6 +25,7 @@ const Home = () => {
             headline: "Nadun Malwenna - Software Engineer",
             description:
               "Portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile apps, and cloud solutions.",
+            primaryImageOfPage: "https://hewagenkm.com/og-home.png",
             author: {
               "@type": "Person",
               name: "Nadun Malwenna",
@@ -32,13 +33,14 @@ const Home = () => {
             },
           },
 
-          // ✅ Person (Rich card)
+          // Person Schema
           {
             "@context": "https://schema.org",
             "@type": "Person",
             name: "Nadun Malwenna",
             url: "https://hewagenkm.com",
             jobTitle: "Software Engineer",
+            image: "https://hewagenkm.com/og-home.png",
             sameAs: [
               "https://github.com/HewageNKM",
               "https://www.linkedin.com/in/nadun-malwenna",
@@ -55,63 +57,61 @@ const Home = () => {
             ],
           },
 
-          // ✅ Breadcrumbs
           {
             "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
+            "@type": "WebSite",
+            name: "Nadun Malwenna Portfolio",
+            url: "https://hewagenkm.com",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://hewagenkm.com/search?q={query}",
+              "query-input": "required name=query",
+            },
+          },
+
+          {
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Nadun Malwenna",
+            url: "https://hewagenkm.com",
+            logo: "https://hewagenkm.com/og-home.png",
+            sameAs: [
+              "https://github.com/HewageNKM",
+              "https://www.linkedin.com/in/nadun-malwenna",
+              "https://twitter.com/HewageNKM",
+            ],
+          },
+
+          {
+            "@context": "https://schema.org",
+            "@type": "OfferCatalog",
+            name: "Software Engineering Services",
+            url: "https://hewagenkm.com#services",
             itemListElement: [
               {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://hewagenkm.com",
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: "Full-stack Development",
+                },
               },
               {
-                "@type": "ListItem",
-                position: 2,
-                name: "Services",
-                item: "https://hewagenkm.com#services",
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: "Mobile App Development",
+                },
               },
               {
-                "@type": "ListItem",
-                position: 3,
-                name: "Experience",
-                item: "https://hewagenkm.com#experiences",
-              },
-              {
-                "@type": "ListItem",
-                position: 4,
-                name: "Education",
-                item: "https://hewagenkm.com#educations",
-              },
-              {
-                "@type": "ListItem",
-                position: 5,
-                name: "Achievements",
-                item: "https://hewagenkm.com#achievements",
-              },
-              {
-                "@type": "ListItem",
-                position: 6,
-                name: "Skills",
-                item: "https://hewagenkm.com#stack",
-              },
-              {
-                "@type": "ListItem",
-                position: 7,
-                name: "Projects",
-                item: "https://hewagenkm.com#works",
-              },
-              {
-                "@type": "ListItem",
-                position: 8,
-                name: "Contact",
-                item: "https://hewagenkm.com/contact",
+                "@type": "Offer",
+                itemOffered: {
+                  "@type": "Service",
+                  name: "Cloud Solutions",
+                },
               },
             ],
           },
 
-          // ✅ ItemList / Carousel without images
           {
             "@context": "https://schema.org",
             "@type": "ItemList",
@@ -119,65 +119,10 @@ const Home = () => {
               {
                 "@type": "ListItem",
                 position: 1,
-                url: "https://hewagenkm.com#services",
-                name: "Services",
+                url: "https://hewagenkm.com",
+                name: "Home",
                 description:
-                  "Full-stack development, mobile app development, and cloud solutions.",
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                url: "https://hewagenkm.com/projects",
-                name: "Projects",
-                description:
-                  "Showcase of full-stack projects, mobile apps, and cloud solutions.",
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                url: "https://hewagenkm.com/blogs",
-                name: "Blogs",
-                description:
-                  "Technical blogs and articles about software development.",
-              },
-              {
-                "@type": "ListItem",
-                position: 4,
-                url: "https://hewagenkm.com#educations",
-                name: "Education",
-                description: "Education background of Nadun Malwenna.",
-              },
-              {
-                "@type": "ListItem",
-                position: 5,
-                url: "https://hewagenkm.com#experiences",
-                name: "Experience",
-                description:
-                  "Work history, roles, and responsibilities held by Nadun Malwenna.",
-              },
-              {
-                "@type": "ListItem",
-                position: 6,
-                url: "https://hewagenkm.com#achievements",
-                name: "Achievements",
-                description:
-                  "Awards and recognitions earned by Nadun Malwenna.",
-              },
-              {
-                "@type": "ListItem",
-                position: 7,
-                url: "https://hewagenkm.com#stack",
-                name: "Skills",
-                description:
-                  "Technical skills including programming languages, frameworks, and tools.",
-              },
-              {
-                "@type": "ListItem",
-                position: 8,
-                url: "https://hewagenkm.com/contact",
-                name: "Contact",
-                description:
-                  "Get in touch with Nadun Malwenna for collaboration or inquiries.",
+                  "Home page of Nadun Malwenna, a software engineer specializing in full-stack development, mobile apps, and cloud solutions.",
               },
             ],
           },
