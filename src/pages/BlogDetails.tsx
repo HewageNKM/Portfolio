@@ -61,6 +61,10 @@ const BlogDetails = () => {
         title={`${blog.title} | NKM Hewage`}
         description={blog.summary}
         url={`https://hewagenkm.com/blogs/${blog.id}`}
+        ogImage={
+          (blog.content.match(/<img[^>]+src="([^">]+)"/) || [])[1] ||
+          "https://hewagenkm.com/og-blogs.png"
+        }
         schema={[
           {
             "@context": "https://schema.org",
@@ -73,6 +77,9 @@ const BlogDetails = () => {
               name: "Nadun Malwenna",
             },
             description: blog.summary,
+            image:
+              (blog.content.match(/<img[^>]+src="([^">]+)"/) || [])[1] ||
+              "https://hewagenkm.com/og-blogs.png",
             mainEntityOfPage: {
               "@type": "WebPage",
               "@id": `https://hewagenkm.com/blogs/${blog.id}`,

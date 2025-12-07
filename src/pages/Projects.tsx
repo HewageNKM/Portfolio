@@ -66,7 +66,7 @@ export const Projects = () => {
         title="Projects"
         description="Discover a showcase of projects by Nadun Malwenna, highlighting skills in web development, full-stack engineering, and modern technologies."
         url="https://hewagenkm.com/projects"
-        ogImage="https://hewagenkm.com/og-image.png"
+        ogImage="https://hewagenkm.com/og-projects.png"
         schema={[
           {
             "@context": "https://schema.org",
@@ -76,6 +76,7 @@ export const Projects = () => {
             description:
               "Portfolio projects by Nadun Malwenna, showcasing skills in full-stack development, web apps, mobile apps, and open-source contributions.",
             url: "https://hewagenkm.com/projects",
+            primaryImageOfPage: "https://hewagenkm.com/og-projects.png",
           },
           ...projects.map((p) => ({
             "@context": "https://schema.org",
@@ -85,6 +86,7 @@ export const Projects = () => {
             applicationCategory: "WebApplication",
             url: p.liveUrl || p.githubUrl,
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+            image: "https://hewagenkm.com/og-projects.png",
           })),
         ]}
       />

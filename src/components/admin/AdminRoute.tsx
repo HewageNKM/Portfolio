@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../FirebaseClient";
+import { auth } from "../../FirebaseClient";
 
-import AdminLayout from "../layout/AdminLayout";
+import AdminLayout from "../../layout/AdminLayout";
 
 const AdminRoute = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
