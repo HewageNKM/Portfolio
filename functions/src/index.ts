@@ -12,7 +12,7 @@ const db = admin.firestore();
 
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
-
+console.log(`Attempting to connect to Project: ${admin.app().name}, DB: ${admin.app().database.name}`);
 const app = express();
 app.use(express.json());
 
@@ -52,7 +52,6 @@ const validateFirebaseIdToken = async (req: express.Request, res: express.Respon
 
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-    // console.log("ID Token correctly decoded", decodedIdToken);
     (req as any).user = decodedIdToken;
     next();
     return;
@@ -68,9 +67,8 @@ app.get("/health", (_, res) => {
   res.json({ message: "Server is Running Healthy!" });
 });
 
-// --- PROJECTS ENDPOINTS ---
 
-app.get("/projects", async (req, res) => {
+app.get("/v1/projects", async (req, res) => {
   try {
     const { featured } = req.query;
     let query: admin.firestore.Query = db.collection("projects").orderBy("createdAt", "desc");
@@ -88,7 +86,7 @@ app.get("/projects", async (req, res) => {
   }
 });
 
-app.post("/projects", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/projects", validateFirebaseIdToken, async (req, res) => {
   try {
     const project = req.body;
     project.createdAt = admin.firestore.FieldValue.serverTimestamp();
@@ -100,7 +98,7 @@ app.post("/projects", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/projects/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/projects/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const project = req.body;
@@ -113,7 +111,7 @@ app.put("/projects/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/projects/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/projects/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("projects").doc(id).delete();
@@ -126,7 +124,7 @@ app.delete("/projects/:id", validateFirebaseIdToken, async (req, res) => {
 
 // --- BLOGS ENDPOINTS ---
 
-app.get("/blogs", async (req, res) => {
+app.get("/v1/blogs", async (req, res) => {
   try {
     const snapshot = await db.collection("blogs").orderBy("date", "desc").get();
     const blogs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -137,7 +135,7 @@ app.get("/blogs", async (req, res) => {
   }
 });
 
-app.get("/blogs/:id", async (req, res) => {
+app.get("/v1/blogs/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("blogs").doc(id).get();
@@ -151,7 +149,7 @@ app.get("/blogs/:id", async (req, res) => {
   }
 });
 
-app.post("/blogs", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/blogs", validateFirebaseIdToken, async (req, res) => {
   try {
     const blog = req.body;
     // Ensure date is set, default to now if not provided
@@ -166,7 +164,7 @@ app.post("/blogs", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/blogs/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const blog = req.body;
@@ -178,7 +176,7 @@ app.put("/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/blogs/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("blogs").doc(id).delete();
@@ -190,7 +188,7 @@ app.delete("/blogs/:id", validateFirebaseIdToken, async (req, res) => {
 });
 
 
-app.post("/ai/generate", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/ai/generate", validateFirebaseIdToken, async (req, res) => {
   try {
     const { prompt } = req.body;
 
@@ -217,7 +215,7 @@ app.post("/ai/generate", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.get("/analytics", async (req, res) => {
+app.get("/v1/analytics", async (req, res) => {
   try {
     const propertyId = process.env.GA4_PROPERTY_ID;
 
@@ -312,7 +310,7 @@ app.get("/analytics", async (req, res) => {
 });
 
 
-app.get("/educations", async (req, res) => {
+app.get("/v1/educations", async (req, res) => {
   try {
     const snapshot = await db.collection("educations").orderBy("startDate", "desc").get();
     const educations = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -323,7 +321,7 @@ app.get("/educations", async (req, res) => {
   }
 });
 
-app.get("/educations/:id", async (req, res) => {
+app.get("/v1/educations/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("educations").doc(id).get();
@@ -335,7 +333,7 @@ app.get("/educations/:id", async (req, res) => {
   }
 });
 
-app.post("/educations", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/educations", validateFirebaseIdToken, async (req, res) => {
   try {
     const data = req.body;
     data.createdAt = admin.firestore.FieldValue.serverTimestamp();
@@ -347,7 +345,7 @@ app.post("/educations", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/educations/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -360,7 +358,7 @@ app.put("/educations/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/educations/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("educations").doc(id).delete();
@@ -371,7 +369,7 @@ app.delete("/educations/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.get("/achievements", async (req, res) => {
+app.get("/v1/achievements", async (req, res) => {
   try {
     const snapshot = await db.collection("achievements").orderBy("date", "desc").get();
     const achievements = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -382,7 +380,7 @@ app.get("/achievements", async (req, res) => {
   }
 });
 
-app.get("/achievements/:id", async (req, res) => {
+app.get("/v1/achievements/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("achievements").doc(id).get();
@@ -394,7 +392,7 @@ app.get("/achievements/:id", async (req, res) => {
   }
 });
 
-app.post("/achievements", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/achievements", validateFirebaseIdToken, async (req, res) => {
   try {
     const data = req.body;
     data.createdAt = admin.firestore.FieldValue.serverTimestamp();
@@ -406,7 +404,7 @@ app.post("/achievements", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/achievements/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -419,7 +417,7 @@ app.put("/achievements/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/achievements/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("achievements").doc(id).delete();
@@ -431,9 +429,7 @@ app.delete("/achievements/:id", validateFirebaseIdToken, async (req, res) => {
 });
 
 
-// --- TECH STACKS ENDPOINTS ---
-
-app.get("/tech-stacks", async (req, res) => {
+app.get("/v1/tech-stacks", async (req, res) => {
   try {
     const snapshot = await db.collection("techStacks").orderBy("name", "asc").get();
     const stacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -444,7 +440,7 @@ app.get("/tech-stacks", async (req, res) => {
   }
 });
 
-app.get("/tech-stacks/:id", async (req, res) => {
+app.get("/v1/tech-stacks/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("techStacks").doc(id).get();
@@ -456,7 +452,7 @@ app.get("/tech-stacks/:id", async (req, res) => {
   }
 });
 
-app.post("/tech-stacks", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/tech-stacks", validateFirebaseIdToken, async (req, res) => {
   try {
     const data = req.body;
     const docRef = await db.collection("techStacks").add(data);
@@ -467,7 +463,7 @@ app.post("/tech-stacks", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -479,7 +475,7 @@ app.put("/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("techStacks").doc(id).delete();
@@ -491,7 +487,7 @@ app.delete("/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
 });
 
 
-app.get("/experiences", async (req, res) => {
+app.get("/v1/experiences", async (req, res) => {
   try {
     const snapshot = await db.collection("experiences").orderBy("createdAt", "desc").get();
     const experiences = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
@@ -502,7 +498,7 @@ app.get("/experiences", async (req, res) => {
   }
 });
 
-app.get("/experiences/:id", async (req, res) => {
+app.get("/v1/experiences/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("experiences").doc(id).get();
@@ -514,7 +510,7 @@ app.get("/experiences/:id", async (req, res) => {
   }
 });
 
-app.post("/experiences", validateFirebaseIdToken, async (req, res) => {
+app.post("/v1/experiences", validateFirebaseIdToken, async (req, res) => {
   try {
     const data = req.body;
     data.createdAt = admin.firestore.FieldValue.serverTimestamp();
@@ -526,7 +522,7 @@ app.post("/experiences", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.put("/experiences/:id", validateFirebaseIdToken, async (req, res) => {
+app.put("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
@@ -539,7 +535,7 @@ app.put("/experiences/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/experiences/:id", validateFirebaseIdToken, async (req, res) => {
+app.delete("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     await db.collection("experiences").doc(id).delete();
@@ -551,9 +547,7 @@ app.delete("/experiences/:id", validateFirebaseIdToken, async (req, res) => {
 });
 
 
-// --- MAILS ENDPOINT ---
-
-app.post("/mails", async (req, res) => {
+app.post("/v1/mails", async (req, res) => {
   try {
     const { recaptchaToken, mail, subject, message, clinetName } = req.body;
     const clientIP = req.headers["x-client-ip"];
@@ -616,8 +610,8 @@ app.post("/mails", async (req, res) => {
   }
 });
 
-export const v1 = functions.onRequest(
-  { region: "asia-northeast1", memory: "512MiB", timeoutSeconds: 60 },
+export const APIs = functions.onRequest(
+  { region: "asia-southeast1", memory: "512MiB", timeoutSeconds: 60 },
   app
 );
 
