@@ -4,6 +4,8 @@ import axios from "axios";
 import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
+import AiAssistButton from "../../components/admin/AiAssistButton";
+import AiGenerationModal from "../../components/admin/AiGenerationModal";
 
 const ProjectEditor = () => {
   const { id } = useParams();
@@ -15,6 +17,40 @@ const ProjectEditor = () => {
   const [technologies, setTechnologies] = useState("");
   const [isFeatured, setIsFeatured] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  // AI State
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiTargetField, setAiTargetField] = useState<
+    "description" | "technologies" | null
+  >(null);
+  const [aiPrompt, setAiPrompt] = useState("");
+
+  const handleAiClick = (field: "description" | "technologies") => {
+    setAiTargetField(field);
+    if (field === "description") {
+      setAiPrompt(
+        `Write a compelling project description for a project titled "${title}". Include details about potential features and the problem it solves.`
+      );
+    } else if (field === "technologies") {
+      setAiPrompt(
+        `Suggest a comma-separated list of modern proprietary and open-source technologies suitable for a project titled "${title}" with description: "${description}". Return ONLY the comma-separated list.`
+      );
+    }
+    setShowAiModal(true);
+  };
+
+  const handleAiGenerated = (text: string) => {
+    if (aiTargetField === "description") {
+      setDescription((prev) => (prev ? prev + "\n\n" + text : text));
+      toast.success("Description generated");
+    } else if (aiTargetField === "technologies") {
+      // clean up potential extra text if AI is chatty
+      const cleanText = text.replace(/Technologies:/i, "").trim();
+      setTechnologies((prev) => (prev ? prev + ", " + cleanText : cleanText));
+      toast.success("Technologies suggested");
+    }
+    setAiTargetField(null);
+  };
 
   useEffect(() => {
     if (id) {
@@ -99,9 +135,16 @@ const ProjectEditor = () => {
           />
         </div>
         <div>
-          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
-            Description
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-neutral-700 dark:text-neutral-300 font-medium">
+              Description
+            </label>
+            <AiAssistButton
+              onClick={() => handleAiClick("description")}
+              label="Generate Description"
+              disabled={!title}
+            />
+          </div>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -134,9 +177,16 @@ const ProjectEditor = () => {
           />
         </div>
         <div>
-          <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
-            Technologies (comma separated)
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-neutral-700 dark:text-neutral-300 font-medium">
+              Technologies (comma separated)
+            </label>
+            <AiAssistButton
+              onClick={() => handleAiClick("technologies")}
+              label="Suggest Tech"
+              disabled={!title}
+            />
+          </div>
           <input
             type="text"
             value={technologies}
@@ -178,6 +228,18 @@ const ProjectEditor = () => {
           </button>
         </div>
       </form>
+
+      <AiGenerationModal
+        isOpen={showAiModal}
+        onClose={() => setShowAiModal(false)}
+        onGenerate={handleAiGenerated}
+        initialPrompt={aiPrompt}
+        title={
+          aiTargetField === "technologies"
+            ? "Suggest Technologies"
+            : "Generate Description"
+        }
+      />
     </div>
   );
 };

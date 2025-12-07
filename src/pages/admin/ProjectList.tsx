@@ -4,7 +4,7 @@ import axios from "axios";
 import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface Project {
   id: string;
@@ -54,9 +54,9 @@ const ProjectList = () => {
         <h1 className="text-3xl font-bold">Manage Projects</h1>
         <Link
           to="/admin/projects/new"
-          className="bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+          className="flex flex-row gap-1 items-center bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
         >
-          Add New Project
+          <PlusIcon size={20} /> New
         </Link>
       </div>
       {isLoading ? (
