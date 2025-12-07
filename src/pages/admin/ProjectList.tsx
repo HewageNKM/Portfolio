@@ -5,6 +5,7 @@ import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
+import SEO from "../../components/SEO";
 
 interface Project {
   id: string;
@@ -50,6 +51,7 @@ const ProjectList = () => {
 
   return (
     <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
+      <SEO title="Admin - Projects | NKM Hewage" />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Manage Projects</h1>
         <Link

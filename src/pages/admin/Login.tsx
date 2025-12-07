@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { Lock, Mail } from "lucide-react";
+import SEO from "../../components/SEO";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ const Login = () => {
 
   return (
     <div className="flex h-screen w-full bg-neutral-50 dark:bg-neutral-900 font-inter">
+      <SEO title="Admin - Login | NKM Hewage" />
       {/* Left Side - Image */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-neutral-900/40 z-10" />

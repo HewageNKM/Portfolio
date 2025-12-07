@@ -12,7 +12,11 @@ const db = admin.firestore();
 
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
-console.log(`Attempting to connect to Project: ${admin.app().name}, DB: ${admin.app().database.name}`);
+console.log(
+  `Attempting to connect to Project: ${admin.app().name}, DB: ${
+    admin.app().database.name
+  }`
+);
 const app = express();
 app.use(express.json());
 
@@ -23,7 +27,10 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1 || origin.startsWith("http://localhost")) {
+      if (
+        allowedOrigins.indexOf(origin) !== -1 ||
+        origin.startsWith("http://localhost")
+      ) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -35,10 +42,17 @@ app.use(
 );
 
 // Middleware to validate Firebase ID Token
-const validateFirebaseIdToken = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+const validateFirebaseIdToken = async (
+  req: express.Request,
+  res: express.Response,
+  next: express.NextFunction
+) => {
   console.log("Check if request is authorized with Firebase ID token");
 
-  if ((!req.headers.authorization || !req.headers.authorization.startsWith("Bearer "))) {
+  if (
+    !req.headers.authorization ||
+    !req.headers.authorization.startsWith("Bearer ")
+  ) {
     console.error(
       "No Firebase ID token was passed as a Bearer token in the Authorization header.",
       "Make sure you authorize your request by providing the following HTTP header:",
@@ -67,18 +81,22 @@ app.get("/health", (_, res) => {
   res.json({ message: "Server is Running Healthy!" });
 });
 
-
 app.get("/v1/projects", async (req, res) => {
   try {
     const { featured } = req.query;
-    let query: admin.firestore.Query = db.collection("projects").orderBy("createdAt", "desc");
+    let query: admin.firestore.Query = db
+      .collection("projects")
+      .orderBy("createdAt", "desc");
 
     if (featured === "true") {
       query = query.where("isFeatured", "==", true);
     }
 
     const snapshot = await query.get();
-    const projects = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const projects = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     return res.json(projects);
   } catch (error) {
     console.error("Error fetching projects:", error);
@@ -187,7 +205,6 @@ app.delete("/v1/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-
 app.post("/v1/ai/generate", validateFirebaseIdToken, async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -237,11 +254,12 @@ app.get("/v1/analytics", async (req, res) => {
     });
 
     // Sum active users across all minutes
-    const activeUsers = realtimeResponse.rows?.reduce(
-      (sum: number, row: any) => sum + parseInt(row.metricValues?.[0]?.value || "0", 10),
-      0
-    ) || 0;
-
+    const activeUsers =
+      realtimeResponse.rows?.reduce(
+        (sum: number, row: any) =>
+          sum + parseInt(row.metricValues?.[0]?.value || "0", 10),
+        0
+      ) || 0;
 
     // 2. Get Today's Stats
     const [todayReport] = await analyticsDataClient.runReport({
@@ -281,7 +299,10 @@ app.get("/v1/analytics", async (req, res) => {
     };
 
     const pageViewsChange = calculateChange(todayPageViews, yesterdayPageViews);
-    const engagementChange = calculateChange(todayEngagement, yesterdayEngagement);
+    const engagementChange = calculateChange(
+      todayEngagement,
+      yesterdayEngagement
+    );
 
     // Format engagement time (seconds to m:s)
     const formatTime = (seconds: number) => {
@@ -309,11 +330,16 @@ app.get("/v1/analytics", async (req, res) => {
   }
 });
 
-
 app.get("/v1/educations", async (req, res) => {
   try {
-    const snapshot = await db.collection("educations").orderBy("startDate", "desc").get();
-    const educations = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const snapshot = await db
+      .collection("educations")
+      .orderBy("startDate", "desc")
+      .get();
+    const educations = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     res.json(educations);
   } catch (error) {
     console.error("Error fetching educations:", error);
@@ -325,7 +351,8 @@ app.get("/v1/educations/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("educations").doc(id).get();
-    if (!doc.exists) return res.status(404).json({ error: "Education not found" });
+    if (!doc.exists)
+      return res.status(404).json({ error: "Education not found" });
     return res.json({ id: doc.id, ...doc.data() });
   } catch (error) {
     console.error("Error fetching education:", error);
@@ -371,8 +398,14 @@ app.delete("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
 
 app.get("/v1/achievements", async (req, res) => {
   try {
-    const snapshot = await db.collection("achievements").orderBy("date", "desc").get();
-    const achievements = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const snapshot = await db
+      .collection("achievements")
+      .orderBy("date", "desc")
+      .get();
+    const achievements = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     res.json(achievements);
   } catch (error) {
     console.error("Error fetching achievements:", error);
@@ -384,7 +417,8 @@ app.get("/v1/achievements/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("achievements").doc(id).get();
-    if (!doc.exists) return res.status(404).json({ error: "Achievement not found" });
+    if (!doc.exists)
+      return res.status(404).json({ error: "Achievement not found" });
     return res.json({ id: doc.id, ...doc.data() });
   } catch (error) {
     console.error("Error fetching achievement:", error);
@@ -417,21 +451,27 @@ app.put("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-app.delete("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
-  try {
-    const { id } = req.params;
-    await db.collection("achievements").doc(id).delete();
-    res.status(204).send();
-  } catch (error) {
-    console.error("Error deleting achievement:", error);
-    res.status(500).json({ error: (error as Error).message });
+app.delete(
+  "/v1/achievements/:id",
+  validateFirebaseIdToken,
+  async (req, res) => {
+    try {
+      const { id } = req.params;
+      await db.collection("achievements").doc(id).delete();
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting achievement:", error);
+      res.status(500).json({ error: (error as Error).message });
+    }
   }
-});
-
+);
 
 app.get("/v1/tech-stacks", async (req, res) => {
   try {
-    const snapshot = await db.collection("techStacks").orderBy("name", "asc").get();
+    const snapshot = await db
+      .collection("techStacks")
+      .orderBy("name", "asc")
+      .get();
     const stacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     res.json(stacks);
   } catch (error) {
@@ -444,7 +484,8 @@ app.get("/v1/tech-stacks/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("techStacks").doc(id).get();
-    if (!doc.exists) return res.status(404).json({ error: "Tech stack not found" });
+    if (!doc.exists)
+      return res.status(404).json({ error: "Tech stack not found" });
     return res.json({ id: doc.id, ...doc.data() });
   } catch (error) {
     console.error("Error fetching tech stack:", error);
@@ -486,11 +527,16 @@ app.delete("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
   }
 });
 
-
 app.get("/v1/experiences", async (req, res) => {
   try {
-    const snapshot = await db.collection("experiences").orderBy("createdAt", "desc").get();
-    const experiences = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const snapshot = await db
+      .collection("experiences")
+      .orderBy("createdAt", "desc")
+      .get();
+    const experiences = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     res.json(experiences);
   } catch (error) {
     console.error("Error fetching experiences:", error);
@@ -502,7 +548,8 @@ app.get("/v1/experiences/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const doc = await db.collection("experiences").doc(id).get();
-    if (!doc.exists) return res.status(404).json({ error: "Experience not found" });
+    if (!doc.exists)
+      return res.status(404).json({ error: "Experience not found" });
     return res.json({ id: doc.id, ...doc.data() });
   } catch (error) {
     console.error("Error fetching experience:", error);
@@ -545,7 +592,6 @@ app.delete("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
     res.status(500).json({ error: (error as Error).message });
   }
 });
-
 
 app.post("/v1/mails", async (req, res) => {
   try {
@@ -609,6 +655,51 @@ app.post("/v1/mails", async (req, res) => {
     return res.status(500).json({ error: (err as Error).message });
   }
 });
+
+// Sitemap Function
+export const sitemap = functions.onRequest(
+  { region: "asia-southeast1", memory: "256MiB", timeoutSeconds: 60 },
+  async (req, res) => {
+    try {
+      const baseUrl = "https://hewagenkm.com";
+      const routes = ["/", "/projects", "/blogs", "/contact"];
+
+      // Fetch dynamic content
+      const [blogsSnapshot] = await Promise.all([db.collection("blogs").get()]);
+
+      let xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`;
+
+      // Static Routes
+      routes.forEach((route) => {
+        xml += `
+  <url>
+    <loc>${baseUrl}${route}</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+      });
+
+      // Dynamic Blogs
+      blogsSnapshot.forEach((doc) => {
+        xml += `
+  <url>
+    <loc>${baseUrl}/blogs/${doc.id}</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>`;
+      });
+      xml += `
+</urlset>`;
+
+      res.set("Content-Type", "application/xml");
+      res.status(200).send(xml);
+    } catch (error) {
+      console.error("Error generating sitemap:", error);
+      res.status(500).send("Error generating sitemap");
+    }
+  }
+);
 
 export const APIs = functions.onRequest(
   { region: "asia-southeast1", memory: "512MiB", timeoutSeconds: 60 },
