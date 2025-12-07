@@ -12,7 +12,7 @@ const db = admin.firestore();
 
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
-
+console.log(`Attempting to connect to Project: ${admin.app().name}, DB: ${admin.app().database.name}`);
 const app = express();
 app.use(express.json());
 
@@ -52,7 +52,6 @@ const validateFirebaseIdToken = async (req: express.Request, res: express.Respon
 
   try {
     const decodedIdToken = await admin.auth().verifyIdToken(idToken);
-    // console.log("ID Token correctly decoded", decodedIdToken);
     (req as any).user = decodedIdToken;
     next();
     return;
@@ -68,7 +67,6 @@ app.get("/health", (_, res) => {
   res.json({ message: "Server is Running Healthy!" });
 });
 
-// --- PROJECTS ENDPOINTS ---
 
 app.get("/v1/projects", async (req, res) => {
   try {
@@ -613,7 +611,7 @@ app.post("/v1/mails", async (req, res) => {
 });
 
 export const APIs = functions.onRequest(
-  { region: "asia-northeast1", memory: "512MiB", timeoutSeconds: 60 },
+  { region: "asia-southeast1", memory: "512MiB", timeoutSeconds: 60 },
   app
 );
 

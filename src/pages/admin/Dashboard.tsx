@@ -36,23 +36,15 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [
-          blogsRes,
-          projectsRes,
-          eduRes,
-          achRes,
-          techRes,
-          expRes,
-          analyticsRes,
-        ] = await Promise.all([
-          axios.get(`${API_BASE_URL}/blogs`),
-          axios.get(`${API_BASE_URL}/projects`),
-          axios.get(`${API_BASE_URL}/educations`),
-          axios.get(`${API_BASE_URL}/achievements`),
-          axios.get(`${API_BASE_URL}/tech-stacks`),
-          axios.get(`${API_BASE_URL}/experiences`),
-          axios.get(`${API_BASE_URL}/analytics`),
-        ]);
+        const [blogsRes, projectsRes, eduRes, achRes, techRes, expRes] =
+          await Promise.all([
+            axios.get(`${API_BASE_URL}/blogs`),
+            axios.get(`${API_BASE_URL}/projects`),
+            axios.get(`${API_BASE_URL}/educations`),
+            axios.get(`${API_BASE_URL}/achievements`),
+            axios.get(`${API_BASE_URL}/tech-stacks`),
+            axios.get(`${API_BASE_URL}/experiences`),
+          ]);
 
         setStats({
           blogs: blogsRes.data.length,
@@ -63,6 +55,7 @@ const Dashboard = () => {
           experiences: expRes.data.length,
         });
 
+        const analyticsRes = await axios.get(`${API_BASE_URL}/analytics`);
         setAnalytics(analyticsRes.data);
       } catch (error) {
         console.error("Error fetching stats:", error);
