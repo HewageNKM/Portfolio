@@ -12,6 +12,7 @@ interface Blog {
 
 import { API_BASE_URL } from "../../AppSettings";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
+import SEO from "../../components/SEO";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -50,6 +51,7 @@ const BlogList = () => {
 
   return (
     <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
+      <SEO title="Admin - Blogs | NKM Hewage" />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Manage Blogs</h1>
         <Link

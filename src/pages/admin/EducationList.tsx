@@ -5,6 +5,7 @@ import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
 import { Pencil, Trash2, Plus } from "lucide-react";
+import SEO from "../../components/SEO";
 
 interface Education {
   id: string;
@@ -54,6 +55,7 @@ const EducationList = () => {
 
   return (
     <div className="text-neutral-900 dark:text-neutral-100">
+      <SEO title="Admin - Education | NKM Hewage" />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Manage Education</h1>
         <Link

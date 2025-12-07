@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import {
   FileText,
@@ -8,6 +9,7 @@ import {
   Layers,
 } from "lucide-react";
 import { API_BASE_URL } from "../../AppSettings";
+import SEO from "../../components/SEO";
 
 interface AnalyticsData {
   activeUsers: number;
@@ -89,6 +91,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <SEO title="Admin - Dashboard | NKM Hewage" />
       <h2 className="text-2xl font-bold mb-6 text-neutral-900 dark:text-white">
         Overview
       </h2>
@@ -203,9 +206,53 @@ const Dashboard = () => {
         <h3 className="text-lg font-bold mb-4 text-neutral-900 dark:text-white">
           Quick Actions
         </h3>
-        <p className="text-neutral-500 dark:text-neutral-400">
-          Select an item from the sidebar to manage your content.
-        </p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <Link
+            to="/admin/blogs/new"
+            className="flex flex-col items-center justify-center p-4 bg-neutral-50 dark:bg-neutral-700/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors border border-neutral-200 dark:border-neutral-600"
+          >
+            <FileText className="w-6 h-6 mb-2 text-blue-500" />
+            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              New Blog
+            </span>
+          </Link>
+          <Link
+            to="/admin/projects/new"
+            className="flex flex-col items-center justify-center p-4 bg-neutral-50 dark:bg-neutral-700/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors border border-neutral-200 dark:border-neutral-600"
+          >
+            <Briefcase className="w-6 h-6 mb-2 text-green-500" />
+            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              New Project
+            </span>
+          </Link>
+          <Link
+            to="/admin/experiences/new"
+            className="flex flex-col items-center justify-center p-4 bg-neutral-50 dark:bg-neutral-700/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors border border-neutral-200 dark:border-neutral-600"
+          >
+            <Briefcase className="w-6 h-6 mb-2 text-purple-500" />
+            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              New Experience
+            </span>
+          </Link>
+          <Link
+            to="/admin/achievements/new"
+            className="flex flex-col items-center justify-center p-4 bg-neutral-50 dark:bg-neutral-700/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors border border-neutral-200 dark:border-neutral-600"
+          >
+            <Trophy className="w-6 h-6 mb-2 text-yellow-500" />
+            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              New Achievement
+            </span>
+          </Link>
+          <Link
+            to="/admin/education/new"
+            className="flex flex-col items-center justify-center p-4 bg-neutral-50 dark:bg-neutral-700/50 hover:bg-neutral-100 dark:hover:bg-neutral-700 rounded-lg transition-colors border border-neutral-200 dark:border-neutral-600"
+          >
+            <GraduationCap className="w-6 h-6 mb-2 text-red-500" />
+            <span className="text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              New Education
+            </span>
+          </Link>
+        </div>
       </div>
     </div>
   );

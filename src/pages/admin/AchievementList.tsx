@@ -5,6 +5,7 @@ import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
 import { Pencil, Trash2, Plus, Trophy } from "lucide-react";
+import SEO from "../../components/SEO";
 
 interface Achievement {
   id: string;
@@ -50,6 +51,7 @@ const AchievementList = () => {
 
   return (
     <div className="text-neutral-900 dark:text-neutral-100">
+      <SEO title="Admin - Achievements | NKM Hewage" />
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Manage Achievements</h1>
         <Link
