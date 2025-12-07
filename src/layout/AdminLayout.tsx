@@ -33,8 +33,8 @@ const AdminLayout = () => {
 
   const menuItems = [
     { path: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { path: "/admin/blogs", label: "Manage Blogs", icon: FileText },
-    { path: "/admin/projects", label: "Manage Projects", icon: Folder },
+    { path: "/admin/blogs", label: "Blogs", icon: FileText },
+    { path: "/admin/projects", label: "Projects", icon: Folder },
     { path: "/admin/education", label: "Education", icon: GraduationCap },
     { path: "/admin/experiences", label: "Experience", icon: Briefcase },
     { path: "/admin/achievements", label: "Achievements", icon: Trophy },

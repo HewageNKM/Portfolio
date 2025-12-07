@@ -5,6 +5,8 @@ import { auth } from "../../FirebaseClient";
 import toast from "react-hot-toast";
 import { API_BASE_URL } from "../../AppSettings";
 import { Save, ArrowLeft } from "lucide-react";
+import AiAssistButton from "../../components/admin/AiAssistButton";
+import AiGenerationModal from "../../components/admin/AiGenerationModal";
 
 const AchievementEditor = () => {
   const { id } = useParams();
@@ -16,6 +18,25 @@ const AchievementEditor = () => {
     link: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+
+  // AI State
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [aiPrompt, setAiPrompt] = useState("");
+
+  const handleAiClick = () => {
+    setAiPrompt(
+      `Write a brief and professional description for the achievement "${formData.title}" received in "${formData.date}". Mention the significance and key skills demonstrated.`
+    );
+    setShowAiModal(true);
+  };
+
+  const handleAiGenerated = (text: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      description: prev.description ? prev.description + "\n\n" + text : text,
+    }));
+    toast.success("Description generated");
+  };
 
   useEffect(() => {
     if (id) {
@@ -114,9 +135,16 @@ const AchievementEditor = () => {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-            Description
-          </label>
+          <div className="flex justify-between items-center mb-2">
+            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
+              Description
+            </label>
+            <AiAssistButton
+              onClick={handleAiClick}
+              label="Generate Description"
+              disabled={!formData.title}
+            />
+          </div>
           <textarea
             name="description"
             value={formData.description}
@@ -152,6 +180,14 @@ const AchievementEditor = () => {
           </button>
         </div>
       </form>
+
+      <AiGenerationModal
+        isOpen={showAiModal}
+        onClose={() => setShowAiModal(false)}
+        onGenerate={handleAiGenerated}
+        initialPrompt={aiPrompt}
+        title="Generate Achievement Description"
+      />
     </div>
   );
 };
