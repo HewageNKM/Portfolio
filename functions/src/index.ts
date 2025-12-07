@@ -120,6 +120,7 @@ app.put("/v1/projects/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const project = req.body;
+    delete project.createdAt;
     project.updatedAt = admin.firestore.FieldValue.serverTimestamp();
     await db.collection("projects").doc(id).update(project);
     res.json({ id, ...project });
@@ -186,6 +187,7 @@ app.put("/v1/blogs/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const blog = req.body;
+    delete blog.createdAt;
     await db.collection("blogs").doc(id).update(blog);
     res.json({ id, ...blog });
   } catch (error) {
@@ -376,6 +378,7 @@ app.put("/v1/educations/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    delete data.createdAt;
     data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
     await db.collection("educations").doc(id).update(data);
     res.json({ id, ...data });
@@ -442,6 +445,7 @@ app.put("/v1/achievements/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    delete data.createdAt;
     data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
     await db.collection("achievements").doc(id).update(data);
     res.json({ id, ...data });
@@ -508,6 +512,7 @@ app.put("/v1/tech-stacks/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    delete data.createdAt;
     await db.collection("techStacks").doc(id).update(data);
     res.json({ id, ...data });
   } catch (error) {
@@ -573,6 +578,7 @@ app.put("/v1/experiences/:id", validateFirebaseIdToken, async (req, res) => {
   try {
     const { id } = req.params;
     const data = req.body;
+    delete data.createdAt;
     data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
     await db.collection("experiences").doc(id).update(data);
     res.json({ id, ...data });
