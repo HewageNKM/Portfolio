@@ -179,7 +179,15 @@ export default async function Home() {
         </section>
 
         <section id="experience">
-          <Experience experiences={experiencesData} />
+          <Experience
+            experiences={experiencesData.map((item: any) => ({
+              id: item.id,
+              role: item.role,
+              company: item.company,
+              duration: item.duration,
+              description: item.description,
+            }))}
+          />
         </section>
 
         <section id="education">
@@ -187,15 +195,45 @@ export default async function Home() {
         </section>
 
         <section id="achievements">
-          <Achievements achievements={achievementsData} />
+          <Achievements
+            achievements={achievementsData.map((item: any) => ({
+              id: item.id,
+              title: item.title,
+              description: item.description,
+              date: item.date,
+              issuer: item.issuer || item.organization || "N/A", // Map issuer, fallback if missing
+              link: item.link,
+            }))}
+          />
         </section>
 
         <section id="tech-stack">
-          <Stack stacks={stacksData} />
+          <Stack
+            stacks={stacksData.flatMap((stack: any) =>
+              (stack.items || []).map((item: any) => ({
+                id: item.id || `${stack.id}-${item.name}`,
+                name: item.name,
+                category: stack.category,
+                icon: item.icon,
+              }))
+            )}
+          />
         </section>
 
         <section id="projects">
-          <Projects projects={projectsData.filter((p: any) => p.isFeatured)} />
+          <Projects
+            projects={projectsData
+              .filter((p: any) => p.isFeatured)
+              .map((p: any) => ({
+                id: p.id,
+                title: p.title,
+                description: p.description,
+                githubUrl: p.githubUrl,
+                liveUrl: p.liveUrl,
+                technologies: p.technologies,
+                image: p.thumbnail, // Map thumbnail to image if Projects section expects 'image'
+              }))}
+          />
         </section>
       </main>
     </>

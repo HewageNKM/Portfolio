@@ -163,4 +163,3 @@ export default async function BlogsPage({
     </>
   );
 }
-export const revalidate = 60 * 60;

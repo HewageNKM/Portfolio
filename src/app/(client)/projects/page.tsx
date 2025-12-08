@@ -53,14 +53,15 @@ export const metadata: Metadata = {
 /* -------------------------------------------------------------------------- */
 
 export default async function ProjectsPage() {
-  const projects = (await ProjectService.getProjects()) as ProjectItem[];
+  const projects =
+    (await ProjectService.getProjects()) as unknown as ProjectItem[];
 
   const projectSchemas = projects.map((project) => ({
     "@type": "CreativeWork",
     name: project.title,
     description: project.description,
-    url: `https://hewagenkm.com/projects/${project.slug ?? project.id}`,
-    image: project.thumbnail ?? "https://hewagenkm.com/og-projects.png",
+    url: `https://hewagenkm.com/projects/${project.id}`,
+    image: "https://hewagenkm.com/og-projects.png",
   }));
 
   return (
@@ -140,5 +141,3 @@ export default async function ProjectsPage() {
     </>
   );
 }
-
-export const revalidate = 60 * 60;
