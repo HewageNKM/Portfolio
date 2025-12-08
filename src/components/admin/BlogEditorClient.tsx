@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
 import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
@@ -13,7 +13,7 @@ import AiGenerationModal from "@/components/admin/AiGenerationModal";
 
 // Integrate Tailwind styles for ReactQuill if needed, or rely on global CSS
 // Dynamically import ReactQuill to avoid SSR issues
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
 
 export default function BlogEditorClient({ id }: { id?: string }) {
   const router = useRouter();
