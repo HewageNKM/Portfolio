@@ -63,7 +63,47 @@ export default function EducationListClient() {
         </Link>
       </div>
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 overflow-x-auto">
+          <table className="min-w-full text-left">
+            <thead className="bg-neutral-50 dark:bg-neutral-800/50">
+              <tr>
+                <th className="px-6 py-4 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  Degree
+                </th>
+                <th className="px-6 py-4 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  Institution
+                </th>
+                <th className="px-6 py-4 text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  Duration
+                </th>
+                <th className="px-6 py-4 text-right text-xs font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-neutral-200 dark:divide-neutral-700">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <tr key={i} className="animate-pulse">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/3"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/4"></div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right">
+                    <div className="flex justify-end gap-2">
+                      <div className="h-8 w-8 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+                      <div className="h-8 w-8 bg-neutral-200 dark:bg-neutral-700 rounded"></div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <div className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 overflow-x-auto">
           <table className="min-w-full text-left">

@@ -62,7 +62,7 @@ export default function Services() {
 
       {/* Services Grid */}
       <motion.ul
-        className="flex flex-row flex-wrap justify-center gap-8 mt-4"
+        className="flex flex-row flex-wrap justify-center items-stretch gap-8 mt-4"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -71,13 +71,14 @@ export default function Services() {
           <motion.li
             key={index}
             variants={itemVariants}
-            whileHover={{ scale: 1.05, y: -5 }}
-            className="shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg"
+            className="rounded-2xl h-full flex flex-col"
           >
             <ServiceCard
               title={service.title}
               description={service.description}
               icon={service.icon}
+              items={service.items}
+              color={service.color}
             />
           </motion.li>
         ))}

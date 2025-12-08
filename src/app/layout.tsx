@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
+import { Toaster } from "react-hot-toast";
 
 export default function RootLayout({
   children,
@@ -13,6 +14,7 @@ export default function RootLayout({
         <RecaptchaProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </RecaptchaProvider>
+        <Toaster />
       </body>
     </html>
   );

@@ -6,9 +6,8 @@ import Header from "../components/Header";
 import { AnimatePresence } from "framer-motion";
 import { Setting } from "../components/Setting";
 import { Menu } from "../components/Menu";
-import HomeSettingsButton from "../components/HomeSettingButton";
 import { useTheme } from "@/context/ThemeContext";
-import { Toaster } from "react-hot-toast";
+import ChatWidget from "../components/ChatWidget";
 
 interface ClientLayoutProps {
   children: ReactNode;
@@ -25,8 +24,8 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
       ref={containerRef}
       className={`relative flex flex-col w-full md:gap-5 gap-3 ${font} overflow-hidden perspective-1000
                     bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200
-                    [background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
-                    dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]
+                    bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
+                    dark:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]
                     bg-fixed transition-all duration-300`}
     >
       {/* Page Content */}
@@ -41,10 +40,7 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
       <AnimatePresence>
         {showMenu && <Menu showMenu={setShowMenu} />}
       </AnimatePresence>
-      <AnimatePresence>
-        <HomeSettingsButton onClick={() => setShowSetting(true)} />
-      </AnimatePresence>
-      <Toaster />
+      <ChatWidget />
     </main>
   );
 };

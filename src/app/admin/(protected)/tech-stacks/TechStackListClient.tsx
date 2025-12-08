@@ -61,7 +61,18 @@ export default function TechStackListClient() {
       </div>
 
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 flex flex-col items-center text-center animate-pulse"
+            >
+              <div className="w-12 h-12 mb-3 bg-neutral-200 dark:bg-neutral-700 rounded-full"></div>
+              <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-20 mb-1"></div>
+              <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-12"></div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {techStacks.length === 0 ? (

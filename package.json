@@ -12,6 +12,7 @@
     "@google-analytics/data": "^5.2.1",
     "@google/generative-ai": "^0.24.1",
     "axios": "^1.13.2",
+    "date-fns": "^4.1.0",
     "firebase": "^12.6.0",
     "firebase-admin": "^13.6.0",
     "framer-motion": "^12.23.25",
@@ -22,8 +23,10 @@
     "react-google-recaptcha-v3": "^1.11.0",
     "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
+    "react-markdown": "^10.1.0",
     "react-quill-new": "^3.6.0",
-    "react-router-dom": "^7.10.1"
+    "react-router-dom": "^7.10.1",
+    "recharts": "^3.5.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

@@ -1,4 +1,4 @@
-import { verifyAuth } from "@/lib/auth";
+import { verifyAuth } from "@/services/AuthService";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -1,4 +1,4 @@
-import { verifyAuth } from "@/lib/auth";
+import { verifyAuth } from "@/services/AuthService";
 import { ProjectService } from "@/services/ProjectService";
 import { NextRequest, NextResponse } from "next/server";
 

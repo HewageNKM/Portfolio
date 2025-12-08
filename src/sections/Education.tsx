@@ -37,6 +37,10 @@ const itemVariants: Variants = {
   },
 };
 
+import Timeline from "@/components/Timeline";
+import TimelineItem from "@/components/TimelineItem";
+import { GraduationCap } from "lucide-react";
+
 export default function Education() {
   const [educations, setEducations] = useState<EducationItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -68,13 +72,19 @@ export default function Education() {
     <motion.section
       id="educations"
       className="w-full flex flex-col p-3 gap-8 mt-10"
-      initial="hidden"
-      whileInView="visible" // Changed from animate to whileInView for scroll trigger
-      variants={containerVariants}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       {/* Title */}
-      <motion.div className="space-y-4" variants={itemVariants}>
+      <motion.div
+        className="space-y-4"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <motion.h2
           className="text-lg dark:text-white text-black font-bold lg:text-xl"
           initial={{ y: -20, opacity: 0 }}
@@ -101,35 +111,39 @@ export default function Education() {
       {isLoading ? (
         <p className="text-center text-gray-500">Loading education...</p>
       ) : (
-        <motion.ul
-          className="flex flex-col gap-16 md:gap-8 mt-4"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {educations.map((edu) => (
-            <motion.li
+        <Timeline>
+          {educations.map((edu, index) => (
+            <TimelineItem
               key={edu.id}
-              variants={itemVariants}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className="shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg"
-            >
-              <EduCard
-                degree={edu.degree}
-                institution={edu.institution}
-                duration={edu.duration}
-                description={edu.details}
-                gpa={edu.gpa}
-              />
-            </motion.li>
+              date={edu.duration}
+              title={edu.degree}
+              subtitle={edu.institution}
+              isLeft={index % 2 === 0}
+              icon={<GraduationCap size={16} />}
+              description={
+                <div className="space-y-2">
+                  {edu.gpa && (
+                    <p className="font-semibold text-neutral-800 dark:text-neutral-200">
+                      GPA: {edu.gpa}
+                    </p>
+                  )}
+                  {edu.details && edu.details.length > 0 && (
+                    <ul className="list-disc list-inside space-y-1">
+                      {edu.details.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              }
+            />
           ))}
-          {educations.length === 0 && (
-            <p className="text-center text-gray-500">
-              No education details added yet.
-            </p>
-          )}
-        </motion.ul>
+        </Timeline>
+      )}
+      {!isLoading && educations.length === 0 && (
+        <p className="text-center text-gray-500">
+          No education details added yet.
+        </p>
       )}
     </motion.section>
   );

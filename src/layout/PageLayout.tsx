@@ -20,8 +20,8 @@ const PageLayout = ({ children }: PageLayoutProps) => {
       ref={containerRef}
       className="relative flex flex-col w-full md:gap-5 gap-3 font-inter overflow-hidden perspective-1000
                  bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200
-                 [background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
-                 dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]
+                 bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
+                 dark:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]
                  bg-fixed"
     >
       {/* Page Content */}

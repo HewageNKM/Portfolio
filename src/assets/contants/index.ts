@@ -15,18 +15,20 @@ export const services = [
     icon: SiReact,
     title: "Web Development",
     description:
-      "Crafting responsive and dynamic web applications using modern frontend and backend technologies.",
+      "Crafting responsive and dynamic web applications using modern technologies.",
+    color: "#61DAFB", // React Cyan
     items: [
-      "Frontend Development (React, Angular, Next.js)",
-      "Backend Development (Spring Boot, Node.js, Django, Laravel)",
-      "Database Management (MySQL, MongoDB, PostgreSQL)",
+      "Frontend (React, Angular, Next.js)",
+      "Backend (Node.js, Django, Laravel)",
+      "Databases (MySQL, MongoDB, PostgreSQL)",
     ],
   },
   {
     icon: SiFlutter,
     title: "Mobile App Development",
     description:
-      "Building intuitive and high-performance mobile applications for various platforms.",
+      "Building intuitive and high-performance mobile applications using modern technologies.",
+    color: "#02569B", // Flutter Blue
     items: [
       "Cross-Platform (React Native, Flutter)",
       "Native Android (Kotlin, Java)",
@@ -37,8 +39,9 @@ export const services = [
     title: "Cloud Services & DevOps",
     description:
       "Deploying and managing applications on cloud platforms with robust CI/CD pipelines.",
+    color: "#FF9900", // AWS Orange
     items: [
-      "Cloud Platforms (AWS, Firebase, Azure)",
+      "Cloud Platforms (AWS, Google Cloud, Azure)",
       "CI/CD (GitHub Actions, Jenkins)",
       "Containerization (Docker)",
     ],
@@ -48,18 +51,12 @@ export const services = [
     title: "API Development & Integration",
     description:
       "Creating and integrating RESTful APIs for seamless communication between systems.",
+    color: "#6DB33F", // Spring Green
     items: [
       "RESTful API Design",
       "Third-party API Integration",
       "Microservices Architecture",
     ],
-  },
-  {
-    icon: SiJavascript,
-    title: "Technical Writing & Documentation",
-    description:
-      "Producing clear, concise, and comprehensive technical documentation.",
-    items: ["API Documentation", "User Manuals", "System Design Documents"],
   },
 ];
 
@@ -96,6 +93,7 @@ export const MenuItems = [
     icon: SiHomepage,
     url: "https://registry.jsonresume.org/HewageNKM",
   },
+  { label: "Guestbook", icon: SiHomepage, url: "/guestbook" },
   { label: "Contact", icon: SiHomepage, url: "/contact" },
 ];
 

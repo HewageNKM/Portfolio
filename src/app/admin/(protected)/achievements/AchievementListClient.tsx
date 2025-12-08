@@ -60,7 +60,28 @@ export default function AchievementListClient() {
         </Link>
       </div>
       {isLoading ? (
-        <p>Loading...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 animate-pulse"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <div className="flex items-center gap-3 w-full">
+                  <div className="w-10 h-10 bg-neutral-200 dark:bg-neutral-700 rounded-lg"></div>
+                  <div className="space-y-2 w-full">
+                    <div className="h-4 bg-neutral-200 dark:bg-neutral-700 rounded w-1/2"></div>
+                    <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-1/4"></div>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-2 mt-4">
+                <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-full"></div>
+                <div className="h-3 bg-neutral-200 dark:bg-neutral-700 rounded w-5/6"></div>
+              </div>
+            </div>
+          ))}
+        </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {achievements.length === 0 ? (

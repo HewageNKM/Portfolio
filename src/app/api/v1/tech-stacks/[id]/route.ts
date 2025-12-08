@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase-admin";
-import { verifyAuth } from "@/lib/auth";
+import { verifyAuth } from "@/services/AuthService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(

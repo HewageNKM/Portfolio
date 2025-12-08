@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { apiClient } from "@/lib/api-client";
-import Link from "next/link";
+import BlogCard from "@/components/BlogCard";
 
 interface BlogItem {
   id: string;
@@ -64,7 +64,7 @@ export default function Blogs() {
       }}
       viewport={{ once: true }}
     >
-      <div className="flex-grow md:px-40 md:py-20 p-8">
+      <div className="grow md:px-40 md:py-20 p-8">
         <motion.div
           variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
         >
@@ -79,19 +79,13 @@ export default function Blogs() {
           <>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {blogs.map((blog) => (
-                <li
-                  key={blog.id}
-                  className="border p-4 rounded-lg hover:shadow-lg transition-shadow"
-                >
-                  <Link href={`/blogs/${blog.id}`}>
-                    <h2 className="text-xl font-semibold mb-2">{blog.title}</h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">
-                      {blog.summary}
-                    </p>
-                    <p className="text-sm text-gray-500 dark:text-gray-500">
-                      {new Date(blog.date).toLocaleDateString()}
-                    </p>
-                  </Link>
+                <li key={blog.id} className="h-full">
+                  <BlogCard
+                    id={blog.id}
+                    title={blog.title}
+                    summary={blog.summary}
+                    date={blog.date}
+                  />
                 </li>
               ))}
               {!isLoading && blogs.length === 0 && (

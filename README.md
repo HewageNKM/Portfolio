@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Nadun Malwenna - Personal Portfolio
 
-## Getting Started
+A modern, high-performance personal portfolio website built with **Next.js 15**, **Firebase**, and **Google Gemini AI**. This project showcases professional experience, projects, skills, and includes an interactive AI assistant and guestbook.
 
-First, run the development server:
+## 🚀 Key Features
+
+### 👤 Public Portfolio
+- **Dynamic Content**: Data-driven sections for Experience, Projects, Education, and Tech Stack fetched from Firestore.
+- **Interactive Guestbook**: Allows visitors to leave messages using their Google account (secured via Firebase Auth).
+- **AI Portfolio Assistant**: A smart chatbot powered by **Gemini 2.0 Flash Lite** that answers questions about Nadun's professional background.
+- **Responsive Design**: Fully mobile-responsive UI built with Tailwind CSS.
+- **Dark Mode**: Seamless theme switching support.
+
+### 🛡️ Admin Dashboard (`/admin`)
+- **Secure Authentication**: Protected routes for content management.
+- **Content Management**: CRUD operations for Blogs, Projects, Experiences, and Skills.
+- **Analytics**: Integrated Google Analytics dashboard to track visitor engagement.
+- **Message Management**: Moderation tools for Guestbook entries.
+
+## 🛠️ Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS, Framer Motion (Animations)
+- **Backend / Database**: Firebase (Auth, Firestore, Storage)
+- **AI Integration**: Google Generative AI SDK (Gemini)
+- **Icons**: Lucide React, React Icons
+- **Markdown**: React Markdown (for blog & chat rendering)
+
+## ⚙️ Environment Configuration
+
+Create a `.env.local` file in the root directory with the following variables:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Firebase Client SDK
+NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id
+
+# Firebase Admin SDK (Service Account)
+FIREBASE_CLIENT_EMAIL=your_service_account_email
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n..."
+
+# Google Gemini AI
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🏃‍♂️ Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    yarn install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-## Learn More
+3.  **Open the app:**
+    Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔒 Security & Privacy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Verification**: Guestbook writes are secured via server-side ID token verification.
+- **AI Safety**: The Chatbot implements strict safety settings and system instructions to prevent abuse and keep conversations relevant.
+- **Policies**: Includes dedicated Privacy Policy and Terms of Service pages compliant with data collection practices (Auth, Analytics).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📄 License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is for personal portfolio usage.
