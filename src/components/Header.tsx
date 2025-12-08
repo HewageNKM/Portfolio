@@ -4,6 +4,8 @@ import { MenuItems } from "../assets/contants";
 import { CgMenu } from "react-icons/cg";
 
 import { CiSettings } from "react-icons/ci";
+import Link from "next/link";
+import Image from "next/image";
 
 const Header = ({
   showMenu,
@@ -27,12 +29,12 @@ const Header = ({
             whileHover={{ scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <a
+            <Link
               href="/"
               className="lg:text-3xl dark:text-white text-black text-2xl font-extrabold tracking-wide"
             >
-              NM.
-            </a>
+              <Image src="/logo.png" alt="Logo" width={50} height={50} />
+            </Link>
             <div className="flex items-center gap-2 lg:hidden">
               <button
                 className="block dark:text-white text-black mr-2"
