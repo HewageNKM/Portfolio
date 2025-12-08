@@ -714,93 +714,42 @@ export const APIs = functions.onRequest(
 
 // Firestore rate limit collection name
 const RATE_LIMIT_COLLECTION = "rateLimits";
-// ... (previous code)
 
-import * as fs from "fs";
-import * as path from "path";
+// Helper function to check rate limit
+export const isRateLimited = async (ip: string): Promise<boolean> => {
+  const currentTime = Date.now();
+  const timeWindow = 60 * 1000;
+  const maxRequests = 2;
 
-// ... (existing exports)
+  console.log(`Checking rate limit for IP: ${ip}`);
 
-// SSR Function for Dynamic Meta Tags
-export const ssr = functions.onRequest(
-  { region: "asia-southeast1", memory: "512MiB", timeoutSeconds: 60 },
-  async (req, res) => {
-    try {
-      // 1. Read index.html from the functions directory (copied during build)
-      // Note: In production, the file should be in the same directory or a known relative path
-      const indexPath = path.resolve(__dirname, "index.html");
+  // Fetch rate limit data from Firestore
+  const docRef = db.collection(RATE_LIMIT_COLLECTION).doc(ip);
+  const docSnapshot = await docRef.get();
 
-      if (!fs.existsSync(indexPath)) {
-        console.error("index.html not found at:", indexPath);
-        // Fallback: This might fail if the file is truly missing, but we can try to send a basic response
-        res.status(500).send("Server Error: index.html missing");
-        return;
-      }
+  let timestamps: number[] = [];
 
-      let html = fs.readFileSync(indexPath, "utf8");
-
-      const url = req.url;
-      const baseUrl = "https://hewagenkm.com";
-      const defaultTitle = "Nadun Malwenna - Portfolio";
-      const defaultDescription =
-        "Explore the portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile applications, and creating innovative web solutions.";
-      const defaultImage = "https://hewagenkm.com/og-home.png";
-
-      let title = defaultTitle;
-      let description = defaultDescription;
-      let image = defaultImage;
-      let ogUrl = `${baseUrl}${url}`;
-
-      // 2. Logic to determine content based on URL
-      if (url.startsWith("/blogs/")) {
-        const blogId = url.split("/blogs/")[1];
-        if (blogId) {
-          const doc = await db.collection("blogs").doc(blogId).get();
-          if (doc.exists) {
-            const data = doc.data();
-            title = data?.title || defaultTitle;
-            description = data?.summary || defaultDescription;
-            const contentImage = (data?.content?.match(
-              /<img[^>]+src="([^">]+)"/
-            ) || [])[1];
-            image = contentImage || "https://hewagenkm.com/og-blogs.png";
-          }
-        }
-      } else if (url === "/projects") {
-        title = "Projects | Nadun Malwenna";
-        description = "Discover a showcase of projects by Nadun Malwenna.";
-        image = "https://hewagenkm.com/og-projects.png";
-      } else if (url === "/blogs") {
-        title = "Blogs | Nadun Malwenna";
-        description = "Explore a collection of insightful articles.";
-        image = "https://hewagenkm.com/og-blogs.png";
-      }
-
-      // 3. Inject Meta Tags
-      html = html.replace(
-        "<!--__META_TITLE__-->",
-        `<title>${title}</title><meta property="og:title" content="${title}" />`
-      );
-      html = html.replace(
-        "<!--__META_DESCRIPTION__-->",
-        `<meta name="description" content="${description}" /><meta property="og:description" content="${description}" />`
-      );
-      html = html.replace(
-        "<!--__META_OG_IMAGE__-->",
-        `<meta property="og:image" content="${image}" />`
-      );
-      html = html.replace(
-        "<!--__META_OG_URL__-->",
-        `<meta property="og:url" content="${ogUrl}" />`
-      );
-
-      // 4. Send the modified HTML
-      // Cache-Control: dynamic content, so maybe short cache or no cache
-      res.set("Cache-Control", "public, max-age=300, s-maxage=600");
-      res.status(200).send(html);
-    } catch (error) {
-      console.error("Error in SSR function:", error);
-      res.status(500).send("Internal Server Error");
-    }
+  if (docSnapshot.exists) {
+    timestamps = docSnapshot.data()?.timestamps || [];
   }
-);
+
+  // Filter out timestamps that are outside the time window
+  const recentRequests = timestamps.filter(
+    (timestamp) => currentTime - timestamp < timeWindow
+  );
+
+  console.log(`Recent requests for IP ${ip}: ${recentRequests.length}`);
+
+  // If the user has exceeded the max request limit within the time window
+  if (recentRequests.length >= maxRequests) {
+    console.log(`Rate limit exceeded for IP: ${ip}`);
+    return true;
+  }
+
+  // Log this request in Firestore
+  recentRequests.push(currentTime);
+  await docRef.set({ timestamps: recentRequests });
+
+  console.log(`Request allowed for IP: ${ip}`);
+  return false;
+};
