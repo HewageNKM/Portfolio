@@ -145,9 +145,31 @@ app.delete("/v1/projects/:id", validateFirebaseIdToken, async (req, res) => {
 
 app.get("/v1/blogs", async (req, res) => {
   try {
-    const snapshot = await db.collection("blogs").orderBy("date", "desc").get();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 9;
+    const offset = (page - 1) * limit;
+
+    const blogsCollection = db.collection("blogs");
+
+    // Get total count
+    const countSnapshot = await blogsCollection.count().get();
+    const total = countSnapshot.data().count;
+
+    const snapshot = await blogsCollection
+      .orderBy("date", "desc")
+      .limit(limit)
+      .offset(offset)
+      .get();
+
     const blogs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    res.json(blogs);
+
+    res.json({
+      data: blogs,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     console.error("Error fetching blogs:", error);
     res.status(500).json({ error: (error as Error).message });

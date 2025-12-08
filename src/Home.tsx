@@ -129,7 +129,7 @@ const Home = () => {
         ]}
       />
 
-      <main className="relative flex md:gap-5 gap-3 flex-col p-5 pb-2 xl:pt-10 xl:p-[16rem] xl:pb-0.5 w-full">
+      <main className="relative flex flex-col items-center justify-center p-5 pb-20 max-w-7xl mx-auto w-full gap-5">
         <Hero />
         <Services />
         <Experience />
