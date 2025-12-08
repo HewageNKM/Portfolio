@@ -1,10 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import AchievementCard from "../components/AchievementCard";
-import { apiClient } from "@/lib/api-client";
 
-interface Achievement {
+export interface Achievement {
   id: string;
   title: string;
   description: string;
@@ -13,22 +11,12 @@ interface Achievement {
   link?: string;
 }
 
-export default function Achievements() {
-  const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchAchievements = async () => {
-      try {
-        const response = await apiClient.get(`/achievements`);
-        setAchievements(response.data);
-      } catch (error) {
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchAchievements();
-  }, []);
+export default function Achievements({
+  achievements = [],
+}: {
+  achievements: Achievement[];
+}) {
+  const isLoading = false;
 
   return (
     <motion.section

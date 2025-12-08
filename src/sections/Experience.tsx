@@ -1,9 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { apiClient } from "@/lib/api-client";
 
-interface ExperienceData {
+export interface ExperienceData {
   id: string;
   role: string;
   company: string;
@@ -15,23 +13,12 @@ import Timeline from "@/components/Timeline";
 import TimelineItem from "@/components/TimelineItem";
 import { Briefcase } from "lucide-react";
 
-const Experience = () => {
-  const [experiences, setExperiences] = useState<ExperienceData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchExperiences = async () => {
-      try {
-        const response = await apiClient.get(`/experiences`);
-        setExperiences(response.data);
-      } catch (error) {
-        // Handled by interceptor
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchExperiences();
-  }, []);
+const Experience = ({
+  experiences = [],
+}: {
+  experiences: ExperienceData[];
+}) => {
+  const isLoading = false;
 
   return (
     <motion.section

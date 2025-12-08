@@ -1,11 +1,10 @@
 "use client";
 import { motion, Variants } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";
 import TechCard from "../components/TechCard";
-import { apiClient } from "@/lib/api-client";
 
-interface TechStack {
+export interface TechStack {
   id: string;
   name: string;
   category: string;
@@ -47,24 +46,9 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Stack() {
+export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [stacks, setStacks] = useState<TechStack[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStacks = async () => {
-      try {
-        const response = await apiClient.get(`/tech-stacks`);
-        setStacks(response.data);
-      } catch (error) {
-        // Handled by interceptor
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchStacks();
-  }, []);
+  const isLoading = false;
 
   const filteredStacks =
     selectedCategory === "all"

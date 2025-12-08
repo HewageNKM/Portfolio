@@ -1,10 +1,8 @@
 "use client";
 import { motion, Variants } from "framer-motion";
-import { useEffect, useState } from "react";
 import EduCard from "../components/EduCard";
-import { apiClient } from "@/lib/api-client";
 
-interface EducationItem {
+export interface EducationItem {
   id: string;
   degree: string;
   institution: string;
@@ -41,32 +39,12 @@ import Timeline from "@/components/Timeline";
 import TimelineItem from "@/components/TimelineItem";
 import { GraduationCap } from "lucide-react";
 
-export default function Education() {
-  const [educations, setEducations] = useState<EducationItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchEducations = async () => {
-      try {
-        const response = await apiClient.get(`/educations`);
-        // Transform data to match EduCard props
-        const transformedData = response.data.map((item: any) => ({
-          id: item.id,
-          degree: item.degree,
-          institution: item.institution,
-          duration: `${item.startDate} - ${item.endDate}`,
-          details: item.description ? item.description.split("\n") : [],
-          gpa: item.gpa,
-        }));
-        setEducations(transformedData);
-      } catch (error) {
-        // Handled by interceptor
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchEducations();
-  }, []);
+export default function Education({
+  educations = [],
+}: {
+  educations: EducationItem[];
+}) {
+  const isLoading = false;
 
   return (
     <motion.section
