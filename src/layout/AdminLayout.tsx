@@ -44,8 +44,8 @@ const AdminLayout = () => {
   return (
     <div
       className="flex h-screen bg-neutral-100 dark:bg-neutral-900 font-inter
-                    [background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
-                    dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
+                    bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
+                    dark:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
     >
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
