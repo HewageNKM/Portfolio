@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { RecaptchaProvider } from "@/providers/RecaptchaProvider";
 
 export default function RootLayout({
   children,
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <RecaptchaProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </RecaptchaProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 import { db, admin } from "@/lib/firebase-admin";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
+import { validateRecaptcha } from "@/utils/validateRecaptcha";
 
 const RATE_LIMIT_COLLECTION = "rateLimits";
 
@@ -80,27 +81,17 @@ export async function POST(req: NextRequest) {
 
     console.log(`Verifying reCAPTCHA token for email: ${mail}`);
 
-    const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+    // ... existing rate limit checks ...
 
-    // Verify reCAPTCHA token
-    const response = await axios.post(
-      "https://www.google.com/recaptcha/api/siteverify",
-      null,
-      {
-        params: {
-          secret: recaptchaSecretKey,
-          response: recaptchaToken,
-        },
-      }
-    );
+    console.log(`Verifying reCAPTCHA token for email: ${mail}`);
 
-    console.log("reCAPTCHA verification response:", response.data);
+    // Use shared utility
+    const isRecaptchaValid = await validateRecaptcha(recaptchaToken);
 
-    // Check if reCAPTCHA verification is successful
-    if (response.data.success) {
+    if (isRecaptchaValid) {
       console.log(`reCAPTCHA verified successfully for email: ${mail}`);
 
-      // Save email details to Firestore (or send email, etc.)
+      // Save email details to Firestore
       await db.collection("mail").add({
         to: mail,
         message: {
