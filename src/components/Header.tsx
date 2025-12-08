@@ -33,7 +33,7 @@ const Header = ({
               href="/"
               className="lg:text-3xl dark:text-white text-black text-2xl font-extrabold tracking-wide"
             >
-              <Image src="/logo.png" alt="Logo" width={50} height={50} />
+              <Image src="/logo.png" alt="Logo" width={70} height={70} />
             </Link>
             <div className="flex items-center gap-2 lg:hidden">
               <button
