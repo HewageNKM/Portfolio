@@ -65,6 +65,10 @@ const BlogDetails = () => {
           (blog.content.match(/<img[^>]+src="([^">]+)"/) || [])[1] ||
           "https://hewagenkm.com/og-blogs.png"
         }
+        type="article"
+        publishedTime={blog.date}
+        modifiedTime={blog.date}
+        tags={blog.tags}
         schema={[
           {
             "@context": "https://schema.org",
