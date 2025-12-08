@@ -102,7 +102,7 @@ export default function Education() {
         <p className="text-center text-gray-500">Loading education...</p>
       ) : (
         <motion.ul
-          className="flex flex-col gap-8 mt-4"
+          className="flex flex-col gap-16 md:gap-8 mt-4"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

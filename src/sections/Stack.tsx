@@ -144,7 +144,7 @@ export default function Stack() {
               </motion.li>
             ))}
             {filteredStacks.length === 0 && (
-              <p className="text-xl text-gray-500 dark:text-gray-400 italic mt-8 p-4 rounded-lg">
+              <p className="text-lg text-gray-500 dark:text-gray-400 italic mt-8 p-4">
                 No stacks found for this category!
               </p>
             )}
