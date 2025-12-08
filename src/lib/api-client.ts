@@ -1,10 +1,9 @@
-import { API_BASE_URL } from "@/AppSettings";
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 import toast from "react-hot-toast";
 
 // Create Axios instance
 export const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: "/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
