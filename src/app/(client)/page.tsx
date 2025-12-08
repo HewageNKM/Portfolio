@@ -1,35 +1,74 @@
 import Hero from "@/sections/Hero";
 import Projects from "@/sections/Projects";
-import Stack, { TechStack } from "@/sections/Stack";
-import Experience, { ExperienceData } from "@/sections/Experience";
-import Achievements, { Achievement } from "@/sections/Achievements";
-import Services from "@/sections/Services"; // Static, no props needed
+import Stack from "@/sections/Stack";
+import Experience from "@/sections/Experience";
+import Achievements from "@/sections/Achievements";
+import Services from "@/sections/Services";
 import Education, { EducationItem } from "@/sections/Education";
+
 import { Metadata } from "next";
+import Script from "next/script";
+
 import { ProjectService } from "@/services/ProjectService";
 import { ExperienceService } from "@/services/ExperienceService";
 import { EducationService } from "@/services/EducationService";
 import { AchievementService } from "@/services/AchievementService";
 import { TechStackService } from "@/services/TechStackService";
 
+/* -------------------------------------------------------------------------- */
+/*                               SEO METADATA                                 */
+/* -------------------------------------------------------------------------- */
+
 export const metadata: Metadata = {
-  title: "Nadun Malwenna - Portfolio",
+  metadataBase: new URL("https://hewagenkm.com"),
+  title: {
+    default: "Nadun Malwenna - Full-Stack Software Engineer",
+    template: "%s | Nadun Malwenna",
+  },
   description:
-    "Explore the portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile applications, and creating innovative web solutions.",
+    "Explore the portfolio of Nadun Malwenna — a full-stack software engineer specializing in modern web development, cloud services, scalable backend systems, and mobile applications.",
   keywords: [
     "software engineer",
     "full-stack developer",
-    "mobile apps",
-    "cloud solutions",
+    "react developer",
+    "nextjs developer",
+    "mobile app developer",
+    "cloud developer",
+    "API development",
+    "Sri Lanka software engineer",
     "Nadun Malwenna",
   ],
+  alternates: {
+    canonical: "https://hewagenkm.com",
+  },
   openGraph: {
-    images: ["https://hewagenkm.com/og-home.png"],
     type: "website",
     url: "https://hewagenkm.com",
+    title: "Nadun Malwenna - Portfolio",
     siteName: "Nadun Malwenna Portfolio",
+    description:
+      "Portfolio of Nadun Malwenna — showcasing full-stack engineering, mobile apps, cloud solutions, and production-grade system design.",
+    images: [
+      {
+        url: "https://hewagenkm.com/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "Nadun Malwenna Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nadun Malwenna - Portfolio",
+    description:
+      "Full-stack software engineer building scalable apps, cloud systems, and modern web experiences.",
+    images: ["https://hewagenkm.com/og-home.png"],
   },
 };
+
+/* -------------------------------------------------------------------------- */
+/*                                   PAGE                                     */
+/* -------------------------------------------------------------------------- */
 
 export default async function Home() {
   const [
@@ -46,32 +85,119 @@ export default async function Home() {
     TechStackService.getTechStacks(),
   ]);
 
+  /* Prepare education data */
+  const formattedEducations: EducationItem[] = educationsData.map(
+    (item: any) => ({
+      id: item.id,
+      degree: item.degree,
+      institution: item.institution,
+      duration: `${item.startDate} - ${item.endDate}`,
+      details: item.description ? item.description.split("\n") : [],
+      gpa: item.gpa,
+    })
+  );
+
   return (
-    <main className="relative flex flex-col items-center justify-center p-5 pb-20 max-w-7xl mx-auto w-full gap-5">
-      <Hero />
-      <Services />
-      <Experience
-        experiences={experiencesData as unknown as ExperienceData[]}
+    <>
+      {/* ---------------------------------------------------------------------- */}
+      {/*                        GOOGLE RICH RESULTS (JSON-LD)                  */}
+      {/* ---------------------------------------------------------------------- */}
+
+      {/* Person Schema */}
+      <Script
+        id="schema-person"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Nadun Malwenna",
+            url: "https://hewagenkm.com",
+            jobTitle: "Full-Stack Software Engineer",
+            image: "https://hewagenkm.com/og-home.png",
+            sameAs: [
+              "https://github.com/YOUR_GITHUB",
+              "https://linkedin.com/in/YOUR_LINKEDIN",
+            ],
+          }),
+        }}
       />
-      <Education
-        educations={
-          educationsData.map((item: any) => ({
-            id: item.id,
-            degree: item.degree,
-            institution: item.institution,
-            duration: `${item.startDate} - ${item.endDate}`,
-            details: item.description ? item.description.split("\n") : [],
-            gpa: item.gpa,
-          })) as EducationItem[]
-        }
+
+      {/* Website Schema */}
+      <Script
+        id="schema-website"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Nadun Malwenna Portfolio",
+            url: "https://hewagenkm.com",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://hewagenkm.com/?s={search_term}",
+              "query-input": "required name=search_term",
+            },
+          }),
+        }}
       />
-      <Achievements
-        achievements={achievementsData as unknown as Achievement[]}
+
+      {/* Breadcrumb Schema */}
+      <Script
+        id="schema-breadcrumbs"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://hewagenkm.com",
+              },
+            ],
+          }),
+        }}
       />
-      <Stack stacks={stacksData as unknown as TechStack[]} />
-      <Projects
-        projects={projectsData.filter((p: any) => p.isFeatured) as any[]}
-      />
-    </main>
+
+      {/* ---------------------------------------------------------------------- */}
+      {/*                             MAIN PAGE                                 */}
+      {/* ---------------------------------------------------------------------- */}
+
+      <main className="relative flex flex-col items-center justify-center p-5 pb-20 max-w-7xl mx-auto w-full gap-5">
+        <section id="hero">
+          <Hero />
+        </section>
+
+        <section id="services">
+          <Services />
+        </section>
+
+        <section id="experience">
+          <Experience experiences={experiencesData} />
+        </section>
+
+        <section id="education">
+          <Education educations={formattedEducations} />
+        </section>
+
+        <section id="achievements">
+          <Achievements achievements={achievementsData} />
+        </section>
+
+        <section id="tech-stack">
+          <Stack stacks={stacksData} />
+        </section>
+
+        <section id="projects">
+          <Projects projects={projectsData.filter((p: any) => p.isFeatured)} />
+        </section>
+      </main>
+    </>
   );
 }

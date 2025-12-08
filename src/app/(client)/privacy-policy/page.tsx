@@ -1,8 +1,41 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy - Nadun Malwenna",
-  description: "Privacy Policy for Nadun Malwenna's Portfolio",
+  title: "Privacy Policy | Nadun Malwenna",
+  description:
+    "Read the Privacy Policy for Nadun Malwenna’s portfolio website, including details on data collection, usage, cookies, and third-party services such as Firebase and Google Gemini.",
+  keywords: [
+    "privacy policy",
+    "nadun malwenna",
+    "data usage",
+    "cookies",
+    "website privacy",
+    "portfolio privacy",
+    "firebase auth privacy",
+    "google gemini privacy",
+  ],
+  openGraph: {
+    title: "Privacy Policy | Nadun Malwenna",
+    description:
+      "Learn how your data is collected, used, and protected on Nadun Malwenna’s portfolio website.",
+    url: "https://hewagenkm.com/privacy-policy",
+    type: "article",
+    images: [
+      {
+        url: "https://hewagenkm.com/og-privacy.png",
+        width: 1200,
+        height: 630,
+        alt: "Privacy Policy - Nadun Malwenna",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Privacy Policy | Nadun Malwenna",
+    description:
+      "Read the Privacy Policy for Nadun Malwenna’s portfolio and understand how your data is handled.",
+    images: ["https://hewagenkm.com/og-privacy.png"],
+  },
 };
 
 export default function PrivacyPolicy() {
@@ -33,14 +66,14 @@ export default function PrivacyPolicy() {
           </li>
           <li>
             <strong>Usage Data:</strong> We may use Google Analytics to collect
-            anonymous information about how visitors interact with the site
-            (e.g., pages visited, time spent).
+            anonymous information about how visitors interact with the site such
+            as pages visited and session duration.
           </li>
           <li>
             <strong>Chat Data:</strong> Messages sent to the AI Portfolio
             Assistant are processed by Google&apos;s Gemini API. Conversations
-            may be temporarily stored for context during your session but are
-            not permanently archived for identifying individuals.
+            may be temporarily stored for session context but are not retained
+            for long-term identification.
           </li>
         </ul>
 
@@ -48,33 +81,35 @@ export default function PrivacyPolicy() {
           3. How We Use Your Information
         </h2>
         <p>
-          - To provide and maintain the Guestbook service.
+          - To provide and maintain the Guestbook functionality.
           <br />
-          - To analyze website traffic and improve user experience.
-          <br />- To prevent abuse of the chat and guestbook features.
+          - To improve website performance and understand usage patterns.
+          <br />- To prevent misuse of interactive features such as chat and
+          guestbook.
         </p>
 
         <h2 className="text-xl font-bold mt-6 mb-3">
           4. Cookies and Local Storage
         </h2>
         <p>
-          We use local storage and cookies to maintain your authenticated
-          session via Firebase Auth. These are essential for the Guestbook
-          feature to function properly. By using this service, you consent to
-          the storage of these functional identifiers.
+          We use cookies and browser storage to maintain your Firebase
+          authenticated session. These are essential for enabling Guestbook
+          features. By using the website, you consent to the use of these
+          functional cookies.
         </p>
 
         <h2 className="text-xl font-bold mt-6 mb-3">5. Third-Party Services</h2>
         <p>
-          We use Firebase (Google) for authentication and database services. We
-          use Google Gemini for AI chat functionality. Please review their
-          respective privacy policies for more information.
+          We rely on trusted third-party systems including Firebase (Google) for
+          authentication and database services, and Google Gemini for AI chat.
+          You are encouraged to review their respective privacy policies for
+          more details.
         </p>
 
         <h2 className="text-xl font-bold mt-6 mb-3">6. Contact</h2>
         <p>
-          If you have questions about this policy, please contact me via the
-          contact form on this website.
+          If you have questions about this Privacy Policy, please contact me via
+          the contact page on this website.
         </p>
       </div>
     </div>
