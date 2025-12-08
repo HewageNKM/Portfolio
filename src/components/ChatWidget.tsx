@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { Send, MessageSquare, X, Minimize2, Loader2, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { apiClient } from "@/lib/api-client";
+import ReactMarkdown from "react-markdown";
 
 interface Message {
   role: "user" | "bot";
@@ -125,7 +126,47 @@ export default function ChatWidget() {
                           : "bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 rounded-bl-none shadow-sm"
                       }`}
                     >
-                      {msg.content}
+                      {msg.role === "bot" ? (
+                        <div className="prose prose-sm dark:prose-invert max-w-none">
+                          <ReactMarkdown
+                            components={{
+                              p: ({ node, ...props }) => (
+                                <p className="mb-2 last:mb-0" {...props} />
+                              ),
+                              ul: ({ node, ...props }) => (
+                                <ul
+                                  className="list-disc pl-4 mb-2 space-y-1"
+                                  {...props}
+                                />
+                              ),
+                              ol: ({ node, ...props }) => (
+                                <ol
+                                  className="list-decimal pl-4 mb-2 space-y-1"
+                                  {...props}
+                                />
+                              ),
+                              li: ({ node, ...props }) => (
+                                <li className="text-sm" {...props} />
+                              ),
+                              strong: ({ node, ...props }) => (
+                                <strong className="font-bold" {...props} />
+                              ),
+                              a: ({ node, ...props }) => (
+                                <a
+                                  className="text-blue-500 hover:underline"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  {...props}
+                                />
+                              ),
+                            }}
+                          >
+                            {msg.content}
+                          </ReactMarkdown>
+                        </div>
+                      ) : (
+                        msg.content
+                      )}
                     </div>
                   </div>
                 ))}
