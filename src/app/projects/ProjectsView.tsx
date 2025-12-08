@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { FiExternalLink } from "react-icons/fi";
 import { SiGithub } from "react-icons/si";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 
 export interface ProjectItem {
   id: string;
@@ -25,7 +24,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,

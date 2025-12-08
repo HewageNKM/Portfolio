@@ -1,10 +1,10 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import BgShadow from "./BgShadow";
-import {MenuItems, socials } from "../assets/contants";
+import { MenuItems, socials } from "../assets/contants";
 import { PiArrowRight } from "react-icons/pi";
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { x: -400, opacity: 0 },
   visible: {
     x: 0,
@@ -23,7 +23,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { x: -20, opacity: 0 },
   visible: {
     x: 0,

@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import EduCard from "../components/EduCard";
 import axios from "axios";
@@ -14,7 +14,7 @@ interface EducationItem {
   gpa?: string;
 }
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -28,7 +28,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,

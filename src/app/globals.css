@@ -9,7 +9,14 @@
   --color-bg-dark: #111111;
   --color-text-light: #1a1a1a;
   --color-text-dark: #e5e5e5;
+  --color-text-dark: #e5e5e5;
 }
+
+/* Explicit font utilities for dynamic classes */
+.font-inter { font-family: var(--font-inter); }
+.font-mono { font-family: monospace; } /* Default mono or customize */
+.font-roboto { font-family: var(--font-roboto); }
+.font-lora { font-family: var(--font-lora); }
 
 :root {
   /* Matte-inspired palette */
@@ -37,19 +44,21 @@ body {
 }
 
 /* Dark mode overrides */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--bg-dark);
-    color: var(--text-dark);
-    background-image: 
-      repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,0.02) 0px,
-        rgba(255,255,255,0.02) 1px,
-        transparent 1px,
-        transparent 20px
-      );
-  }
+/* Enable class-based dark mode */
+@variant dark (&:where(.dark, .dark *));
+
+/* Dark mode overrides using the variant */
+.dark body {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+  background-image: 
+    repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 20px
+    );
 }
 
 /* Class-based dark mode (if mapped to .dark class) */

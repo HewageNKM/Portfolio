@@ -59,7 +59,7 @@ export async function getTotalCommits() {
     if (commitsRes) {
       //@ts-ignore
       const self = commitsRes.find(
-        (contributor) => contributor.login === username
+        (contributor: any) => contributor.login === username
       );
       totalCommits += self ? self.contributions : 0;
     }

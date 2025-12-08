@@ -1,9 +1,9 @@
 "use client";
-import { motion } from "framer-motion"; // For adding animations to components
+import { motion, Variants } from "framer-motion"; // For adding animations to components
 import { MenuItems, socials } from "../assets/contants";
 
 // Variants for animating the footer when it comes into view
-const footerVariants = {
+const footerVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: {
     opacity: 1,
@@ -16,7 +16,7 @@ const footerVariants = {
 };
 
 // Variants for animating each item in the footer (links and icons)
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 },
 };

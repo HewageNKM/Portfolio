@@ -10,7 +10,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Nadun Malwenna - Portfolio",
   description:
-    "Explore my work as a software engineer specializing in full-stack development and mobile apps.",
+    "Explore the portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile applications, and creating innovative web solutions.",
   keywords: [
     "software engineer",
     "full-stack developer",

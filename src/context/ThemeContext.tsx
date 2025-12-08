@@ -66,7 +66,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         setFont: setEffectiveFont,
       }}
     >
-      <main className={`${font} transition-all`}>{children}</main>
+      {children}
     </ThemeContext.Provider>
   );
 }

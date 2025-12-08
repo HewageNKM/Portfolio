@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader2 } from "lucide-react";
-
+import { API_BASE_URL } from "../AppSettings";
 export default function Message() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [sending, setSending] = useState(false);
@@ -46,15 +46,13 @@ export default function Message() {
         message: message,
       };
 
-      const url = import.meta.env.VITE_SERVER_URL;
-
       await axios({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Client-IP": publicIp,
         },
-        url: `${url}/mails`,
+        url: `${API_BASE_URL}/mails`,
         data: JSON.stringify(newData),
       });
 

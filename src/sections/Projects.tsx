@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import axios from "axios";
 import { API_BASE_URL } from "../AppSettings";
 
@@ -19,17 +19,27 @@ interface Project {
 }
 
 // Animation variants for individual project cards and other items
-const itemVariants = {
-  hidden: { opacity: 0, y: 20, scale: 0.95 }, // Initially hidden with slight upward movement and scale down
+const containerVariants: Variants = {
+  hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
-    y: 0, // Move to the original position
-    scale: 1, // Scale to original size
+    y: 0,
     transition: {
-      type: "spring", // Use spring for smooth motion
-      stiffness: 150, // Stiffness controls the spring effect strength
-      damping: 20, // Controls how quickly the motion settles
+      staggerChildren: 0.1,
+      type: "spring",
+      stiffness: 80,
+      damping: 20,
     },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 120, damping: 18 },
   },
 };
 
@@ -56,7 +66,7 @@ export default function Projects() {
   return (
     <motion.section
       id="works"
-      className="flex flex-col mt-10 p-3 gap-4"
+      className="flex flex-col py-10 px-4 md:px-0 gap-6 w-full"
       initial={{ opacity: 0 }} // Start with hidden opacity
       whileInView={{ opacity: 1 }} // Fade in when in view
       transition={{ duration: 0.8 }} // Animation duration for opacity
@@ -76,7 +86,7 @@ export default function Projects() {
         className="md:text-lg text-sm dark:text-white text-black"
         variants={itemVariants}
       >
-        Here are some of the recent projects I've worked on.
+        Here are some of the recent projects I&apos;ve worked on.
       </motion.p>
 
       {/* Grid for Project Cards */}
@@ -86,7 +96,7 @@ export default function Projects() {
         </p>
       ) : projects.length > 0 ? (
         <motion.ul
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-6"
           variants={{
             visible: { transition: { staggerChildren: 0.1 } },
           }}

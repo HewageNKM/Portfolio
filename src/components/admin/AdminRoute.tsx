@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../FirebaseClient";
+import { auth } from "../../lib/firebase";
 
 import AdminLayout from "../../layout/AdminLayout";
 
