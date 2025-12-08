@@ -28,7 +28,7 @@ env:
 
   # Secret Manager bindings (server-only runtime)
   - variable: GITHUB_TOKEN
-    secret: github-pat
+    secret: github-secret
   - variable: RECAPTCHA_SECRET_KEY
     secret: recaptcha-secret
   - variable: GEMINI_API_KEY
