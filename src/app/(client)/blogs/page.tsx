@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
-import { API_BASE_URL } from "../../AppSettings";
+import { API_BASE_URL } from "@/AppSettings";
 
 interface BlogItem {
   id: string;
