@@ -102,52 +102,11 @@ export default function Projects() {
           viewport={{ once: true }}
         >
           {projects.map((project) => (
-            <motion.li
+            <ProjectCard
               key={project.id}
+              project={project}
               variants={itemVariants}
-              className="bg-white dark:bg-zinc-800 p-5 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between border border-gray-200 dark:border-gray-700"
-            >
-              <div>
-                <h3 className="text-xl font-semibold mb-2 text-black dark:text-white">
-                  {project.title}
-                </h3>
-                <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 leading-relaxed line-clamp-3">
-                  {project.description}
-                </p>
-                {/* Optional: Display technologies
-                {project.technologies && project.technologies.length > 0 && (
-                  <div className="mb-3">
-                    <div className="flex flex-wrap gap-2">
-                      {project.technologies.map(tech => (
-                        <span key={tech} className="text-xs bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded-full text-gray-800 dark:text-gray-200">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )} */}
-              </div>
-              <div className="mt-auto pt-3 flex flex-wrap gap-3">
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3 py-1.5 bg-black dark:bg-white text-white dark:text-black rounded-md text-xs font-medium hover:opacity-80 transition-opacity"
-                >
-                  <SiGithub size={16} /> GitHub
-                </a>
-                {project.liveUrl && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-black dark:text-white rounded-md text-xs font-medium hover:bg-gray-50 dark:hover:bg-zinc-700 transition-colors"
-                  >
-                    <FiExternalLink size={16} /> Live Demo
-                  </a>
-                )}
-              </div>
-            </motion.li>
+            />
           ))}
         </motion.ul>
       ) : (
