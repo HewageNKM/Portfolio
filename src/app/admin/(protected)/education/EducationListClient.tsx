@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface Education {
@@ -22,11 +21,10 @@ export default function EducationListClient() {
 
   const fetchEducations = async () => {
     try {
-      const response = await axios.get(`${INTERNAL_API_BASE_URL}/educations`);
+      const response = await apiClient.get(`/educations`);
       setEducations(response.data);
     } catch (error) {
-      console.error("Error fetching educations:", error);
-      toast.error("Failed to fetch educations");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -43,14 +41,13 @@ export default function EducationListClient() {
       return;
     try {
       const token = await auth.currentUser?.getIdToken();
-      await axios.delete(`${INTERNAL_API_BASE_URL}/educations/${id}`, {
+      await apiClient.delete(`/educations/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Education record deleted");
       fetchEducations();
     } catch (error) {
-      console.error("Error deleting education:", error);
-      toast.error("Failed to delete education record");
+      // Handled by interceptor
     }
   };
 

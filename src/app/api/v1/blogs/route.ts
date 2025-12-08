@@ -1,5 +1,5 @@
-import { db } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/lib/auth";
+import { BlogService } from "@/services/BlogService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -7,29 +7,10 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "9");
-    const offset = (page - 1) * limit;
 
-    const blogsCollection = db.collection("blogs");
+    const result = await BlogService.getBlogs(page, limit);
 
-    // Get total count
-    const countSnapshot = await blogsCollection.count().get();
-    const total = countSnapshot.data().count;
-
-    const snapshot = await blogsCollection
-      .orderBy("date", "desc")
-      .limit(limit)
-      .offset(offset)
-      .get();
-
-    const blogs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
-    return NextResponse.json({
-      data: blogs,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+    return NextResponse.json(result);
   } catch (error) {
     console.error("Error fetching blogs:", error);
     return NextResponse.json(
@@ -47,11 +28,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const blog = await req.json();
-    if (!blog.date) {
-      blog.date = new Date().toISOString();
-    }
-    const docRef = await db.collection("blogs").add(blog);
-    return NextResponse.json({ id: docRef.id, ...blog }, { status: 201 });
+    const result = await BlogService.createBlog(blog);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },

@@ -3,8 +3,7 @@ import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";
 import TechCard from "../components/TechCard";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 interface TechStack {
   id: string;
@@ -56,10 +55,10 @@ export default function Stack() {
   useEffect(() => {
     const fetchStacks = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/tech-stacks`);
+        const response = await apiClient.get(`/tech-stacks`);
         setStacks(response.data);
       } catch (error) {
-        console.error("Error fetching tech stacks:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

@@ -4,10 +4,9 @@ import { useState, useEffect, useMemo } from "react";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { useAiGenerate } from "@/hooks/useAiGenerate";
 import AiAssistButton from "@/components/admin/AiAssistButton";
 import AiGenerationModal from "@/components/admin/AiGenerationModal";
@@ -33,9 +32,7 @@ export default function BlogEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchBlog = async () => {
         try {
-          const response = await axios.get(
-            `${INTERNAL_API_BASE_URL}/blogs/${id}`
-          );
+          const response = await apiClient.get(`/blogs/${id}`);
           const blog = response.data;
           setTitle(blog.title);
           setSummary(blog.summary);
@@ -44,8 +41,7 @@ export default function BlogEditorClient({ id }: { id?: string }) {
           setDate(blog.date.split("T")[0]);
           setIsFeatured(blog.isFeatured || false);
         } catch (error) {
-          console.error("Error fetching blog:", error);
-          toast.error("Failed to load blog");
+          // Handled by interceptor
         }
       };
       fetchBlog();
@@ -72,20 +68,19 @@ export default function BlogEditorClient({ id }: { id?: string }) {
       };
 
       if (id && id !== "new") {
-        await axios.put(`${INTERNAL_API_BASE_URL}/blogs/${id}`, blogData, {
+        await apiClient.put(`/blogs/${id}`, blogData, {
           headers,
         });
         toast.success("Blog updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/blogs`, blogData, {
+        await apiClient.post(`/blogs`, blogData, {
           headers,
         });
         toast.success("Blog created");
       }
       router.push("/admin/blogs");
     } catch (error) {
-      console.error("Error saving blog:", error);
-      toast.error("Failed to save blog");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }

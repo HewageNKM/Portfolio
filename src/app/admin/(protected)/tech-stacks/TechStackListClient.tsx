@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Layers, Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface TechStack {
@@ -21,11 +20,10 @@ export default function TechStackListClient() {
 
   const fetchTechStacks = async () => {
     try {
-      const response = await axios.get(`${INTERNAL_API_BASE_URL}/tech-stacks`);
+      const response = await apiClient.get(`/tech-stacks`);
       setTechStacks(response.data);
     } catch (error) {
-      console.error("Error fetching tech stacks:", error);
-      toast.error("Failed to fetch tech stacks");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -40,14 +38,13 @@ export default function TechStackListClient() {
       return;
     try {
       const token = await auth.currentUser?.getIdToken();
-      await axios.delete(`${INTERNAL_API_BASE_URL}/tech-stacks/${id}`, {
+      await apiClient.delete(`/tech-stacks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Tech stack deleted");
       fetchTechStacks();
     } catch (error) {
-      console.error("Error deleting tech stack:", error);
-      toast.error("Failed to delete record");
+      // Handled by interceptor
     }
   };
 

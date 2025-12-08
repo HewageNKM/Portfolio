@@ -2,8 +2,7 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import AchievementCard from "../components/AchievementCard";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 interface Achievement {
   id: string;
@@ -21,10 +20,10 @@ export default function Achievements() {
   useEffect(() => {
     const fetchAchievements = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/achievements`);
+        const response = await apiClient.get(`/achievements`);
         setAchievements(response.data);
       } catch (error) {
-        console.error("Error fetching achievements:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

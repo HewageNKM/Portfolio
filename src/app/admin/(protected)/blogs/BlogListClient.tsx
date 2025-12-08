@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface Blog {
@@ -20,17 +19,14 @@ export default function BlogListClient() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get(
-        `${INTERNAL_API_BASE_URL}/blogs?limit=100`
-      ); // Fetch 100 for admin list for now
+      const response = await apiClient.get(`/blogs?limit=100`); // Fetch 100 for admin list for now
       if (Array.isArray(response.data)) {
         setBlogs(response.data);
       } else {
         setBlogs(response.data.data);
       }
     } catch (error) {
-      console.error("Error fetching blogs:", error);
-      toast.error("Failed to fetch blogs");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -44,14 +40,13 @@ export default function BlogListClient() {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
     try {
       const token = await auth.currentUser?.getIdToken();
-      await axios.delete(`${INTERNAL_API_BASE_URL}/blogs/${id}`, {
+      await apiClient.delete(`/blogs/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Blog deleted");
       fetchBlogs();
     } catch (error) {
-      console.error("Error deleting blog:", error);
-      toast.error("Failed to delete blog");
+      // Handled by interceptor
     }
   };
 

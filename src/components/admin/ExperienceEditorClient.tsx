@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Save, ArrowLeft } from "lucide-react";
 import AiAssistButton from "@/components/admin/AiAssistButton";
 import AiGenerationModal from "@/components/admin/AiGenerationModal";
@@ -46,9 +45,7 @@ export default function ExperienceEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchExperience = async () => {
         try {
-          const response = await axios.get(
-            `${INTERNAL_API_BASE_URL}/experiences/${id}`
-          );
+          const response = await apiClient.get(`/experiences/${id}`);
           const data = response.data;
           // Join array back to string for editing
           if (Array.isArray(data.description)) {
@@ -56,8 +53,7 @@ export default function ExperienceEditorClient({ id }: { id?: string }) {
           }
           setFormData(data);
         } catch (error) {
-          console.error("Error fetching experience:", error);
-          toast.error("Failed to load experience record");
+          // Handled by interceptor
         }
       };
       fetchExperience();
@@ -80,20 +76,19 @@ export default function ExperienceEditorClient({ id }: { id?: string }) {
       };
 
       if (id && id !== "new") {
-        await axios.put(`${INTERNAL_API_BASE_URL}/experiences/${id}`, payload, {
+        await apiClient.put(`/experiences/${id}`, payload, {
           headers,
         });
         toast.success("Experience updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/experiences`, payload, {
+        await apiClient.post(`/experiences`, payload, {
           headers,
         });
         toast.success("Experience added");
       }
       router.push("/admin/experiences");
     } catch (error) {
-      console.error("Error saving experience:", error);
-      toast.error("Failed to save experience record");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }

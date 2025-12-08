@@ -2,8 +2,7 @@
 import { motion, Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import EduCard from "../components/EduCard";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 interface EducationItem {
   id: string;
@@ -45,7 +44,7 @@ export default function Education() {
   useEffect(() => {
     const fetchEducations = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/educations`);
+        const response = await apiClient.get(`/educations`);
         // Transform data to match EduCard props
         const transformedData = response.data.map((item: any) => ({
           id: item.id,
@@ -57,7 +56,7 @@ export default function Education() {
         }));
         setEducations(transformedData);
       } catch (error) {
-        console.error("Error fetching educations:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

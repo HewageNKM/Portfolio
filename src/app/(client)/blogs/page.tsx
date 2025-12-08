@@ -2,9 +2,8 @@
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import Link from "next/link";
-import { API_BASE_URL } from "@/AppSettings";
 
 interface BlogItem {
   id: string;
@@ -25,8 +24,8 @@ export default function Blogs() {
     const fetchBlogs = async () => {
       setIsLoading(true);
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/blogs?page=${currentPage}&limit=${limit}`
+        const response = await apiClient.get(
+          `/blogs?page=${currentPage}&limit=${limit}`
         );
         if (Array.isArray(response.data)) {
           setBlogs(response.data);
@@ -36,7 +35,7 @@ export default function Blogs() {
           setTotalPages(response.data.totalPages);
         }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
+        // Error handled by interceptor
       } finally {
         setIsLoading(false);
       }

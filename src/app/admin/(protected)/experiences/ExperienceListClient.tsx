@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface Experience {
@@ -21,11 +20,10 @@ export default function ExperienceListClient() {
 
   const fetchExperiences = async () => {
     try {
-      const response = await axios.get(`${INTERNAL_API_BASE_URL}/experiences`);
+      const response = await apiClient.get(`/experiences`);
       setExperiences(response.data);
     } catch (error) {
-      console.error("Error fetching experiences:", error);
-      toast.error("Failed to fetch experiences");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -40,14 +38,13 @@ export default function ExperienceListClient() {
       return;
     try {
       const token = await auth.currentUser?.getIdToken();
-      await axios.delete(`${INTERNAL_API_BASE_URL}/experiences/${id}`, {
+      await apiClient.delete(`/experiences/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Experience deleted");
       fetchExperiences();
     } catch (error) {
-      console.error("Error deleting experience:", error);
-      toast.error("Failed to delete experience");
+      // Handled by interceptor
     }
   };
 

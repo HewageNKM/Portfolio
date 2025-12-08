@@ -7,7 +7,7 @@ import type { NextRequest } from "next/server";
 // For this portfolio, a per-instance limit is a sufficient first defense.
 const rateLimitMap = new Map();
 
-export function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Only rate limit API routes

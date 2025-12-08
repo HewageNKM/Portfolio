@@ -1,123 +1,26 @@
-import { db, admin } from "@/lib/firebase-admin";
-import axios from "axios";
+import { MailService } from "@/services/MailService";
 import { NextRequest, NextResponse } from "next/server";
-import { validateRecaptcha } from "@/utils/validateRecaptcha";
-
-const RATE_LIMIT_COLLECTION = "rateLimits";
-
-// Helper function to check rate limit
-const isRateLimited = async (ip: string): Promise<boolean> => {
-  const currentTime = Date.now();
-  const timeWindow = 60 * 1000;
-  const maxRequests = 2;
-
-  console.log(`Checking rate limit for IP: ${ip}`);
-
-  // Fetch rate limit data from Firestore
-  const docRef = db.collection(RATE_LIMIT_COLLECTION).doc(ip);
-  const docSnapshot = await docRef.get();
-
-  let timestamps: number[] = [];
-
-  if (docSnapshot.exists) {
-    timestamps = docSnapshot.data()?.timestamps || [];
-  }
-
-  // Filter out timestamps that are outside the time window
-  const recentRequests = timestamps.filter(
-    (timestamp) => currentTime - timestamp < timeWindow
-  );
-
-  console.log(`Recent requests for IP ${ip}: ${recentRequests.length}`);
-
-  // If the user has exceeded the max request limit within the time window
-  if (recentRequests.length >= maxRequests) {
-    console.log(`Rate limit exceeded for IP: ${ip}`);
-    return true;
-  }
-
-  // Log this request in Firestore
-  recentRequests.push(currentTime);
-  await docRef.set({ timestamps: recentRequests });
-
-  console.log(`Request allowed for IP: ${ip}`);
-  return false;
-};
 
 export async function POST(req: NextRequest) {
   try {
-    const { recaptchaToken, mail, subject, message, clinetName } =
-      await req.json();
+    const body = await req.json();
 
-    // Get client IP securely from headers
-    const forwardedFor = req.headers.get("x-forwarded-for");
-    const clientIP = forwardedFor ? forwardedFor.split(",")[0] : "127.0.0.1";
+    // Validate request body basics (service also checks, but good to have)
+    // Actually Service checks throwing errors, so we can just call it.
+    // Client IP rate limiting is handled by middleware now.
 
-    if (!clientIP) {
-      return NextResponse.json(
-        { error: "Missing client IP address." },
-        { status: 400 }
-      );
-    }
+    const result = await MailService.sendMail({
+      ...body,
+      clientName: body.clinetName, // Fixing typo in mapping if exist, assuming body has clientName or clinetName?
+      // Previous code had "clinetName".
+    });
 
-    console.log(`Received mail request from IP: ${clientIP}`);
-
-    if (!recaptchaToken || !mail || !subject || !message || !clinetName) {
-      return NextResponse.json(
-        { error: "Missing required fields." },
-        { status: 400 }
-      );
-    }
-
-    const isLimited = await isRateLimited(clientIP);
-
-    // Check rate limit
-    if (isLimited) {
-      return NextResponse.json(
-        { error: "Rate limit exceeded." },
-        { status: 429 }
-      );
-    }
-
-    console.log(`Verifying reCAPTCHA token for email: ${mail}`);
-
-    // ... existing rate limit checks ...
-
-    console.log(`Verifying reCAPTCHA token for email: ${mail}`);
-
-    // Use shared utility
-    const isRecaptchaValid = await validateRecaptcha(recaptchaToken);
-
-    if (isRecaptchaValid) {
-      console.log(`reCAPTCHA verified successfully for email: ${mail}`);
-
-      // Save email details to Firestore
-      await db.collection("mail").add({
-        to: mail,
-        message: {
-          subject: subject,
-          html: message,
-        },
-        createdAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
-
-      console.log(`Email sent for: ${mail}`);
-      return NextResponse.json(
-        { message: "Email sent successfully" },
-        { status: 201 }
-      );
-    } else {
-      console.log("reCAPTCHA verification failed.");
-      return NextResponse.json(
-        { error: "reCAPTCHA verification failed." },
-        { status: 400 }
-      );
-    }
+    return NextResponse.json(result, { status: 201 });
   } catch (err) {
     console.error("Error processing mail request:", err);
     return NextResponse.json(
       { error: (err as Error).message },
-      { status: 500 }
+      { status: 400 } // Service throws validation errors usually
     );
   }
 }

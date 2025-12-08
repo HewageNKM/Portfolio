@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Save, ArrowLeft } from "lucide-react";
 
 export default function TechStackEditorClient({ id }: { id?: string }) {
@@ -21,13 +20,10 @@ export default function TechStackEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchTechStack = async () => {
         try {
-          const response = await axios.get(
-            `${INTERNAL_API_BASE_URL}/tech-stacks/${id}`
-          );
+          const response = await apiClient.get(`/tech-stacks/${id}`);
           setFormData(response.data);
         } catch (error) {
-          console.error("Error fetching tech stack:", error);
-          toast.error("Failed to load tech stack");
+          // Handled by interceptor
         }
       };
       fetchTechStack();
@@ -42,24 +38,19 @@ export default function TechStackEditorClient({ id }: { id?: string }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (id && id !== "new") {
-        await axios.put(
-          `${INTERNAL_API_BASE_URL}/tech-stacks/${id}`,
-          formData,
-          {
-            headers,
-          }
-        );
+        await apiClient.put(`/tech-stacks/${id}`, formData, {
+          headers,
+        });
         toast.success("Tech stack updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/tech-stacks`, formData, {
+        await apiClient.post(`/tech-stacks`, formData, {
           headers,
         });
         toast.success("Tech stack added");
       }
       router.push("/admin/tech-stacks");
     } catch (error) {
-      console.error("Error saving tech stack:", error);
-      toast.error("Failed to save tech stack");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }

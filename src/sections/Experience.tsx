@@ -1,8 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 interface ExperienceData {
   id: string;
@@ -19,10 +18,10 @@ const Experience = () => {
   useEffect(() => {
     const fetchExperiences = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/experiences`);
+        const response = await apiClient.get(`/experiences`);
         setExperiences(response.data);
       } catch (error) {
-        console.error("Error fetching experiences:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

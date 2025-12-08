@@ -1,7 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import toast from "react-hot-toast";
 
 interface UseAiGenerateResult {
@@ -30,8 +29,8 @@ export const useAiGenerate = (): UseAiGenerateResult => {
       }
 
       const headers = { Authorization: `Bearer ${token}` };
-      const response = await axios.post(
-        `${INTERNAL_API_BASE_URL}/ai/generate`,
+      const response = await apiClient.post(
+        `/ai/generate`,
         { prompt },
         { headers }
       );
@@ -39,10 +38,7 @@ export const useAiGenerate = (): UseAiGenerateResult => {
       return response.data.text;
     } catch (err) {
       console.error("AI Generation error:", err);
-      const errorMessage =
-        (err as any)?.response?.data?.error || "Failed to generate content";
-      setError(errorMessage);
-      toast.error(errorMessage);
+      // Detailed error is handled by interceptor, but we still catch to return null
       return null;
     } finally {
       setIsLoading(false);

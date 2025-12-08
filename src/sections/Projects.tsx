@@ -4,8 +4,7 @@ import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion, Variants } from "framer-motion";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 // Define an interface for the project structure
 interface Project {
@@ -18,7 +17,7 @@ interface Project {
   isFeatured?: boolean;
 }
 
-// Animation variants for individual project cards and other items
+// ... variants ...
 const containerVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
@@ -50,12 +49,10 @@ export default function Projects() {
   useEffect(() => {
     const fetchFeaturedProjects = async () => {
       try {
-        const response = await axios.get(
-          `${API_BASE_URL}/projects?featured=true`
-        );
+        const response = await apiClient.get(`/projects?featured=true`);
         setProjects(response.data);
       } catch (error) {
-        console.error("Error fetching featured projects:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

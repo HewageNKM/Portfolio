@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Save, ArrowLeft } from "lucide-react";
 import AiAssistButton from "@/components/admin/AiAssistButton";
 import AiGenerationModal from "@/components/admin/AiGenerationModal";
@@ -43,13 +42,10 @@ export default function AchievementEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchAchievement = async () => {
         try {
-          const response = await axios.get(
-            `${INTERNAL_API_BASE_URL}/achievements/${id}`
-          );
+          const response = await apiClient.get(`/achievements/${id}`);
           setFormData(response.data);
         } catch (error) {
-          console.error("Error fetching achievement:", error);
-          toast.error("Failed to load achievement");
+          // Handled by interceptor
         }
       };
       fetchAchievement();
@@ -64,24 +60,19 @@ export default function AchievementEditorClient({ id }: { id?: string }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (id && id !== "new") {
-        await axios.put(
-          `${INTERNAL_API_BASE_URL}/achievements/${id}`,
-          formData,
-          {
-            headers,
-          }
-        );
+        await apiClient.put(`/achievements/${id}`, formData, {
+          headers,
+        });
         toast.success("Achievement updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/achievements`, formData, {
+        await apiClient.post(`/achievements`, formData, {
           headers,
         });
         toast.success("Achievement added");
       }
       router.push("/admin/achievements");
     } catch (error) {
-      console.error("Error saving achievement:", error);
-      toast.error("Failed to save achievement");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }

@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Pencil, PlusIcon, Trash2 } from "lucide-react";
 
 interface Project {
@@ -20,11 +19,10 @@ export default function ProjectListClient() {
 
   const fetchProjects = async () => {
     try {
-      const response = await axios.get(`${INTERNAL_API_BASE_URL}/projects`);
+      const response = await apiClient.get(`/projects`);
       setProjects(response.data);
     } catch (error) {
-      console.error("Error fetching projects:", error);
-      toast.error("Failed to fetch projects");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -39,14 +37,13 @@ export default function ProjectListClient() {
       return;
     try {
       const token = await auth.currentUser?.getIdToken();
-      await axios.delete(`${INTERNAL_API_BASE_URL}/projects/${id}`, {
+      await apiClient.delete(`/projects/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Project deleted");
       fetchProjects();
     } catch (error) {
-      console.error("Error deleting project:", error);
-      toast.error("Failed to delete project");
+      // Handled by interceptor
     }
   };
 

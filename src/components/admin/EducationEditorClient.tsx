@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import { Save, ArrowLeft } from "lucide-react";
 import AiAssistButton from "@/components/admin/AiAssistButton";
 import AiGenerationModal from "@/components/admin/AiGenerationModal";
@@ -44,13 +43,10 @@ export default function EducationEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchEducation = async () => {
         try {
-          const response = await axios.get(
-            `${INTERNAL_API_BASE_URL}/educations/${id}`
-          );
+          const response = await apiClient.get(`/educations/${id}`);
           setFormData(response.data);
         } catch (error) {
-          console.error("Error fetching education:", error);
-          toast.error("Failed to load education record");
+          // Handled by interceptor
         }
       };
       fetchEducation();
@@ -65,20 +61,19 @@ export default function EducationEditorClient({ id }: { id?: string }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (id && id !== "new") {
-        await axios.put(`${INTERNAL_API_BASE_URL}/educations/${id}`, formData, {
+        await apiClient.put(`/educations/${id}`, formData, {
           headers,
         });
         toast.success("Education updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/educations`, formData, {
+        await apiClient.post(`/educations`, formData, {
           headers,
         });
         toast.success("Education added");
       }
       router.push("/admin/education");
     } catch (error) {
-      console.error("Error saving education:", error);
-      toast.error("Failed to save education record");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }

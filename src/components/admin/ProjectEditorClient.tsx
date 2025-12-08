@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
-import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import AiAssistButton from "@/components/admin/AiAssistButton";
 import AiGenerationModal from "@/components/admin/AiGenerationModal";
 
@@ -57,7 +56,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
     if (id && id !== "new") {
       const fetchProject = async () => {
         try {
-          const response = await axios.get(`${INTERNAL_API_BASE_URL}/projects`);
+          const response = await apiClient.get(`/projects`);
           const project = response.data.find((p: any) => p.id === id);
           if (project) {
             setTitle(project.title);
@@ -70,8 +69,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             setIsFeatured(project.isFeatured || false);
           }
         } catch (error) {
-          console.error("Error fetching project:", error);
-          toast.error("Failed to load project");
+          // Handled by interceptor
         }
       };
       fetchProject();
@@ -97,24 +95,19 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
       };
 
       if (id && id !== "new") {
-        await axios.put(
-          `${INTERNAL_API_BASE_URL}/projects/${id}`,
-          projectData,
-          {
-            headers,
-          }
-        );
+        await apiClient.put(`/projects/${id}`, projectData, {
+          headers,
+        });
         toast.success("Project updated");
       } else {
-        await axios.post(`${INTERNAL_API_BASE_URL}/projects`, projectData, {
+        await apiClient.post(`/projects`, projectData, {
           headers,
         });
         toast.success("Project created");
       }
       router.push("/admin/projects");
     } catch (error) {
-      console.error("Error saving project:", error);
-      toast.error("Failed to save project");
+      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
