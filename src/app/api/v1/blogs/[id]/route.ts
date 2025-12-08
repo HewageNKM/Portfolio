@@ -1,5 +1,5 @@
-import { db, admin } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { BlogService } from "@/services/BlogService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -8,11 +8,11 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const doc = await db.collection("blogs").doc(id).get();
-    if (!doc.exists) {
+    const blog = await BlogService.getBlogById(id);
+    if (!blog) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });
     }
-    return NextResponse.json({ id: doc.id, ...doc.data() });
+    return NextResponse.json(blog);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -33,9 +33,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const blog = await req.json();
-    delete blog.createdAt;
-    await db.collection("blogs").doc(id).update(blog);
-    return NextResponse.json({ id, ...blog });
+    const result = await BlogService.updateBlog(id, blog);
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -55,7 +54,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    await db.collection("blogs").doc(id).delete();
+    await BlogService.deleteBlog(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(

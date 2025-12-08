@@ -5,6 +5,7 @@ import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion, Variants } from "framer-motion";
 import { apiClient } from "@/lib/api-client";
+import ProjectCard from "@/components/ProjectCard";
 
 // Define an interface for the project structure
 interface Project {

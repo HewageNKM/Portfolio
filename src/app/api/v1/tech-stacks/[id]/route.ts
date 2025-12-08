@@ -1,5 +1,5 @@
-import { db } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { TechStackService } from "@/services/TechStackService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -8,13 +8,14 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const doc = await db.collection("techStacks").doc(id).get();
-    if (!doc.exists)
+    const stack = await TechStackService.getTechStackById(id);
+    if (!stack) {
       return NextResponse.json(
         { error: "Tech stack not found" },
         { status: 404 }
       );
-    return NextResponse.json({ id: doc.id, ...doc.data() });
+    }
+    return NextResponse.json(stack);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -34,9 +35,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const data = await req.json();
-    delete data.createdAt;
-    await db.collection("techStacks").doc(id).update(data);
-    return NextResponse.json({ id, ...data });
+    const result = await TechStackService.updateTechStack(id, data);
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -55,7 +55,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    await db.collection("techStacks").doc(id).delete();
+    await TechStackService.deleteTechStack(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(

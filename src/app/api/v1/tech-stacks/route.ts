@@ -1,14 +1,10 @@
-import { db } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { TechStackService } from "@/services/TechStackService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const snapshot = await db
-      .collection("techStacks")
-      .orderBy("name", "asc")
-      .get();
-    const stacks = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+    const stacks = await TechStackService.getTechStacks();
     return NextResponse.json(stacks);
   } catch (error) {
     return NextResponse.json(
@@ -25,8 +21,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json();
-    const docRef = await db.collection("techStacks").add(data);
-    return NextResponse.json({ id: docRef.id, ...data }, { status: 201 });
+    const result = await TechStackService.createTechStack(data);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },

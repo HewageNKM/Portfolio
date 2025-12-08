@@ -1,17 +1,10 @@
-import { db, admin } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { EducationService } from "@/services/EducationService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   try {
-    const snapshot = await db
-      .collection("educations")
-      .orderBy("startDate", "desc")
-      .get();
-    const educations = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const educations = await EducationService.getEducations();
     return NextResponse.json(educations);
   } catch (error) {
     return NextResponse.json(
@@ -29,9 +22,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json();
-    data.createdAt = admin.firestore.FieldValue.serverTimestamp();
-    const docRef = await db.collection("educations").add(data);
-    return NextResponse.json({ id: docRef.id, ...data }, { status: 201 });
+    const result = await EducationService.createEducation(data);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },

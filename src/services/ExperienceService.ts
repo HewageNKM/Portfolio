@@ -1,26 +1,17 @@
 import { db, admin } from "@/lib/firebase-admin";
 
-export class BlogService {
+export class ExperienceService {
   private static formatDate(date: any) {
     if (!date) return null;
     return new Date(date).toLocaleString();
   }
 
-  static async getBlogs(page: number = 1, limit: number = 9) {
-    const offset = (page - 1) * limit;
-    const blogsCollection = db.collection("blogs");
-
-    // Get total count
-    const countSnapshot = await blogsCollection.count().get();
-    const total = countSnapshot.data().count;
-
-    const snapshot = await blogsCollection
-      .orderBy("date", "desc")
-      .limit(limit)
-      .offset(offset)
+  static async getExperiences() {
+    const snapshot = await db
+      .collection("experiences")
+      .orderBy("createdAt", "desc")
       .get();
-
-    const blogs = snapshot.docs.map((doc) => {
+    return snapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
@@ -33,18 +24,10 @@ export class BlogService {
         ),
       };
     });
-
-    return {
-      data: blogs,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    };
   }
 
-  static async getBlogById(id: string) {
-    const doc = await db.collection("blogs").doc(id).get();
+  static async getExperienceById(id: string) {
+    const doc = await db.collection("experiences").doc(id).get();
     if (!doc.exists) return null;
     const data = doc.data()!;
     return {
@@ -59,39 +42,36 @@ export class BlogService {
     };
   }
 
-  static async createBlog(blog: any) {
-    if (!blog.date) {
-      blog.date = new Date().toISOString();
-    }
+  static async createExperience(experience: any) {
     const data = {
-      ...blog,
+      ...experience,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
-    const docRef = await db.collection("blogs").add(data);
+    const docRef = await db.collection("experiences").add(data);
     return {
       id: docRef.id,
-      ...blog,
+      ...experience,
       createdAt: new Date().toLocaleString(),
       updatedAt: new Date().toLocaleString(),
     };
   }
 
-  static async updateBlog(id: string, blog: any) {
-    delete blog.createdAt;
+  static async updateExperience(id: string, experience: any) {
+    delete experience.createdAt;
     const data = {
-      ...blog,
+      ...experience,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
-    await db.collection("blogs").doc(id).update(data);
+    await db.collection("experiences").doc(id).update(data);
     return {
       id,
-      ...blog,
+      ...experience,
       updatedAt: new Date().toLocaleString(),
     };
   }
 
-  static async deleteBlog(id: string) {
-    await db.collection("blogs").doc(id).delete();
+  static async deleteExperience(id: string) {
+    await db.collection("experiences").doc(id).delete();
   }
 }
