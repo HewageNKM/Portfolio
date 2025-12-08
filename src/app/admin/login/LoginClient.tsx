@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { Lock, Mail } from "lucide-react";
+import Image from "next/image";
 
 export default function LoginClient() {
   const [email, setEmail] = useState("");
@@ -34,8 +35,9 @@ export default function LoginClient() {
       {/* Left Side - Image */}
       <div className="hidden lg:flex w-1/2 relative overflow-hidden">
         <div className="absolute inset-0 bg-neutral-900/40 z-10" />
-        <img
-          src="/assets/login-bg.png"
+        <Image
+          fill
+          src="/og-home.png"
           alt="Login Background"
           className="w-full h-full object-cover grayscale"
         />
