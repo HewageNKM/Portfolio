@@ -54,14 +54,24 @@ export default function PrivacyPolicy() {
           <br />- To prevent abuse of the chat and guestbook features.
         </p>
 
-        <h2 className="text-xl font-bold mt-6 mb-3">4. Third-Party Services</h2>
+        <h2 className="text-xl font-bold mt-6 mb-3">
+          4. Cookies and Local Storage
+        </h2>
+        <p>
+          We use local storage and cookies to maintain your authenticated
+          session via Firebase Auth. These are essential for the Guestbook
+          feature to function properly. By using this service, you consent to
+          the storage of these functional identifiers.
+        </p>
+
+        <h2 className="text-xl font-bold mt-6 mb-3">5. Third-Party Services</h2>
         <p>
           We use Firebase (Google) for authentication and database services. We
           use Google Gemini for AI chat functionality. Please review their
           respective privacy policies for more information.
         </p>
 
-        <h2 className="text-xl font-bold mt-6 mb-3">5. Contact</h2>
+        <h2 className="text-xl font-bold mt-6 mb-3">6. Contact</h2>
         <p>
           If you have questions about this policy, please contact me via the
           contact form on this website.
