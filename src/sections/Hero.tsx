@@ -1,15 +1,10 @@
 "use client";
 import { motion } from "framer-motion"; // For adding animations to components
 import { useEffect, useState } from "react"; // React hooks for managing state and side effects
-import {
-  getFollowers,
-  getTotalCommits,
-  getTotalRepos,
-  getTotalStars,
-} from "../utils";
 import GitStatCard from "../components/GitStatCard";
 import { SiGit, SiGithub } from "react-icons/si";
 import { BsPeople, BsStar } from "react-icons/bs";
+import { apiClient } from "@/lib/api-client";
 
 export default function Hero() {
   const [repos, setRepos] = useState(0);
@@ -18,18 +13,18 @@ export default function Hero() {
   const [followers, setFollowers] = useState(0);
 
   useEffect(() => {
-    getTotalRepos().then((res) => {
-      setRepos(res);
-    });
-    getTotalCommits().then((res) => {
-      setCommits(res || 0);
-    });
-    getTotalStars().then((res) => {
-      setStars(res || 0);
-    });
-    getFollowers().then((res) => {
-      setFollowers(res);
-    });
+    const fetchGithubStats = async () => {
+      try {
+        const { data } = await apiClient.get("/github");
+        setRepos(data.repos);
+        setFollowers(data.followers);
+        setStars(data.stars);
+        setCommits(data.commits);
+      } catch (error) {
+        console.error("Failed to fetch GitHub stats");
+      }
+    };
+    fetchGithubStats();
   }, []);
 
   return (

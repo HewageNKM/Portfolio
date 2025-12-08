@@ -8,7 +8,7 @@ import {
   Trophy,
   Layers,
 } from "lucide-react";
-import { getAnalyticsData } from "@/lib/analytics-service";
+import { getAnalyticsData } from "@/services/AnalyticsService";
 
 export const metadata: Metadata = {
   title: "Admin - Dashboard | NKM Hewage",
