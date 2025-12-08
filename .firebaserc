@@ -1,8 +1,5 @@
 {
   "projects": {
-    "default": "portfolio-hewagenkm",
-    "production": "portfolio-hewagenkm"
-  },
-  "targets": {},
-  "etags": {}
+    "default": "portfolio-hewagenkm"
+  }
 }

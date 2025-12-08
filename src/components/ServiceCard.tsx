@@ -1,3 +1,4 @@
+"use client";
 interface ServiceCardProps {
   title: string;
   description: string;

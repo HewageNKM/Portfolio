@@ -1,3 +1,4 @@
+"use client";
 interface TechCardProps {
   img?: string;
   title: string;

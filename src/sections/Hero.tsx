@@ -1,14 +1,10 @@
+"use client";
 import { motion } from "framer-motion"; // For adding animations to components
 import { useEffect, useState } from "react"; // React hooks for managing state and side effects
-import {
-  getFollowers,
-  getTotalCommits,
-  getTotalRepos,
-  getTotalStars,
-} from "../utils";
 import GitStatCard from "../components/GitStatCard";
 import { SiGit, SiGithub } from "react-icons/si";
 import { BsPeople, BsStar } from "react-icons/bs";
+import { apiClient } from "@/lib/api-client";
 
 export default function Hero() {
   const [repos, setRepos] = useState(0);
@@ -17,18 +13,18 @@ export default function Hero() {
   const [followers, setFollowers] = useState(0);
 
   useEffect(() => {
-    getTotalRepos().then((res) => {
-      setRepos(res);
-    });
-    getTotalCommits().then((res) => {
-      setCommits(res || 0);
-    });
-    getTotalStars().then((res) => {
-      setStars(res || 0);
-    });
-    getFollowers().then((res) => {
-      setFollowers(res);
-    });
+    const fetchGithubStats = async () => {
+      try {
+        const { data } = await apiClient.get("/github");
+        setRepos(data.repos);
+        setFollowers(data.followers);
+        setStars(data.stars);
+        setCommits(data.commits);
+      } catch (error) {
+        console.error("Failed to fetch GitHub stats");
+      }
+    };
+    fetchGithubStats();
   }, []);
 
   return (
@@ -37,7 +33,7 @@ export default function Hero() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full flex flex-col p-2 md:mt-10 mt-2"
+      className="w-full flex flex-col pt-24 md:pt-32 pb-10 px-4 md:px-0"
     >
       {/* Name Header Animation */}
       <motion.p
@@ -46,7 +42,7 @@ export default function Hero() {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5, duration: 0.6, ease: "easeOut" }}
       >
-        Hey!, I'm Nadun Malwenna
+        Hey!, I&apos;m Nadun Malwenna
       </motion.p>
 
       {/* Description Text Animation */}
@@ -56,12 +52,12 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.7, duration: 0.8, ease: "easeOut" }}
       >
-        I'm a passionate Full Stack Developer from Sri Lanka, dedicated to
+        I&apos;m a passionate Full Stack Developer from Sri Lanka, dedicated to
         continuously learning and building new things every day. I love
         exploring modern web technologies, crafting clean code, and bringing
-        creative ideas to life through intuitive user experiences. Whether it's
-        frontend, backend, or somewhere in between, I'm always excited to take
-        on new challenges and grow as a developer.
+        creative ideas to life through intuitive user experiences. Whether
+        it&apos;s frontend, backend, or somewhere in between, I&apos;m always
+        excited to take on new challenges and grow as a developer.
       </motion.p>
 
       {/* GitHub Stats Section */}

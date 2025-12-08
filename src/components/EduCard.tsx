@@ -1,3 +1,4 @@
+"use client";
 interface EduCardProps {
   degree: string;
   institution: string;

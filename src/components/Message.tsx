@@ -1,10 +1,11 @@
+"use client";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import toast, { Toaster } from "react-hot-toast";
 import { Loader2 } from "lucide-react";
-
+import { apiClient } from "@/lib/api-client";
 export default function Message() {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [sending, setSending] = useState(false);
@@ -45,24 +46,17 @@ export default function Message() {
         message: message,
       };
 
-      const url = import.meta.env.VITE_SERVER_URL;
-
-      await axios({
-        method: "POST",
+      await apiClient.post(`/mails`, newData, {
         headers: {
-          "Content-Type": "application/json",
           "X-Client-IP": publicIp,
         },
-        url: `${url}/mails`,
-        data: JSON.stringify(newData),
       });
 
       e.target.reset();
       toast.success("Message sent successfully!");
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      //@ts-ignore
-      toast.error(err?.response?.data?.message || "Something went wrong!");
+      // Handled by interceptor, but we might want to ensure loading state is reset
       return;
     } finally {
       setSending(false);

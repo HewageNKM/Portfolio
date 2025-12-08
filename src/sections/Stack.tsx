@@ -1,9 +1,9 @@
-import { motion } from "framer-motion";
+"use client";
+import { motion, Variants } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";
 import TechCard from "../components/TechCard";
-import axios from "axios";
-import { API_BASE_URL } from "../AppSettings";
+import { apiClient } from "@/lib/api-client";
 
 interface TechStack {
   id: string;
@@ -23,7 +23,7 @@ const categories = [
   { label: "Other", value: "Other", icon: Box },
 ];
 
-const containerVariants = {
+const containerVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
@@ -37,7 +37,7 @@ const containerVariants = {
   },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20, scale: 0.95 },
   visible: {
     opacity: 1,
@@ -55,10 +55,10 @@ export default function Stack() {
   useEffect(() => {
     const fetchStacks = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/tech-stacks`);
+        const response = await apiClient.get(`/tech-stacks`);
         setStacks(response.data);
       } catch (error) {
-        console.error("Error fetching tech stacks:", error);
+        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }

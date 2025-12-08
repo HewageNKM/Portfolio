@@ -1,114 +1,36 @@
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-# Portfolio Website
+## Getting Started
 
-A personal portfolio website built with React, TypeScript, and Vite, featuring a dynamic Admin Dashboard for content management. This project serves as a showcase of skills, projects, and blogs, with a fully integrated backend using Firebase.
-
-## 🚀 Deployment
-
-**Live Site:** [https://hewagenkm.com](https://hewagenkm.com)
-
-## 🛠️ Tech Stack
-
-- **Frontend:** React, TypeScript, Vite, TailwindCSS
-- **State Management & Animations:** Framer Motion
-- **Backend / BaaS:** Firebase (Authentication, Firestore, Storage, Cloud Functions, Analytics)
-- **Editor:** React Quill (Rich Text)
-- **Icons:** React Icons, Lucide React
-
-## ✨ Features
-
-### Public Interface
-- **Responsive Design:** Fully optimized for all device sizes.
-- **Dynamic Content:** Blogs, Projects, and Experience data fetched from Firestore.
-- **Contact Form:** Integrated WhatsApp direct messaging.
-- **SEO Optimized:** Meta tags, Open Graph support, and dynamic sitemap generation.
-
-### Admin Dashboard (Protected)
-- **Authentication:** Secure login for admin access.
-- **Analytics:** Integrated Google Analytics dashboard.
-- **Content Management:**
-  - **Blogs:** Create, edit, delete blog posts with rich text and tags.
-  - **Projects:** Manage portfolio projects.
-  - **Experience & Education:** Update professional background.
-  - **Tech Stack:** Manage displayed technologies.
-- **AI Assistance:** Integrated AI tools for content generation (Drafting blogs, descriptions).
-- **Settings:** Profile and site configuration.
-
-## 💻 Local Development
-
-Follow these steps to set up the project locally.
-
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
-
-### Installation
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/hewagenkm/hewagenkm.github.io.git
-    cd hewagenkm.github.io
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-### Environment Variables
-
-Create a `.env` file in the root directory and add the following Firebase configuration keys. You can obtain these from your Firebase Console.
-
-```env
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_project_id.appspot.com
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
-VITE_WHATSAPP_NUMBER=your_whatsapp_number
-```
-
-### Running the App
-
-Start the development server:
+First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-The app will be available at `http://localhost:5173`.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### Building for Production
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-To create a production build:
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-```bash
-npm run build
-```
+## Learn More
 
-The output will be in the `dist` directory.
+To learn more about Next.js, take a look at the following resources:
 
-## ☁️ Deployment
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-This project is configured for Firebase Hosting.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-1.  **Install Firebase CLI:**
-    ```bash
-    npm install -g firebase-tools
-    ```
+## Deploy on Vercel
 
-2.  **Login to Firebase:**
-    ```bash
-    firebase login
-    ```
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-3.  **Deploy:**
-    ```bash
-    firebase deploy
-    ```
-
-## 📄 License
-
-This project is for personal use.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
