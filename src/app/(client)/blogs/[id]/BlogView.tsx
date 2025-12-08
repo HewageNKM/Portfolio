@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import "react-quill/dist/quill.snow.css";
+import "react-quill-new/dist/quill.snow.css";
 
 interface Blog {
   id: string;
