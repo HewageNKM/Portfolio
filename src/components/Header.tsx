@@ -3,8 +3,15 @@ import { motion } from "framer-motion";
 import { MenuItems } from "../assets/contants";
 import { CgMenu } from "react-icons/cg";
 
-const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<boolean>>,showMenu:React.Dispatch<React.SetStateAction<boolean>>}) => {
+import { CiSettings } from "react-icons/ci";
 
+const Header = ({
+  showMenu,
+  showSetting,
+}: {
+  showSetting: React.Dispatch<React.SetStateAction<boolean>>;
+  showMenu: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   return (
     <motion.header
       initial={{ y: -50, opacity: 0 }}
@@ -26,17 +33,25 @@ const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<bool
             >
               NM.
             </a>
-            <button
-              className="lg:hidden block dark:text-white text-black"
-              onClick={() => showMenu(true)}
-            >
-              <CgMenu size={30} />
-            </button>
+            <div className="flex items-center gap-2 lg:hidden">
+              <button
+                className="block dark:text-white text-black mr-2"
+                onClick={() => showSetting(true)}
+              >
+                <CiSettings size={28} />
+              </button>
+              <button
+                className="block dark:text-white text-black"
+                onClick={() => showMenu(true)}
+              >
+                <CgMenu size={30} />
+              </button>
+            </div>
           </motion.li>
 
           {/* Navigation links */}
           <motion.li
-            className="lg:flex dark:text-white text-black flex-row md:gap-5 gap-3 hidden lg:text-lg text-xs font-bold"
+            className="lg:flex dark:text-white text-black flex-row md:gap-5 gap-3 hidden lg:text-lg text-xs font-bold items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.5 }}
@@ -51,6 +66,13 @@ const Header = ({showMenu}:{showSetting:React.Dispatch<React.SetStateAction<bool
                 <span className="block h-0.5 w-0 bg-black dark:bg-white group-hover:w-full transition-all duration-300"></span>
               </motion.a>
             ))}
+            <motion.button
+              whileHover={{ rotate: 45 }}
+              onClick={() => showSetting(true)}
+              className="ml-2"
+            >
+              <CiSettings size={24} />
+            </motion.button>
           </motion.li>
         </ul>
       </nav>

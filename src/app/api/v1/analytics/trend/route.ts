@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getAnalyticsData } from "@/services/AnalyticsService";
+import { getAnalyticsTrend } from "@/services/AnalyticsService";
 
 export async function GET(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
-    const range = searchParams.get("range") || "today";
-    const data = await getAnalyticsData(range);
+    const range = searchParams.get("range") || "30days";
+    const data = await getAnalyticsTrend(range);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json(

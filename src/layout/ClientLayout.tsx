@@ -6,8 +6,8 @@ import Header from "../components/Header";
 import { AnimatePresence } from "framer-motion";
 import { Setting } from "../components/Setting";
 import { Menu } from "../components/Menu";
-import HomeSettingsButton from "../components/HomeSettingButton";
 import { useTheme } from "@/context/ThemeContext";
+import ChatWidget from "../components/ChatWidget";
 
 interface ClientLayoutProps {
   children: ReactNode;
@@ -40,9 +40,7 @@ const ClientLayout = ({ children }: ClientLayoutProps) => {
       <AnimatePresence>
         {showMenu && <Menu showMenu={setShowMenu} />}
       </AnimatePresence>
-      <AnimatePresence>
-        <HomeSettingsButton onClick={() => setShowSetting(true)} />
-      </AnimatePresence>
+      <ChatWidget />
     </main>
   );
 };

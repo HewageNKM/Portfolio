@@ -13,17 +13,18 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const clientApp =
+  getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+const clientAuth = getAuth(clientApp);
+const clientDB = getFirestore(clientApp);
 
 let analytics: Analytics | null = null;
 if (typeof window !== "undefined") {
   isSupported().then((yes) => {
     if (yes) {
-      analytics = getAnalytics(app);
+      analytics = getAnalytics(clientApp);
     }
   });
 }
 
-export { app, auth, db, analytics };
+export { clientApp as app, clientAuth as auth, clientDB as db, analytics };

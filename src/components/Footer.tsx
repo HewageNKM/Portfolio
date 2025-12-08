@@ -91,21 +91,11 @@ const Footer = () => {
         variants={itemVariants}
       >
         This site is protected by reCAPTCHA and the Google{" "}
-        <a
-          href="https://policies.google.com/privacy"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-primary"
-        >
+        <a href="/privacy-policy" className="underline hover:text-primary">
           Privacy Policy
         </a>{" "}
         and{" "}
-        <a
-          href="https://policies.google.com/terms"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline hover:text-primary"
-        >
+        <a href="/terms" className="underline hover:text-primary">
           Terms of Service
         </a>{" "}
         apply.

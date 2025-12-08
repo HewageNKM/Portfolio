@@ -7,7 +7,7 @@ const analyticsDataClient = new BetaAnalyticsDataClient({
   },
 });
 
-export async function getAnalyticsData() {
+export async function getAnalyticsData(range: string = "today") {
   const propertyId = process.env.GA4_PROPERTY_ID;
 
   if (!propertyId) {
@@ -21,14 +21,12 @@ export async function getAnalyticsData() {
   }
 
   try {
-    // 1. Get Active Users (Realtime) - Last 30 mins
     const [realtimeResponse] = await analyticsDataClient.runRealtimeReport({
       property: `properties/${propertyId}`,
       dimensions: [{ name: "minutesAgo" }],
       metrics: [{ name: "activeUsers" }],
     });
 
-    // Sum active users across all minutes
     const activeUsers =
       realtimeResponse.rows?.reduce(
         (sum: number, row: any) =>
@@ -36,20 +34,36 @@ export async function getAnalyticsData() {
         0
       ) || 0;
 
-    // 2. Get Today's Stats
-    const [todayReport] = await analyticsDataClient.runReport({
+    let currentStartDate = "today";
+    let currentEndDate = "today";
+    let prevStartDate = "yesterday";
+    let prevEndDate = "yesterday";
+
+    if (range === "7days") {
+      currentStartDate = "7daysAgo";
+      currentEndDate = "today";
+      prevStartDate = "14daysAgo";
+      prevEndDate = "7daysAgo";
+    } else if (range === "30days") {
+      currentStartDate = "30daysAgo";
+      currentEndDate = "today";
+      prevStartDate = "60daysAgo";
+      prevEndDate = "30daysAgo";
+    }
+
+    const [currentReport] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
-      dateRanges: [{ startDate: "today", endDate: "today" }],
+      dateRanges: [{ startDate: currentStartDate, endDate: currentEndDate }],
       metrics: [
         { name: "screenPageViews" },
         { name: "averageSessionDuration" },
       ],
     });
 
-    // 3. Get Yesterday's Stats
-    const [yesterdayReport] = await analyticsDataClient.runReport({
+    // 3. Get Previous Period Stats
+    const [prevReport] = await analyticsDataClient.runReport({
       property: `properties/${propertyId}`,
-      dateRanges: [{ startDate: "yesterday", endDate: "yesterday" }],
+      dateRanges: [{ startDate: prevStartDate, endDate: prevEndDate }],
       metrics: [
         { name: "screenPageViews" },
         { name: "averageSessionDuration" },
@@ -61,11 +75,11 @@ export async function getAnalyticsData() {
         ? parseFloat(report.rows[0].metricValues[index].value || "0")
         : 0;
 
-    const todayPageViews = parseMetric(todayReport, 0);
-    const todayEngagement = parseMetric(todayReport, 1);
+    const currentPageViews = parseMetric(currentReport, 0);
+    const currentEngagement = parseMetric(currentReport, 1);
 
-    const yesterdayPageViews = parseMetric(yesterdayReport, 0);
-    const yesterdayEngagement = parseMetric(yesterdayReport, 1);
+    const prevPageViews = parseMetric(prevReport, 0);
+    const prevEngagement = parseMetric(prevReport, 1);
 
     // Calculate percentage changes
     const calculateChange = (current: number, previous: number) => {
@@ -73,11 +87,8 @@ export async function getAnalyticsData() {
       return Math.round(((current - previous) / previous) * 100);
     };
 
-    const pageViewsChange = calculateChange(todayPageViews, yesterdayPageViews);
-    const engagementChange = calculateChange(
-      todayEngagement,
-      yesterdayEngagement
-    );
+    const pageViewsChange = calculateChange(currentPageViews, prevPageViews);
+    const engagementChange = calculateChange(currentEngagement, prevEngagement);
 
     // Format engagement time (seconds to m:s)
     const formatTime = (seconds: number) => {
@@ -89,12 +100,12 @@ export async function getAnalyticsData() {
     return {
       activeUsers,
       pageViews: {
-        value: todayPageViews,
+        value: currentPageViews,
         change: pageViewsChange,
       },
       engagementTime: {
-        value: formatTime(todayEngagement),
-        seconds: todayEngagement,
+        value: formatTime(currentEngagement),
+        seconds: currentEngagement,
         change: engagementChange,
       },
       mock: false,

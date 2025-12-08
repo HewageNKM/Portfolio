@@ -96,6 +96,7 @@ export const MenuItems = [
     icon: SiHomepage,
     url: "https://registry.jsonresume.org/HewageNKM",
   },
+  { label: "Guestbook", icon: SiHomepage, url: "/guestbook" },
   { label: "Contact", icon: SiHomepage, url: "/contact" },
 ];
 
