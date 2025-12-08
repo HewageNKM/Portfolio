@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { MenuItems } from "../assets/contants";
 import { CgMenu } from "react-icons/cg";

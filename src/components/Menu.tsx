@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import BgShadow from "./BgShadow";
 import {MenuItems, socials } from "../assets/contants";

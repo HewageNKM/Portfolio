@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";

@@ -1,0 +1,119 @@
+import { Helmet } from "react-helmet-async";
+
+interface SEOProps {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  twitterImage?: string;
+  url?: string;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+  type?: "website" | "article";
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  tags?: string[];
+}
+
+const SEO = ({
+  title: customTitle,
+  description: customDescription,
+  keywords: customKeywords,
+  ogImage: customOgImage,
+  twitterImage: customTwitterImage,
+  url: customUrl,
+  schema,
+  type = "website",
+  publishedTime,
+  modifiedTime,
+  author: customAuthor,
+  tags,
+}: SEOProps) => {
+  const defaultTitle = "Nadun Malwenna - Portfolio";
+  const defaultDescription =
+    "Explore the portfolio of Nadun Malwenna, a software engineer specializing in full-stack development, mobile applications, and creating innovative web solutions.";
+  const defaultKeywords =
+    "Nadun Malwenna, portfolio, software engineer, full-stack developer, mobile developer, web development, React, Node.js, JavaScript, TypeScript, personal projects, programming, coding";
+  const defaultOgImage = "https://hewagenkm.com/og-home.png";
+  const defaultTwitterImage = "https://hewagenkm.com/og-home.png";
+  const defaultUrl = "https://hewagenkm.com";
+  const defaultAuthor = "Nadun Malwenna";
+
+  const formattedTitle = customTitle ? `${customTitle}` : defaultTitle;
+  const description = customDescription || defaultDescription;
+  const keywords = customKeywords || defaultKeywords;
+  const ogImage = customOgImage || defaultOgImage;
+  const twitterImage = customTwitterImage || defaultTwitterImage;
+  const url = customUrl || defaultUrl;
+  const author = customAuthor || defaultAuthor;
+
+  return (
+    <Helmet>
+      {/* Basic */}
+      <meta charSet="utf-8" />
+      <meta httpEquiv="Content-Language" content="en" />
+      <title>{formattedTitle}</title>
+      <meta name="description" content={description} />
+      <meta name="keywords" content={keywords} />
+      <meta name="author" content={author} />
+      <meta name="copyright" content="Nadun Malwenna" />
+      <meta name="application-name" content="Nadun Malwenna" />
+      <meta name="apple-mobile-web-app-title" content="Nadun Malwenna" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+      {/* Robots */}
+      <meta name="robots" content="index, follow" />
+      <meta name="googlebot" content="index, follow" />
+
+      {/* Canonical */}
+      <link rel="canonical" href={url} />
+
+      {/* Open Graph */}
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={url} />
+      <meta property="og:title" content={formattedTitle} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={ogImage} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:site_name" content="Nadun Malwenna - Portfolio" />
+
+      {/* Article Specific */}
+      {type === "article" && publishedTime && (
+        <meta property="article:published_time" content={publishedTime} />
+      )}
+      {type === "article" && modifiedTime && (
+        <meta property="article:modified_time" content={modifiedTime} />
+      )}
+      {type === "article" && author && (
+        <meta property="article:author" content={author} />
+      )}
+      {type === "article" &&
+        tags &&
+        tags.map((tag) => (
+          <meta key={tag} property="article:tag" content={tag} />
+        ))}
+
+      {/* Twitter */}
+      <meta property="twitter:card" content="summary_large_image" />
+      <meta property="twitter:url" content={url} />
+      <meta property="twitter:title" content={formattedTitle} />
+      <meta property="twitter:description" content={description} />
+      <meta property="twitter:image" content={twitterImage} />
+
+      {/* JSON-LD Schema */}
+      {schema &&
+        (Array.isArray(schema) ? (
+          schema.map((s, i) => (
+            <script key={i} type="application/ld+json">
+              {JSON.stringify(s)}
+            </script>
+          ))
+        ) : (
+          <script type="application/ld+json">{JSON.stringify(schema)}</script>
+        ))}
+    </Helmet>
+  );
+};
+
+export default SEO;

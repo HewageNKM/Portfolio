@@ -1,6 +1,6 @@
 const GITHUB_API = "https://api.github.com";
-const username = import.meta.env.VITE_GIT_USERNAME;
-const token = import.meta.env.VITE_GIT_ACCESS_KEY;
+const username = process.env.NEXT_PUBLIC_GIT_USERNAME || "";
+const token = process.env.NEXT_PUBLIC_GIT_ACCESS_KEY || "";
 
 const headers = {
   Authorization: `token ${token}`,
@@ -34,7 +34,9 @@ export async function getFollowers() {
 }
 
 export async function getTotalStars() {
-  const repos = await fetchUserData(`${GITHUB_API}/users/${username}/repos?per_page=100`);
+  const repos = await fetchUserData(
+    `${GITHUB_API}/users/${username}/repos?per_page=100`
+  );
   if (!repos) return 0;
 
   //@ts-ignore
@@ -42,7 +44,9 @@ export async function getTotalStars() {
 }
 
 export async function getTotalCommits() {
-  const repos = await fetchUserData(`${GITHUB_API}/users/${username}/repos?per_page=100`);
+  const repos = await fetchUserData(
+    `${GITHUB_API}/users/${username}/repos?per_page=100`
+  );
   if (!repos) return 0;
 
   let totalCommits = 0;
@@ -54,7 +58,9 @@ export async function getTotalCommits() {
     );
     if (commitsRes) {
       //@ts-ignore
-      const self = commitsRes.find((contributor) => contributor.login === username);
+      const self = commitsRes.find(
+        (contributor) => contributor.login === username
+      );
       totalCommits += self ? self.contributions : 0;
     }
   }

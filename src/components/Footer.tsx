@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion"; // For adding animations to components
 import { MenuItems, socials } from "../assets/contants";
 

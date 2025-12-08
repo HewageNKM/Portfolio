@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 import { services } from "../assets/contants";
 import ServiceCard from "../components/ServiceCard";

@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion"; // For adding animations to components
 import { useEffect, useState } from "react"; // React hooks for managing state and side effects
 import {

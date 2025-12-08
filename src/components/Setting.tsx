@@ -1,3 +1,4 @@
+"use client";
 import { CiSettings } from "react-icons/ci";
 import { fonts, themes } from "../assets/contants";
 import BgShadow from "./BgShadow";

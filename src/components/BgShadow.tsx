@@ -1,3 +1,4 @@
+"use client";
 import { motion } from "framer-motion";
 
 export default function BgShadow({ children, onClose ,align}:{onClose:()=>void,children:React.ReactNode,align:"justify-start" | "justify-center"}) {

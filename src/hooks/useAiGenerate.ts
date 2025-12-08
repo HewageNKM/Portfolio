@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { auth } from "../FirebaseClient";
-import { API_BASE_URL } from "../AppSettings";
+import { auth } from "@/lib/firebase";
+import { INTERNAL_API_BASE_URL } from "@/lib/constants";
 import toast from "react-hot-toast";
 
 interface UseAiGenerateResult {
@@ -31,7 +31,7 @@ export const useAiGenerate = (): UseAiGenerateResult => {
 
       const headers = { Authorization: `Bearer ${token}` };
       const response = await axios.post(
-        `${API_BASE_URL}/ai/generate`,
+        `${INTERNAL_API_BASE_URL}/ai/generate`,
         { prompt },
         { headers }
       );

@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { defaultFont, defaultTheme } from "../assets/contants/index";
 

@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
