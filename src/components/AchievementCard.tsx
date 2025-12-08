@@ -20,7 +20,7 @@ export default function AchievementCard({
 }: AchievementCardProps) {
   return (
     <motion.li
-      className="p-5 rounded-lg min-w-full min-h-[12rem] md:min-w-[20rem] bg-gray-50 dark:bg-zinc-800 shadow-lg border border-gray-200 dark:border-gray-700"
+      className="p-5 rounded-lg min-w-full min-h-48 md:min-w-[20rem] bg-gray-50 dark:bg-zinc-800 shadow-lg border border-gray-200 dark:border-gray-700"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay: index * 0.15 }}
