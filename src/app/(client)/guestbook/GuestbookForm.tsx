@@ -69,13 +69,29 @@ export default function GuestbookForm() {
       </h3>
 
       {!user ? (
-        <button
-          onClick={handleSignIn}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-900 dark:text-white"
-        >
-          <FcGoogle size={20} />
-          Sign in with Google
-        </button>
+        <div className="flex flex-col items-center gap-3">
+          <button
+            onClick={handleSignIn}
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-neutral-100 dark:bg-neutral-700 hover:bg-neutral-200 dark:hover:bg-neutral-600 rounded-lg transition-colors font-medium text-neutral-900 dark:text-white w-fit"
+          >
+            <FcGoogle size={20} />
+            Sign in with Google
+          </button>
+          <p className="text-[10px] text-neutral-400 text-center max-w-xs">
+            By signing in, you agree to our{" "}
+            <a
+              href="/privacy-policy"
+              className="underline hover:text-neutral-500"
+            >
+              Privacy Policy
+            </a>{" "}
+            and{" "}
+            <a href="/terms" className="underline hover:text-neutral-500">
+              Terms of Service
+            </a>
+            .
+          </p>
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex items-center gap-3 mb-2">
