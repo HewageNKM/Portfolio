@@ -4,7 +4,6 @@ import {
   HarmBlockThreshold,
 } from "@google/generative-ai";
 import { db } from "@/lib/firebase-admin";
-import { collection, getDocs } from "firebase/firestore";
 
 // Cache context to avoid hitting Firestore on every request (1 hr cache)
 let contextCache: string | null = null;
@@ -20,10 +19,10 @@ export const ChatService = {
 
     try {
       const [experiences, projects, skills, education] = await Promise.all([
-        getDocs(collection(db, "experiences")),
-        getDocs(collection(db, "projects")),
-        getDocs(collection(db, "tech-stacks")),
-        getDocs(collection(db, "educations")),
+        db.collection("experiences").get(),
+        db.collection("projects").get(),
+        db.collection("tech-stacks").get(),
+        db.collection("educations").get(),
       ]);
 
       let context =
