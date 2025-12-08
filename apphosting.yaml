@@ -21,8 +21,6 @@ env:
     value: "1:202465676824:web:7079ef3fb70fae951d7d6d"
   - variable: NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
     value: "G-5SGM0ZXYYK"
-  - variable: NEXT_PUBLIC_API_BASE_URL
-    value: "https://hewagekm.com/api/v1"
   - variable: NEXT_PUBLIC_WHATSAPP_NUMBER
     value: "94723410000"
 

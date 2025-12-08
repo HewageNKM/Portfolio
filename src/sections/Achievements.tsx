@@ -23,7 +23,6 @@ export default function Achievements() {
         const response = await apiClient.get(`/achievements`);
         setAchievements(response.data);
       } catch (error) {
-        // Handled by interceptor
       } finally {
         setIsLoading(false);
       }
