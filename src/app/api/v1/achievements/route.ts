@@ -1,17 +1,10 @@
-import { db, admin } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { AchievementService } from "@/services/AchievementService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const snapshot = await db
-      .collection("achievements")
-      .orderBy("date", "desc")
-      .get();
-    const achievements = snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    const achievements = await AchievementService.getAchievements();
     return NextResponse.json(achievements);
   } catch (error) {
     return NextResponse.json(
@@ -29,9 +22,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const data = await req.json();
-    data.createdAt = admin.firestore.FieldValue.serverTimestamp();
-    const docRef = await db.collection("achievements").add(data);
-    return NextResponse.json({ id: docRef.id, ...data }, { status: 201 });
+    const result = await AchievementService.createAchievement(data);
+    return NextResponse.json(result, { status: 201 });
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },

@@ -1,13 +1,12 @@
 "use client";
-import { useState, useEffect } from "react";
 import { PiArrowRight } from "react-icons/pi";
 import { SiGithub } from "react-icons/si";
 import { FiExternalLink } from "react-icons/fi"; // Added for live link icon
 import { motion, Variants } from "framer-motion";
-import { apiClient } from "@/lib/api-client";
+import ProjectCard from "@/components/ProjectCard";
 
 // Define an interface for the project structure
-interface Project {
+export interface Project {
   id: string;
   title: string;
   description: string;
@@ -42,23 +41,8 @@ const itemVariants: Variants = {
   },
 };
 
-export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchFeaturedProjects = async () => {
-      try {
-        const response = await apiClient.get(`/projects?featured=true`);
-        setProjects(response.data);
-      } catch (error) {
-        // Handled by interceptor
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchFeaturedProjects();
-  }, []);
+export default function Projects({ projects = [] }: { projects: Project[] }) {
+  const isLoading = false;
 
   return (
     <motion.section

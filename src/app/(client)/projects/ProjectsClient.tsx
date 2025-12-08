@@ -34,7 +34,7 @@ const itemVariants: Variants = {
   },
 };
 
-export default function ProjectsView({
+export default function ProjectsClient({
   projects,
 }: {
   projects: ProjectItem[];
@@ -47,7 +47,7 @@ export default function ProjectsView({
       variants={containerVariants}
       viewport={{ once: true }}
     >
-      <div className="flex-grow md:px-40 md:py-20 p-8">
+      <div className="grow md:px-40 md:py-20 p-8">
         <motion.div className="mb-12" variants={itemVariants}>
           <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold">
             Projects.

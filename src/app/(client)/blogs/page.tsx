@@ -1,124 +1,165 @@
-"use client";
+import { Metadata } from "next";
+import Script from "next/script";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { apiClient } from "@/lib/api-client";
-import BlogCard from "@/components/BlogCard";
+import { BlogService } from "@/services/BlogService";
+import BlogsClient from "./BlogsClient";
 
-interface BlogItem {
-  id: string;
-  title: string;
-  summary: string;
-  tags?: string[];
-  date: string;
-}
+/* -------------------------------------------------------------------------- */
+/*                                SEO METADATA                                */
+/* -------------------------------------------------------------------------- */
 
-export default function Blogs() {
-  const [blogs, setBlogs] = useState<BlogItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const limit = 9;
+export const metadata: Metadata = {
+  metadataBase: new URL("https://hewagenkm.com"),
+  title: "Blogs | NKM Hewage",
+  description:
+    "Read insightful articles and updates by Nadun Malwenna on software development, web technologies, engineering practices, and real-world coding experience.",
+  keywords: [
+    "blog",
+    "tech blog",
+    "software engineering articles",
+    "coding blog",
+    "nextjs blog",
+    "web development blog",
+    "nadun malwenna blog",
+  ],
+  alternates: {
+    canonical: "https://hewagenkm.com/blogs",
+  },
+  openGraph: {
+    title: "Blogs | NKM Hewage",
+    description: "Insights and articles by Nadun Malwenna.",
+    url: "https://hewagenkm.com/blogs",
+    images: [
+      {
+        url: "https://hewagenkm.com/og-blogs.png",
+        width: 1200,
+        height: 630,
+        alt: "Blogs - NKM Hewage",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blogs | NKM Hewage",
+    description: "Read articles and insights by Nadun Malwenna.",
+    images: ["https://hewagenkm.com/og-blogs.png"],
+  },
+};
 
-  useEffect(() => {
-    const fetchBlogs = async () => {
-      setIsLoading(true);
-      try {
-        const response = await apiClient.get(
-          `/blogs?page=${currentPage}&limit=${limit}`
-        );
-        if (Array.isArray(response.data)) {
-          setBlogs(response.data);
-          setTotalPages(1);
-        } else {
-          setBlogs(response.data.data);
-          setTotalPages(response.data.totalPages);
-        }
-      } catch (error) {
-        // Error handled by interceptor
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchBlogs();
-  }, [currentPage]);
+/* -------------------------------------------------------------------------- */
+/*                                   PAGE                                     */
+/* -------------------------------------------------------------------------- */
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage > 0 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-  };
+export default async function BlogsPage({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
+  const page = parseInt(searchParams.page || "1", 10);
+  const { data, totalPages } = await BlogService.getBlogs(page, 9);
+
+  // Format blog data for schema
+  const blogPostsSchema = data.map((b: any) => ({
+    "@type": "BlogPosting",
+    headline: b.title,
+    description: b.summary,
+    url: `https://hewagenkm.com/blogs/${b.slug ?? b.id}`,
+    datePublished: b.createdAt,
+    author: {
+      "@type": "Person",
+      name: "NKM Hewage (Nadun Malwenna)",
+    },
+    image: b.coverImage || "https://hewagenkm.com/og-blogs.png",
+  }));
 
   return (
-    <motion.div
-      className="flex flex-col min-h-screen dark:text-gray-100"
-      initial="hidden"
-      animate="visible"
-      variants={{
-        hidden: { opacity: 0 },
-        visible: {
-          opacity: 1,
-          transition: { staggerChildren: 0.1, duration: 0.5 },
-        },
-      }}
-      viewport={{ once: true }}
-    >
-      <div className="grow md:px-40 md:py-20 p-8">
-        <motion.div
-          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
-        >
-          <h1 className="lg:text-4xl md:text-3xl text-2xl font-bold mb-8">
-            Blogs.
-          </h1>
-        </motion.div>
+    <>
+      {/* ---------------------------------------------------------------------- */}
+      {/*                            STRUCTURED DATA                             */}
+      {/* ---------------------------------------------------------------------- */}
 
-        {isLoading ? (
-          <p>Loading blogs...</p>
-        ) : (
-          <>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {blogs.map((blog) => (
-                <li key={blog.id} className="h-full">
-                  <BlogCard
-                    id={blog.id}
-                    title={blog.title}
-                    summary={blog.summary}
-                    date={blog.date}
-                  />
-                </li>
-              ))}
-              {!isLoading && blogs.length === 0 && (
-                <p>
-                  No blogs available at the moment. Please check back later!
-                </p>
-              )}
-            </ul>
-            {/* Pagination Controls */}
-            {totalPages > 1 && (
-              <div className="flex justify-center items-center mt-12 gap-4">
-                <button
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded disabled:opacity-50 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-                >
-                  Previous
-                </button>
-                <span className="text-gray-600 dark:text-gray-400">
-                  Page {currentPage} of {totalPages}
-                </span>
-                <button
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 bg-gray-200 dark:bg-gray-800 rounded disabled:opacity-50 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors"
-                >
-                  Next
-                </button>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </motion.div>
+      {/* Blog Schema */}
+      <Script
+        id="schema-blog-list"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Blog",
+            name: "NKM Hewage Blog",
+            url: "https://hewagenkm.com/blogs",
+            description:
+              "A collection of articles, insights, and software engineering content by Nadun Malwenna.",
+            blogPost: blogPostsSchema,
+          }),
+        }}
+      />
+
+      {/* Breadcrumb Schema */}
+      <Script
+        id="schema-blog-breadcrumb"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://hewagenkm.com",
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Blogs",
+                item: "https://hewagenkm.com/blogs",
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* Enable Sitelinks Search Box */}
+      <Script
+        id="schema-blog-website"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "NKM Hewage Portfolio",
+            url: "https://hewagenkm.com",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://hewagenkm.com/blogs?s={search_term}",
+              "query-input": "required name=search_term",
+            },
+          }),
+        }}
+      />
+
+      {/* ---------------------------------------------------------------------- */}
+      {/*                               PAGE RENDER                              */}
+      {/* ---------------------------------------------------------------------- */}
+
+      <main className="max-w-7xl mx-auto px-4 py-10">
+        <BlogsClient
+          initialBlogs={data.map((b: any) => ({
+            id: b.id,
+            title: b.title,
+            summary: b.summary,
+            date: b.createdAt || "",
+            tags: b.tags,
+          }))}
+          totalPages={totalPages}
+          currentPage={page}
+        />
+      </main>
+    </>
   );
 }

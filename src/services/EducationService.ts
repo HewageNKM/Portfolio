@@ -1,26 +1,17 @@
 import { db, admin } from "@/lib/firebase-admin";
 
-export class BlogService {
+export class EducationService {
   private static formatDate(date: any) {
     if (!date) return null;
     return new Date(date).toLocaleString();
   }
 
-  static async getBlogs(page: number = 1, limit: number = 9) {
-    const offset = (page - 1) * limit;
-    const blogsCollection = db.collection("blogs");
-
-    // Get total count
-    const countSnapshot = await blogsCollection.count().get();
-    const total = countSnapshot.data().count;
-
-    const snapshot = await blogsCollection
-      .orderBy("date", "desc")
-      .limit(limit)
-      .offset(offset)
+  static async getEducations() {
+    const snapshot = await db
+      .collection("educations")
+      .orderBy("startDate", "desc")
       .get();
-
-    const blogs = snapshot.docs.map((doc) => {
+    return snapshot.docs.map((doc) => {
       const data = doc.data();
       return {
         id: doc.id,
@@ -33,18 +24,10 @@ export class BlogService {
         ),
       };
     });
-
-    return {
-      data: blogs,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    };
   }
 
-  static async getBlogById(id: string) {
-    const doc = await db.collection("blogs").doc(id).get();
+  static async getEducationById(id: string) {
+    const doc = await db.collection("educations").doc(id).get();
     if (!doc.exists) return null;
     const data = doc.data()!;
     return {
@@ -59,39 +42,36 @@ export class BlogService {
     };
   }
 
-  static async createBlog(blog: any) {
-    if (!blog.date) {
-      blog.date = new Date().toISOString();
-    }
+  static async createEducation(education: any) {
     const data = {
-      ...blog,
+      ...education,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
-    const docRef = await db.collection("blogs").add(data);
+    const docRef = await db.collection("educations").add(data);
     return {
       id: docRef.id,
-      ...blog,
+      ...education,
       createdAt: new Date().toLocaleString(),
       updatedAt: new Date().toLocaleString(),
     };
   }
 
-  static async updateBlog(id: string, blog: any) {
-    delete blog.createdAt;
+  static async updateEducation(id: string, education: any) {
+    delete education.createdAt;
     const data = {
-      ...blog,
+      ...education,
       updatedAt: admin.firestore.FieldValue.serverTimestamp(),
     };
-    await db.collection("blogs").doc(id).update(data);
+    await db.collection("educations").doc(id).update(data);
     return {
       id,
-      ...blog,
+      ...education,
       updatedAt: new Date().toLocaleString(),
     };
   }
 
-  static async deleteBlog(id: string) {
-    await db.collection("blogs").doc(id).delete();
+  static async deleteEducation(id: string) {
+    await db.collection("educations").doc(id).delete();
   }
 }

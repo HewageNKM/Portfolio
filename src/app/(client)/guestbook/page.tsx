@@ -3,8 +3,40 @@ import GuestbookForm from "./GuestbookForm";
 import GuestbookList from "./GuestbookList";
 
 export const metadata: Metadata = {
-  title: "Guestbook - Nadun Malwenna",
-  description: "Leave a message on my guestbook!",
+  title: "Guestbook | Nadun Malwenna",
+  description:
+    "Sign the guestbook and leave a message for Nadun Malwenna. Say hi, share feedback, or drop your thoughts!",
+  keywords: [
+    "guestbook",
+    "Nadun Malwenna",
+    "NKM Hewage",
+    "portfolio guestbook",
+    "leave a message",
+    "visitor messages",
+    "contact",
+    "feedback",
+  ],
+  openGraph: {
+    title: "Guestbook | Nadun Malwenna",
+    description:
+      "Leave a message, say hi, or share your thoughts on my portfolio guestbook!",
+    url: "https://hewagenkm.com/guestbook",
+    images: [
+      {
+        url: "https://hewagenkm.com/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "Guestbook - Nadun Malwenna",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Guestbook | Nadun Malwenna",
+    description: "Say hi or leave your thoughts in my portfolio guestbook!",
+    images: ["https://hewagenkm.com/og-home.png"],
+  },
 };
 
 export default function GuestbookPage() {

@@ -1,5 +1,5 @@
-import { db, admin } from "@/lib/firebase-admin";
 import { verifyAuth } from "@/services/AuthService";
+import { ExperienceService } from "@/services/ExperienceService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -8,13 +8,14 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    const doc = await db.collection("experiences").doc(id).get();
-    if (!doc.exists)
+    const experience = await ExperienceService.getExperienceById(id);
+    if (!experience) {
       return NextResponse.json(
         { error: "Experience not found" },
         { status: 404 }
       );
-    return NextResponse.json({ id: doc.id, ...doc.data() });
+    }
+    return NextResponse.json(experience);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -34,10 +35,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const data = await req.json();
-    delete data.createdAt;
-    data.updatedAt = admin.firestore.FieldValue.serverTimestamp();
-    await db.collection("experiences").doc(id).update(data);
-    return NextResponse.json({ id, ...data });
+    const result = await ExperienceService.updateExperience(id, data);
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -56,7 +55,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    await db.collection("experiences").doc(id).delete();
+    await ExperienceService.deleteExperience(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(

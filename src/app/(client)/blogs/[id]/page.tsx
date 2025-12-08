@@ -1,14 +1,7 @@
-import { db } from "@/lib/firebase-admin";
 import { Metadata, ResolvingMetadata } from "next";
-import BlogView from "./BlogView";
+import BlogClient from "./BlogClient";
 import { notFound } from "next/navigation";
-
-// Fetch blog data
-async function getBlog(id: string) {
-  const doc = await db.collection("blogs").doc(id).get();
-  if (!doc.exists) return null;
-  return { id: doc.id, ...doc.data() } as any;
-}
+import { BlogService } from "@/services/BlogService";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -20,7 +13,7 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   const { id } = await params;
-  const blog = await getBlog(id);
+  const blog = (await BlogService.getBlogById(id)) as any;
 
   if (!blog) {
     return {
@@ -42,8 +35,8 @@ export async function generateMetadata(
       url: `https://hewagenkm.com/blogs/${blog.id}`,
       images: [ogImage, ...previousImages],
       type: "article",
-      publishedTime: blog.date,
-      modifiedTime: blog.date,
+      publishedTime: blog.createdAt || "",
+      modifiedTime: blog.updatedAt || "",
       authors: ["Nadun Malwenna"],
       tags: blog.tags,
     },
@@ -52,11 +45,18 @@ export async function generateMetadata(
 
 export default async function BlogPage({ params }: Props) {
   const { id } = await params;
-  const blog = await getBlog(id);
+  const blog = (await BlogService.getBlogById(id)) as any;
 
   if (!blog) {
     notFound();
   }
 
-  return <BlogView blog={blog} />;
+  return (
+    <BlogClient
+      blog={{
+        ...blog,
+        date: blog.createdAt,
+      }}
+    />
+  );
 }

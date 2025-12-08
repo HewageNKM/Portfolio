@@ -29,11 +29,14 @@ const Header = ({
             whileHover={{ scale: 1.1 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            <Link
-              href="/"
-              className="lg:text-3xl dark:text-white text-black text-2xl font-extrabold tracking-wide"
-            >
-              <Image src="/logo.png" alt="Logo" width={50} height={50} />
+            <Link href="/" className="">
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={70}
+                height={70}
+                unoptimized
+              />
             </Link>
             <div className="flex items-center gap-2 lg:hidden">
               <button

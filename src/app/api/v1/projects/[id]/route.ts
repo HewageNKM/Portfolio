@@ -1,4 +1,4 @@
-import { db, admin } from "@/lib/firebase-admin";
+import { ProjectService } from "@/services/ProjectService";
 import { verifyAuth } from "@/services/AuthService";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,10 +14,8 @@ export async function PUT(
   try {
     const { id } = await params;
     const project = await req.json();
-    delete project.createdAt;
-    project.updatedAt = admin.firestore.FieldValue.serverTimestamp();
-    await db.collection("projects").doc(id).update(project);
-    return NextResponse.json({ id, ...project });
+    const result = await ProjectService.updateProject(id, project);
+    return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -37,7 +35,7 @@ export async function DELETE(
 
   try {
     const { id } = await params;
-    await db.collection("projects").doc(id).delete();
+    await ProjectService.deleteProject(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     return NextResponse.json(

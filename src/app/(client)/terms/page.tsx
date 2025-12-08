@@ -1,8 +1,40 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service - Nadun Malwenna",
-  description: "Terms of Service for Nadun Malwenna's Portfolio",
+  title: "Terms of Service | Nadun Malwenna",
+  description:
+    "Read the Terms of Service for Nadun Malwenna’s portfolio website, including usage guidelines, intellectual property rights, disclaimers, and limitations.",
+  keywords: [
+    "terms of service",
+    "tos",
+    "legal",
+    "policy",
+    "nadun malwenna",
+    "portfolio terms",
+    "website terms",
+  ],
+  openGraph: {
+    title: "Terms of Service | Nadun Malwenna",
+    description:
+      "Review the Terms of Service for Nadun Malwenna’s portfolio website.",
+    url: "https://hewagenkm.com/terms",
+    type: "article",
+    images: [
+      {
+        url: "https://hewagenkm.com/og-home.png",
+        width: 1200,
+        height: 630,
+        alt: "Terms of Service - Nadun Malwenna",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Terms of Service | Nadun Malwenna",
+    description:
+      "Review the Terms of Service for Nadun Malwenna’s portfolio website.",
+    images: ["https://hewagenkm.com/og-home.png"],
+  },
 };
 
 export default function TermsOfService() {
@@ -17,7 +49,7 @@ export default function TermsOfService() {
         <h2 className="text-xl font-bold mt-6 mb-3">1. Acceptance of Terms</h2>
         <p>
           By accessing and using this website, you accept and agree to be bound
-          by the terms and provision of this agreement.
+          by the terms and provisions of this agreement.
         </p>
 
         <h2 className="text-xl font-bold mt-6 mb-3">2. Use of Services</h2>

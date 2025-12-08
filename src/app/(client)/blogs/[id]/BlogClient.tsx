@@ -12,7 +12,7 @@ interface Blog {
   date: string;
 }
 
-export default function BlogView({ blog }: { blog: Blog }) {
+export default function BlogClient({ blog }: { blog: Blog }) {
   return (
     <motion.div
       className="flex flex-col min-h-screen dark:text-gray-100"
