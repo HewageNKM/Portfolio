@@ -140,3 +140,5 @@ export default async function ProjectsPage() {
     </>
   );
 }
+
+export const revalidate = 60 * 60;
