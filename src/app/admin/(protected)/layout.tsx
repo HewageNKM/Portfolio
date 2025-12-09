@@ -52,14 +52,31 @@ export default function AdminLayout({
     }
   };
 
+  const [expandedMenus, setExpandedMenus] = useState<string[]>(["Portfolio"]);
+
+  const toggleMenu = (label: string) => {
+    setExpandedMenus((prev) =>
+      prev.includes(label)
+        ? prev.filter((item) => item !== label)
+        : [...prev, label]
+    );
+  };
+
   const menuItems = [
     { path: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
-    { path: "/admin/blogs", label: "Blogs", icon: FileText },
-    { path: "/admin/projects", label: "Projects", icon: Folder },
-    { path: "/admin/education", label: "Education", icon: GraduationCap },
-    { path: "/admin/experiences", label: "Experience", icon: Briefcase },
-    { path: "/admin/achievements", label: "Achievements", icon: Trophy },
-    { path: "/admin/tech-stacks", label: "Tech Stacks", icon: Layers },
+    {
+      label: "Portfolio",
+      icon: Folder,
+      children: [
+        { path: "/admin/blogs", label: "Blogs", icon: FileText },
+        { path: "/admin/projects", label: "Projects", icon: Folder },
+        { path: "/admin/services", label: "Services", icon: Briefcase },
+        { path: "/admin/education", label: "Education", icon: GraduationCap },
+        { path: "/admin/experiences", label: "Experience", icon: Briefcase },
+        { path: "/admin/achievements", label: "Achievements", icon: Trophy },
+        { path: "/admin/tech-stacks", label: "Tech Stacks", icon: Layers },
+      ],
+    },
   ];
 
   if (loading) {
@@ -73,8 +90,8 @@ export default function AdminLayout({
   return (
     <div
       className="flex h-screen bg-neutral-100 dark:bg-neutral-900 font-inter
-                    [background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
-                    dark:[background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
+                    bg-[repeating-linear-gradient(45deg,rgba(0,0,0,0.02)_0px,rgba(0,0,0,0.02)_1px,transparent_1px,transparent_20px)]
+                    dark:bg-[repeating-linear-gradient(45deg,rgba(255,255,255,0.02)_0px,rgba(255,255,255,0.02)_1px,transparent_1px,transparent_20px)]"
     >
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
@@ -105,11 +122,55 @@ export default function AdminLayout({
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {menuItems.map((item) => {
             const Icon = item.icon;
-            const isActive = pathname.startsWith(item.path);
+
+            if (item.children) {
+              const isExpanded = expandedMenus.includes(item.label);
+
+              return (
+                <div key={item.label}>
+                  <button
+                    onClick={() => toggleMenu(item.label)}
+                    className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <Icon size={20} />
+                      <span className="font-medium">{item.label}</span>
+                    </div>
+                  </button>
+
+                  {isExpanded && (
+                    <div className="ml-4 mt-1 space-y-1 border-l-2 border-neutral-200 dark:border-neutral-700 pl-2">
+                      {item.children.map((child) => {
+                        const ChildIcon = child.icon;
+                        const isChildActive = pathname.startsWith(child.path);
+                        return (
+                          <Link
+                            key={child.path}
+                            href={child.path}
+                            className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all duration-200 group ${
+                              isChildActive
+                                ? "bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-white shadow-sm"
+                                : "text-neutral-500 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-white"
+                            }`}
+                          >
+                            <ChildIcon size={18} />
+                            <span className="font-medium text-sm">
+                              {child.label}
+                            </span>
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            const isActive = pathname.startsWith(item.path!);
             return (
               <Link
                 key={item.path}
-                href={item.path}
+                href={item.path!}
                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                   isActive
                     ? "bg-neutral-200 dark:bg-neutral-700 text-neutral-900 dark:text-white shadow-sm"

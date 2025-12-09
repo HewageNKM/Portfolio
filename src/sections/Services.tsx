@@ -1,7 +1,19 @@
 "use client";
 import { motion, Variants } from "framer-motion";
-import { services } from "../assets/contants";
 import ServiceCard from "../components/ServiceCard";
+import { useEffect, useState } from "react";
+import { apiClient } from "@/lib/api-client";
+import * as SiIcons from "react-icons/si";
+import { IconType } from "react-icons";
+
+interface Service {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  color: string;
+  items: string[];
+}
 
 const containerVariants: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -28,6 +40,28 @@ const itemVariants: Variants = {
 };
 
 export default function Services() {
+  const [servicesData, setServicesData] = useState<Service[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await apiClient.get("/services");
+        setServicesData(response.data);
+      } catch (error) {
+        console.error("Failed to fetch services", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchServices();
+  }, []);
+
+  const getIconComponent = (iconName: string): IconType => {
+    // @ts-ignore - Dynamic access to icons
+    return SiIcons[iconName as keyof typeof SiIcons] || SiIcons.SiReact;
+  };
+
   return (
     <motion.section
       id="services"
@@ -61,28 +95,39 @@ export default function Services() {
       </motion.div>
 
       {/* Services Grid */}
-      <motion.ul
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {services.map((service, index) => (
-          <motion.li
-            key={index}
-            variants={itemVariants}
-            className="rounded-2xl h-full flex flex-col"
-          >
-            <ServiceCard
-              title={service.title}
-              description={service.description}
-              icon={service.icon}
-              items={service.items}
-              color={service.color}
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-48 rounded-2xl bg-neutral-200 dark:bg-neutral-800 animate-pulse"
             />
-          </motion.li>
-        ))}
-      </motion.ul>
+          ))}
+        </div>
+      ) : (
+        <motion.ul
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {servicesData.map((service, index) => (
+            <motion.li
+              key={service.id || index}
+              variants={itemVariants}
+              className="rounded-2xl h-full flex flex-col"
+            >
+              <ServiceCard
+                title={service.title}
+                description={service.description}
+                icon={getIconComponent(service.icon)}
+                items={service.items}
+                color={service.color}
+              />
+            </motion.li>
+          ))}
+        </motion.ul>
+      )}
     </motion.section>
   );
 }
