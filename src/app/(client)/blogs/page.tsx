@@ -56,11 +56,13 @@ export default async function BlogsPage({
   searchParams: Promise<{ page?: string; search?: string }>;
 }) {
   const { page: pageParam, search: searchParam } = await searchParams;
-  const page = parseInt(pageParam || "1", 10);
+
+  const page = Number(pageParam || 1);
   const search = searchParam || "";
+
   const { data, totalPages } = await BlogService.getBlogs(page, 9, search);
 
-  // Format blog data for schema
+  /* ---------------------------------- Schema --------------------------------- */
   const blogPostsSchema = data.map((b: any) => ({
     "@type": "BlogPosting",
     headline: b.title,
@@ -80,7 +82,7 @@ export default async function BlogsPage({
       {/*                            STRUCTURED DATA                             */}
       {/* ---------------------------------------------------------------------- */}
 
-      {/* Blog Schema */}
+      {/* Blog Listing Schema */}
       <Script
         id="schema-blog-list"
         type="application/ld+json"
@@ -125,7 +127,7 @@ export default async function BlogsPage({
         }}
       />
 
-      {/* Enable Sitelinks Search Box */}
+      {/* Search Box Schema */}
       <Script
         id="schema-blog-website"
         type="application/ld+json"

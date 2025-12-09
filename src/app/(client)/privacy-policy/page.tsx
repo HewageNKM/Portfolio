@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: "article",
     images: [
       {
-        url: "https://hewagenkm.com/og-privacy.png",
+        url: "https://hewagenkm.com/og-home.png",
         width: 1200,
         height: 630,
         alt: "Privacy Policy - Nadun Malwenna",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy | Nadun Malwenna",
     description:
       "Read the Privacy Policy for Nadun Malwenna’s portfolio and understand how your data is handled.",
-    images: ["https://hewagenkm.com/og-privacy.png"],
+    images: ["https://hewagenkm.com/og-home.png"],
   },
 };
 

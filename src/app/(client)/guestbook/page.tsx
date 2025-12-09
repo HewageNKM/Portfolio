@@ -42,6 +42,7 @@ export const metadata: Metadata = {
 export default function GuestbookPage() {
   return (
     <div className="flex flex-col items-center justify-center p-5 pb-20 max-w-2xl mx-auto w-full gap-8 mt-20">
+      {/* Header */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold text-neutral-900 dark:text-white">
           Guestbook
@@ -51,9 +52,12 @@ export default function GuestbookPage() {
         </p>
       </div>
 
+      {/* Content */}
       <div className="w-full">
         <GuestbookForm />
+
         <div className="my-8 border-t border-neutral-200 dark:border-neutral-800"></div>
+
         <GuestbookList />
       </div>
     </div>

@@ -56,17 +56,24 @@ export default async function ProjectsPage() {
   const projects =
     (await ProjectService.getProjects()) as unknown as ProjectItem[];
 
+  /* ------------------------- JSON-LD: INDIVIDUAL PROJECTS ------------------------- */
   const projectSchemas = projects.map((project) => ({
     "@type": "CreativeWork",
     name: project.title,
     description: project.description,
     url: `https://hewagenkm.com/projects/${project.id}`,
-    image: "https://hewagenkm.com/og-projects.png",
+    image: project.thumbnail || "https://hewagenkm.com/og-projects.png",
+    creator: {
+      "@type": "Person",
+      name: "Nadun Malwenna",
+    },
   }));
 
   return (
     <>
-      {/* ----------------------------- STRUCTURED DATA ----------------------------- */}
+      {/* ---------------------------------------------------------------------- */}
+      {/*                           STRUCTURED DATA                             */}
+      {/* ---------------------------------------------------------------------- */}
 
       {/* CollectionPage Schema */}
       <Script
@@ -113,7 +120,7 @@ export default async function ProjectsPage() {
         }}
       />
 
-      {/* Website Schema (optional but beneficial for Sitelinks Search Box) */}
+      {/* WebSite Schema + SearchAction */}
       <Script
         id="schema-projects-website"
         type="application/ld+json"
@@ -124,11 +131,38 @@ export default async function ProjectsPage() {
             "@type": "WebSite",
             name: "NKM Hewage Portfolio",
             url: "https://hewagenkm.com",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://hewagenkm.com/search?q={query}",
+              "query-input": "required name=query",
+            },
           }),
         }}
       />
 
-      {/* --------------------------- MAIN CONTENT RENDER --------------------------- */}
+      {/* Organization Schema */}
+      <Script
+        id="schema-projects-organization"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Nadun Malwenna",
+            url: "https://hewagenkm.com",
+            logo: "https://hewagenkm.com/og-home.png",
+            sameAs: [
+              "https://github.com/HewageNKM",
+              "https://linkedin.com/in/nadun-malwenna",
+            ],
+          }),
+        }}
+      />
+
+      {/* ---------------------------------------------------------------------- */}
+      {/*                                MAIN UI                                */}
+      {/* ---------------------------------------------------------------------- */}
 
       <main className="max-w-7xl mx-auto px-4 py-10">
         <ProjectsClient projects={projects} />
