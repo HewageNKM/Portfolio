@@ -33,7 +33,7 @@ export default function Hero() {
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="w-full flex flex-col pt-24 md:pt-32 pb-10 px-4 md:px-0"
+      className="w-full px-4 py-16 max-w-7xl mx-auto flex flex-col pb-10"
     >
       {/* Name Header Animation */}
       <motion.p

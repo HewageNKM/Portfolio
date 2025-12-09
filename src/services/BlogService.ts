@@ -6,9 +6,53 @@ export class BlogService {
     return new Date(date).toLocaleString();
   }
 
-  static async getBlogs(page: number = 1, limit: number = 9) {
-    const offset = (page - 1) * limit;
+  static async getBlogs(page: number = 1, limit: number = 9, search?: string) {
     const blogsCollection = db.collection("blogs");
+
+    // If search is provided, we need to fetch all and filter in memory
+    // Firestore doesn't support native full-text search
+    if (search) {
+      const snapshot = await blogsCollection.orderBy("date", "desc").get();
+      const allBlogs = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: this.formatDate(
+            data.createdAt?.toDate ? data.createdAt.toDate() : data.createdAt
+          ),
+          updatedAt: this.formatDate(
+            data.updatedAt?.toDate ? data.updatedAt.toDate() : data.updatedAt
+          ),
+        };
+      });
+
+      const searchLower = search.toLowerCase();
+      const filteredBlogs = allBlogs.filter((blog: any) => {
+        return (
+          blog.title?.toLowerCase().includes(searchLower) ||
+          blog.summary?.toLowerCase().includes(searchLower) ||
+          blog.tags?.some((tag: string) =>
+            tag.toLowerCase().includes(searchLower)
+          )
+        );
+      });
+
+      const total = filteredBlogs.length;
+      const totalPages = Math.ceil(total / limit);
+      const offset = (page - 1) * limit;
+      const paginatedBlogs = filteredBlogs.slice(offset, offset + limit);
+
+      return {
+        data: paginatedBlogs,
+        total,
+        page,
+        limit,
+        totalPages,
+      };
+    }
+
+    const offset = (page - 1) * limit;
 
     // Get total count
     const countSnapshot = await blogsCollection.count().get();

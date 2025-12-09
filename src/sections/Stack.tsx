@@ -59,18 +59,18 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
     <div className="font-sans">
       <motion.section
         id="stack"
-        className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto"
+        className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto w-full"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
         variants={containerVariants}
       >
         {/* Title */}
-        <motion.div className="text-center space-y-4" variants={itemVariants}>
+        <motion.div className="space-y-4" variants={itemVariants}>
           <h2 className="text-3xl md:text-4xl font-extrabold dark:text-white text-gray-900">
             Things I Know
           </h2>
-          <p className="text-gray-600 dark:text-gray-300 md:text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-300 md:text-lg max-w-2xl">
             Over the years, I’ve worked with a variety of tools, frameworks, and
             platforms to bring ideas to life. Here’s a glimpse of my toolbox.
           </p>
@@ -78,7 +78,7 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
 
         {/* Category Filter Tabs */}
         <motion.div className="w-full px-2 md:px-0" variants={itemVariants}>
-          <div className="bg-gray-200 dark:bg-gray-800 rounded-full p-2 shadow-inner w-full max-w-max mx-auto">
+          <div className="bg-gray-200 dark:bg-gray-800 rounded-full p-2 shadow-inner w-full max-w-full md:max-w-max mx-auto overflow-hidden">
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
               {categories.map((cat) => (
                 <motion.button
@@ -106,7 +106,7 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
           <p className="text-center text-gray-500">Loading tech stack...</p>
         ) : (
           <motion.ul
-            className="flex flex-wrap justify-center gap-6 mt-4 p-4"
+            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 mt-4 p-4"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -127,18 +127,20 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
                 <TechCard title={item.name} img={item.icon} />
               </motion.li>
             ))}
-            {filteredStacks.length === 0 && (
-              <p className="text-lg text-gray-500 dark:text-gray-400 italic mt-8 p-4">
-                No stacks found for this category!
-              </p>
-            )}
           </motion.ul>
         )}
-
+        {filteredStacks.length === 0 && (
+          <p className="text-center text-gray-500 dark:text-gray-400 italic mt-8 p-4">
+            No stacks found for this category!
+          </p>
+        )}
         {/* Footer Note */}
         <motion.p
           className="text-center text-gray-500 dark:text-gray-400 mt-3 italic"
-          variants={itemVariants}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true }}
         >
           ...and always learning more 🚀
         </motion.p>

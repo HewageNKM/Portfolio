@@ -79,7 +79,7 @@ export default function TimelineItem({
         transition={{ duration: 0.5, delay: 0.1 }}
         // Reset transform on mobile to avoid layout issues if needed, but framer motion handles it well usually.
         // We'll use responsiveness in classNames mostly.
-        className={`order-1 bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl shadow-sm w-full md:w-5/12 px-6 py-4 border border-neutral-200 dark:border-neutral-700 ml-12 md:ml-0 ${
+        className={`order-1 bg-white/50 dark:bg-neutral-800/50 backdrop-blur-sm rounded-xl shadow-sm md:w-5/12 px-6 py-4 border border-neutral-200 dark:border-neutral-700 ml-12 md:ml-0 ${
           isLeft ? "md:mr-auto" : "md:ml-auto"
         }`}
       >

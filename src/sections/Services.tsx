@@ -31,7 +31,7 @@ export default function Services() {
   return (
     <motion.section
       id="services"
-      className="flex flex-col gap-10 py-16 max-w-7xl"
+      className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto w-full"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
@@ -40,7 +40,7 @@ export default function Services() {
       {/* Title */}
       <motion.div className="space-y-4" variants={itemVariants}>
         <motion.h2
-          className="text-lg dark:text-white text-black font-bold lg:text-xl"
+          className="text-3xl md:text-4xl font-extrabold dark:text-white text-black"
           initial={{ y: -20, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6 }}
@@ -62,7 +62,7 @@ export default function Services() {
 
       {/* Services Grid */}
       <motion.ul
-        className="flex flex-row flex-wrap justify-center items-stretch gap-8 mt-4"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-4"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

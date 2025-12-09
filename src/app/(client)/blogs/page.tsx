@@ -53,10 +53,12 @@ export const metadata: Metadata = {
 export default async function BlogsPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string; search?: string }>;
 }) {
-  const page = parseInt(searchParams.page || "1", 10);
-  const { data, totalPages } = await BlogService.getBlogs(page, 9);
+  const { page: pageParam, search: searchParam } = await searchParams;
+  const page = parseInt(pageParam || "1", 10);
+  const search = searchParam || "";
+  const { data, totalPages } = await BlogService.getBlogs(page, 9, search);
 
   // Format blog data for schema
   const blogPostsSchema = data.map((b: any) => ({
@@ -136,7 +138,7 @@ export default async function BlogsPage({
             url: "https://hewagenkm.com",
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://hewagenkm.com/blogs?s={search_term}",
+              target: "https://hewagenkm.com/blogs?search={search_term}",
               "query-input": "required name=search_term",
             },
           }),
@@ -158,6 +160,7 @@ export default async function BlogsPage({
           }))}
           totalPages={totalPages}
           currentPage={page}
+          search={search}
         />
       </main>
     </>

@@ -23,14 +23,14 @@ const Experience = ({
   return (
     <motion.section
       id="experiences"
-      className="w-full flex flex-col p-3 gap-8 mt-10"
+      className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto w-full"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <motion.h2
-        className="text-lg dark:text-white text-black font-bold lg:text-xl"
+        className="text-3xl md:text-4xl font-extrabold dark:text-white text-black"
         initial={{ y: -20, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
@@ -38,6 +38,17 @@ const Experience = ({
       >
         My Experience.
       </motion.h2>
+
+      <motion.p
+        className="text-gray-600 dark:text-gray-300 md:text-lg max-w-2xl"
+        initial={{ y: 20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        My professional journey has provided me with a strong foundation in
+        computer science and software engineering.
+      </motion.p>
 
       <div className="mt-4">
         {isLoading ? (

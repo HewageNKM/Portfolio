@@ -124,11 +124,6 @@ export default async function ProjectsPage() {
             "@type": "WebSite",
             name: "NKM Hewage Portfolio",
             url: "https://hewagenkm.com",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "https://hewagenkm.com/projects?s={search_term}",
-              "query-input": "required name=search_term",
-            },
           }),
         }}
       />
