@@ -62,7 +62,7 @@ export default async function ProjectsPage() {
     name: project.title,
     description: project.description,
     url: `https://hewagenkm.com/projects/${project.id}`,
-    image: project.thumbnail || "https://hewagenkm.com/og-projects.png",
+    image: "https://hewagenkm.com/og-projects.png",
     creator: {
       "@type": "Person",
       name: "Nadun Malwenna",
