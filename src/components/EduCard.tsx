@@ -17,7 +17,6 @@ export default function EduCard({
   gpa,
 }: EduCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-  // Estimate length: join description strings and check length
   const fullDescription = description.join(" ");
   const shouldShowButton = fullDescription.length > 80;
 
@@ -37,8 +36,7 @@ export default function EduCard({
         {duration}
       </p>
 
-      {/* Description Area */}
-      <div className="mb-4 flex-grow">
+      <div className="mb-4 grow">
         <ul
           className={`list-disc list-inside text-gray-700 dark:text-gray-300 text-sm leading-relaxed ${
             isExpanded ? "" : "line-clamp-4"

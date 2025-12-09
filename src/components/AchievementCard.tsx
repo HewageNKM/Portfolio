@@ -43,7 +43,7 @@ export default function AchievementCard({
             <Award className="text-lg" />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-bold text-neutral-900 dark:text-white leading-tight mb-0.5 truncate">
+            <h3 className="text-sm font-bold text-neutral-900 dark:text-white leading-tight mb-0.5">
               {title}
             </h3>
             <p className="text-[10px] font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider truncate">

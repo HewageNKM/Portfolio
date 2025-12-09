@@ -85,7 +85,6 @@ export default async function Home() {
     TechStackService.getTechStacks(),
   ]);
 
-  /* Prepare education data */
   const formattedEducations: EducationItem[] = educationsData.map(
     (item: any) => ({
       id: item.id,
@@ -100,7 +99,7 @@ export default async function Home() {
   return (
     <>
       {/* ---------------------------------------------------------------------- */}
-      {/*                        GOOGLE RICH RESULTS (JSON-LD)                  */}
+      {/*                        GLOBAL RICH RESULTS (JSON-LD)                  */}
       {/* ---------------------------------------------------------------------- */}
 
       {/* Person Schema */}
@@ -124,41 +123,112 @@ export default async function Home() {
         }}
       />
 
-      {/* Website Schema */}
+      {/* Website + Search Box Schema */}
       <Script
-        id="schema-website"
+        id="schema-website-search"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "WebSite",
-            name: "Nadun Malwenna Portfolio",
             url: "https://hewagenkm.com",
+            name: "Nadun Malwenna Portfolio",
+            potentialAction: {
+              "@type": "SearchAction",
+              target: "https://hewagenkm.com/search?q={query}",
+              "query-input": "required name=query",
+            },
           }),
         }}
       />
 
-      {/* Breadcrumb Schema */}
+      {/* Organization Schema */}
       <Script
-        id="schema-breadcrumbs"
+        id="schema-organization"
         type="application/ld+json"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Home",
-                item: "https://hewagenkm.com",
-              },
+            "@type": "Organization",
+            name: "Nadun Malwenna",
+            url: "https://hewagenkm.com",
+            logo: "https://hewagenkm.com/og-home.png",
+            sameAs: [
+              "https://linkedin.com/in/nadun-malwenna",
+              "https://github.com/HewageNKM",
             ],
           }),
         }}
       />
+
+      {/* Experience Schema */}
+      <Script
+        id="schema-experience"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Nadun Malwenna",
+            hasOccupation: experiencesData.map((exp: any) => ({
+              "@type": "Occupation",
+              name: exp.role,
+              description: exp.description,
+              occupationLocation: {
+                "@type": "Organization",
+                name: exp.company,
+              },
+            })),
+          }),
+        }}
+      />
+
+      {/* Education Schema */}
+      <Script
+        id="schema-education"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: "Nadun Malwenna",
+            alumniOf: formattedEducations.map((edu) => ({
+              "@type": "CollegeOrUniversity",
+              name: edu.institution,
+              degree: edu.degree,
+            })),
+          }),
+        }}
+      />
+
+      {/* Project Schema (for each project) */}
+      {projectsData.map((p: any) => (
+        <Script
+          key={p.id}
+          id={`schema-project-${p.id}`}
+          type="application/ld+json"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "CreativeWork",
+              name: p.title,
+              description: p.description,
+              url: p.liveUrl || "https://hewagenkm.com",
+              image: p.thumbnail,
+              creator: {
+                "@type": "Person",
+                name: "Nadun Malwenna",
+              },
+              programmingLanguage: p.technologies?.join(", "),
+            }),
+          }}
+        />
+      ))}
 
       {/* ---------------------------------------------------------------------- */}
       {/*                             MAIN PAGE                                 */}
@@ -166,7 +236,6 @@ export default async function Home() {
 
       <main className="relative">
         <Hero />
-
         <Services />
 
         <Experience
@@ -187,7 +256,7 @@ export default async function Home() {
             title: item.title,
             description: item.description,
             date: item.date,
-            issuer: item.issuer || item.organization || "N/A", // Map issuer, fallback if missing
+            issuer: item.issuer || item.organization || "N/A",
             link: item.link,
           }))}
         />
