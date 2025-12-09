@@ -5,10 +5,11 @@ export const metadata: Metadata = {
   title: "Admin - Edit Service | NKM Hewage",
 };
 
-export default function EditServicePage({
+export default async function EditServicePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <ServiceEditorClient id={params.id} />;
+  const { id } = await params;
+  return <ServiceEditorClient id={id} />;
 }

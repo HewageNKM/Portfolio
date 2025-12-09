@@ -4,10 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const service = await ServicesService.getServiceById(params.id);
+    const { id } = await params;
+    const service = await ServicesService.getServiceById(id);
     if (!service) {
       return NextResponse.json({ error: "Service not found" }, { status: 404 });
     }
@@ -22,7 +23,7 @@ export async function GET(
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await verifyAuth(req);
   if (!user) {
@@ -30,8 +31,9 @@ export async function PUT(
   }
 
   try {
+    const { id } = await params;
     const data = await req.json();
-    const result = await ServicesService.updateService(params.id, data);
+    const result = await ServicesService.updateService(id, data);
     return NextResponse.json(result);
   } catch (error) {
     return NextResponse.json(
@@ -43,7 +45,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await verifyAuth(req);
   if (!user) {
@@ -51,7 +53,8 @@ export async function DELETE(
   }
 
   try {
-    await ServicesService.deleteService(params.id);
+    const { id } = await params;
+    await ServicesService.deleteService(id);
     return NextResponse.json({ success: true });
   } catch (error) {
     return NextResponse.json(
