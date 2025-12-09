@@ -23,7 +23,7 @@ export default function ServiceCard({
 
   return (
     <div
-      className="relative group w-full md:w-[240px] rounded-2xl overflow-hidden cursor-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 min-h-full flex flex-col"
+      className="relative group w-full rounded-2xl overflow-hidden cursor-default transition-all duration-300 hover:shadow-lg hover:-translate-y-1 min-h-full flex flex-col"
       style={
         {
           "--service-color": color,

@@ -47,24 +47,24 @@ export default function Projects({ projects = [] }: { projects: Project[] }) {
   return (
     <motion.section
       id="works"
-      className="flex flex-col py-10 px-4 md:px-0 gap-6 w-full"
-      initial={{ opacity: 0 }} // Start with hidden opacity
-      whileInView={{ opacity: 1 }} // Fade in when in view
-      transition={{ duration: 0.8 }} // Animation duration for opacity
-      viewport={{ once: true }} // Trigger animation only once when in view
+      className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto w-full"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
     >
       {/* Section Heading with animation */}
       <motion.h2
-        className="text-lg dark:text-white text-black font-bold lg:text-xl"
-        initial={{ y: -20, opacity: 0 }} // Start with slight upward movement and hidden opacity
-        whileInView={{ y: 0, opacity: 1 }} // Move to original position and fade in
-        transition={{ duration: 0.6 }} // Animation duration for heading
-        viewport={{ once: true }} // Trigger animation only once
+        className="text-3xl md:text-4xl font-extrabold dark:text-white text-black"
+        initial={{ y: -20, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
       >
-        My Works.
+        My Projects.
       </motion.h2>
       <motion.p
-        className="md:text-lg text-sm dark:text-white text-black"
+        className="text-gray-600 dark:text-gray-300 md:text-lg max-w-2xl"
         variants={itemVariants}
       >
         Here are some of the recent projects I&apos;ve worked on.

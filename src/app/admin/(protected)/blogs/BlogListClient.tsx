@@ -18,14 +18,30 @@ export default function BlogListClient() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const limit = 10;
 
-  const fetchBlogs = async (page: number) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearch]);
+
+  const fetchBlogs = async (page: number, searchTerm: string) => {
     setIsLoading(true);
     try {
-      const response = await apiClient.get(
-        `/blogs?page=${page}&limit=${limit}`
-      );
+      const query = new URLSearchParams({
+        page: page.toString(),
+        limit: limit.toString(),
+        ...(searchTerm && { search: searchTerm }),
+      });
+      const response = await apiClient.get(`/blogs?${query.toString()}`);
       if (Array.isArray(response.data)) {
         // Fallback for non-paginated response if any
         setBlogs(response.data);
@@ -34,7 +50,7 @@ export default function BlogListClient() {
         setBlogs(response.data.data);
         setTotalPages(response.data.totalPages);
       }
-    } catch (error) {
+    } catch {
       // Handled by interceptor
     } finally {
       setIsLoading(false);
@@ -42,8 +58,8 @@ export default function BlogListClient() {
   };
 
   useEffect(() => {
-    fetchBlogs(currentPage);
-  }, [currentPage]);
+    fetchBlogs(currentPage, debouncedSearch);
+  }, [currentPage, debouncedSearch]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
@@ -60,8 +76,8 @@ export default function BlogListClient() {
       });
       toast.success("Blog deleted");
       // Refresh current page
-      fetchBlogs(currentPage);
-    } catch (error) {
+      fetchBlogs(currentPage, debouncedSearch);
+    } catch {
       // Handled by interceptor
     }
   };
@@ -77,6 +93,18 @@ export default function BlogListClient() {
           <PlusIcon size={18} /> New
         </Link>
       </div>
+
+      {/* Search Bar */}
+      <div className="mb-6">
+        <input
+          type="text"
+          placeholder="Search blogs..."
+          className="w-full md:w-96 px-4 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg focus:ring-2 focus:ring-black outline-none transition-all"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
       {isLoading ? (
         <div className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 overflow-x-auto">
           <table className="min-w-full text-left">

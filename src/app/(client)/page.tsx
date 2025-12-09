@@ -117,8 +117,8 @@ export default async function Home() {
             jobTitle: "Full-Stack Software Engineer",
             image: "https://hewagenkm.com/og-home.png",
             sameAs: [
-              "https://github.com/YOUR_GITHUB",
-              "https://linkedin.com/in/YOUR_LINKEDIN",
+              "https://github.com/HewageNKM",
+              "https://linkedin.com/in/nadun-malwenna",
             ],
           }),
         }}
@@ -135,11 +135,6 @@ export default async function Home() {
             "@type": "WebSite",
             name: "Nadun Malwenna Portfolio",
             url: "https://hewagenkm.com",
-            potentialAction: {
-              "@type": "SearchAction",
-              target: "https://hewagenkm.com/?s={search_term}",
-              "query-input": "required name=search_term",
-            },
           }),
         }}
       />
@@ -169,72 +164,58 @@ export default async function Home() {
       {/*                             MAIN PAGE                                 */}
       {/* ---------------------------------------------------------------------- */}
 
-      <main className="relative flex flex-col items-center justify-center p-5 pb-20 max-w-7xl mx-auto w-full gap-5">
-        <section id="hero">
-          <Hero />
-        </section>
+      <main className="relative">
+        <Hero />
 
-        <section id="services">
-          <Services />
-        </section>
+        <Services />
 
-        <section id="experience">
-          <Experience
-            experiences={experiencesData.map((item: any) => ({
-              id: item.id,
-              role: item.role,
-              company: item.company,
-              duration: item.duration,
-              description: item.description,
+        <Experience
+          experiences={experiencesData.map((item: any) => ({
+            id: item.id,
+            role: item.role,
+            company: item.company,
+            duration: item.duration,
+            description: item.description,
+          }))}
+        />
+
+        <Education educations={formattedEducations} />
+
+        <Achievements
+          achievements={achievementsData.map((item: any) => ({
+            id: item.id,
+            title: item.title,
+            description: item.description,
+            date: item.date,
+            issuer: item.issuer || item.organization || "N/A", // Map issuer, fallback if missing
+            link: item.link,
+          }))}
+        />
+
+        <Stack
+          stacks={stacksData.flatMap((stack: any) =>
+            (stack.items || []).map((item: any) => ({
+              id: item.id || `${stack.id}-${item.name}`,
+              name: item.name,
+              category: stack.category,
+              icon: item.icon,
+            }))
+          )}
+        />
+
+        <Projects
+          projects={projectsData
+            .filter((p: any) => p.isFeatured)
+            .map((p: any) => ({
+              id: p.id,
+              title: p.title,
+              description: p.description,
+              githubUrl: p.githubUrl,
+              liveUrl: p.liveUrl,
+              technologies: p.technologies,
+              image: p.thumbnail,
             }))}
-          />
-        </section>
-
-        <section id="education">
-          <Education educations={formattedEducations} />
-        </section>
-
-        <section id="achievements">
-          <Achievements
-            achievements={achievementsData.map((item: any) => ({
-              id: item.id,
-              title: item.title,
-              description: item.description,
-              date: item.date,
-              issuer: item.issuer || item.organization || "N/A", // Map issuer, fallback if missing
-              link: item.link,
-            }))}
-          />
-        </section>
-
-        <section id="tech-stack">
-          <Stack
-            stacks={stacksData.flatMap((stack: any) =>
-              (stack.items || []).map((item: any) => ({
-                id: item.id || `${stack.id}-${item.name}`,
-                name: item.name,
-                category: stack.category,
-                icon: item.icon,
-              }))
-            )}
-          />
-        </section>
-
-        <section id="projects">
-          <Projects
-            projects={projectsData
-              .filter((p: any) => p.isFeatured)
-              .map((p: any) => ({
-                id: p.id,
-                title: p.title,
-                description: p.description,
-                githubUrl: p.githubUrl,
-                liveUrl: p.liveUrl,
-                technologies: p.technologies,
-                image: p.thumbnail, // Map thumbnail to image if Projects section expects 'image'
-              }))}
-          />
-        </section>
+        />
       </main>
     </>
   );

@@ -40,7 +40,7 @@ export default function ProjectsClient({
   projects: ProjectItem[];
 }) {
   return (
-    <motion.main
+    <motion.div
       className="flex flex-col min-h-screen dark:text-gray-100"
       initial="hidden"
       animate="visible"
@@ -142,6 +142,6 @@ export default function ProjectsClient({
           </motion.div>
         )}
       </div>
-    </motion.main>
+    </motion.div>
   );
 }
