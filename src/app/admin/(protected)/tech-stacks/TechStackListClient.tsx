@@ -49,9 +49,9 @@ export default function TechStackListClient() {
   };
 
   return (
-    <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Manage Tech Stacks</h1>
+    <div className="p-4 sm:p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">Manage Tech Stacks</h1>
         <Link
           href="/admin/tech-stacks/new"
           className="flex flex-row gap-1 items-center bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
