@@ -101,7 +101,7 @@ export default function ExperienceEditorClient({ id }: { id?: string }) {
   };
 
   return (
-    <div className="text-neutral-900 dark:text-neutral-100 max-w-4xl mx-auto p-8">
+    <div className="text-neutral-900 dark:text-neutral-100 max-w-5xl mx-auto p-4 sm:p-8">
       <div className="flex items-center gap-4 mb-8">
         <button
           onClick={() => router.push("/admin/experiences")}
@@ -109,14 +109,14 @@ export default function ExperienceEditorClient({ id }: { id?: string }) {
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl sm:text-3xl font-bold">
           {id && id !== "new" ? "Edit Experience" : "Add Experience"}
         </h1>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="col-span-2 md:col-span-1">

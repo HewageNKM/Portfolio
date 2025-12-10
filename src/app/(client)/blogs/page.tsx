@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     url: "https://hewagenkm.com/blogs",
     images: [
       {
-        url: "https://hewagenkm.com/og-blogs.png",
+        url: "https://hewagenkm.com/og-blogs.webp",
         width: 1200,
         height: 630,
         alt: "Blogs - NKM Hewage",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Blogs | NKM Hewage",
     description: "Read articles and insights by Nadun Malwenna.",
-    images: ["https://hewagenkm.com/og-blogs.png"],
+    images: ["https://hewagenkm.com/og-blogs.webp"],
   },
 };
 
@@ -73,7 +73,7 @@ export default async function BlogsPage({
       "@type": "Person",
       name: "NKM Hewage (Nadun Malwenna)",
     },
-    image: b.coverImage || "https://hewagenkm.com/og-blogs.png",
+    image: b.coverImage || "https://hewagenkm.com/og-blogs.webp",
   }));
 
   return (

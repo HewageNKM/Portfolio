@@ -24,7 +24,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage =
     (blog.content.match(/<img[^>]+src="([^">]+)"/) || [])[1] ||
-    "https://hewagenkm.com/og-blogs.png";
+    "https://hewagenkm.com/og-blogs.webp";
 
   return {
     title: `${blog.title} | NKM Hewage`,

@@ -11,17 +11,18 @@ import AiGenerationModal from "@/components/admin/AiGenerationModal";
 
 export default function ServiceEditorClient({ id }: { id?: string }) {
   const router = useRouter();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    icon: "SiReact", // Default
-    color: "#61DAFB", // Default
+    icon: "SiReact",
+    color: "#61DAFB",
     items: [] as string[],
   });
+
   const [newItem, setNewItem] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // AI State
   const [showAiModal, setShowAiModal] = useState(false);
   const [aiPrompt, setAiPrompt] = useState("");
 
@@ -33,24 +34,19 @@ export default function ServiceEditorClient({ id }: { id?: string }) {
   };
 
   const handleAiGenerated = (text: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      description: text,
-    }));
+    setFormData((prev) => ({ ...prev, description: text }));
     toast.success("Description generated");
   };
 
   useEffect(() => {
     if (id && id !== "new") {
-      const fetchService = async () => {
+      const load = async () => {
         try {
-          const response = await apiClient.get(`/services/${id}`);
-          setFormData(response.data);
-        } catch (error) {
-          // Handled by interceptor
-        }
+          const res = await apiClient.get(`/services/${id}`);
+          setFormData(res.data);
+        } catch {}
       };
-      fetchService();
+      load();
     }
   }, [id]);
 
@@ -62,19 +58,14 @@ export default function ServiceEditorClient({ id }: { id?: string }) {
       const headers = { Authorization: `Bearer ${token}` };
 
       if (id && id !== "new") {
-        await apiClient.put(`/services/${id}`, formData, {
-          headers,
-        });
+        await apiClient.put(`/services/${id}`, formData, { headers });
         toast.success("Service updated");
       } else {
-        await apiClient.post(`/services`, formData, {
-          headers,
-        });
+        await apiClient.post(`/services`, formData, { headers });
         toast.success("Service added");
       }
+
       router.push("/admin/services");
-    } catch (error) {
-      // Handled by interceptor
     } finally {
       setIsLoading(false);
     }
@@ -82,165 +73,162 @@ export default function ServiceEditorClient({ id }: { id?: string }) {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  ) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const addItem = () => {
-    if (newItem.trim()) {
-      setFormData({ ...formData, items: [...formData.items, newItem.trim()] });
-      setNewItem("");
-    }
+    if (!newItem.trim()) return;
+    setFormData({ ...formData, items: [...formData.items, newItem.trim()] });
+    setNewItem("");
   };
 
-  const removeItem = (index: number) => {
-    const newItems = [...formData.items];
-    newItems.splice(index, 1);
-    setFormData({ ...formData, items: newItems });
-  };
+  const removeItem = (i: number) =>
+    setFormData({
+      ...formData,
+      items: formData.items.filter((_, idx) => idx !== i),
+    });
 
   return (
-    <div className="text-neutral-900 dark:text-neutral-100 max-w-4xl mx-auto p-8">
-      <div className="flex items-center gap-4 mb-8">
+    <div className="text-neutral-900 dark:text-neutral-100 max-w-5xl mx-auto p-4 sm:p-6">
+      <div className="flex items-center gap-3 mb-6">
         <button
           onClick={() => router.push("/admin/services")}
-          className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
+          className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800"
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-3xl font-bold">
+
+        <h1 className="text-2xl font-bold">
           {id && id !== "new" ? "Edit Service" : "Add Service"}
         </h1>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/70 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="col-span-2">
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+          {/* Title */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-sm font-medium">
               Service Title
             </label>
             <input
-              type="text"
               name="title"
               value={formData.title}
               onChange={handleChange}
-              className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent dark:bg-neutral-700 dark:text-white transition-colors"
-              required
+              className="w-full p-3 rounded-lg border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
               placeholder="e.g. Web Development"
+              required
             />
           </div>
 
+          {/* Icon */}
           <div>
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            <label className="block mb-2 text-sm font-medium">
               Icon Name (React Icons)
             </label>
             <input
-              type="text"
               name="icon"
               value={formData.icon}
               onChange={handleChange}
-              className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent dark:bg-neutral-700 dark:text-white transition-colors"
-              required
+              className="w-full p-3 rounded-lg border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
               placeholder="e.g. SiReact"
             />
-            <p className="text-xs text-neutral-500 mt-1">
-              Use icon names from react-icons/si (Simple Icons)
-            </p>
+            <p className="text-xs text-neutral-500 mt-1">From react-icons/si</p>
           </div>
 
+          {/* Color */}
           <div>
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
+            <label className="block mb-2 text-sm font-medium">
               Color (Hex)
             </label>
-            <div className="flex items-center gap-2">
+
+            <div className="flex flex-wrap items-center gap-3">
               <input
                 type="color"
                 name="color"
                 value={formData.color}
                 onChange={handleChange}
-                className="h-12 w-12 p-1 border border-neutral-300 dark:border-neutral-600 rounded-lg bg-white dark:bg-neutral-700 cursor-pointer"
+                className="h-12 w-14 rounded-md border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700"
               />
+
               <input
-                type="text"
                 name="color"
                 value={formData.color}
                 onChange={handleChange}
-                className="flex-1 p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent dark:bg-neutral-700 dark:text-white transition-colors uppercase"
-                required
+                className="flex-1 min-w-[140px] p-3 rounded-lg border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white uppercase focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
                 placeholder="#000000"
               />
             </div>
           </div>
 
-          <div className="col-span-2">
+          {/* Description */}
+          <div className="md:col-span-2">
             <div className="flex justify-between items-center mb-2">
-              <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300">
-                Description
-              </label>
+              <label className="text-sm font-medium">Description</label>
               <AiAssistButton
                 onClick={handleAiClick}
-                label="Generate Description"
                 disabled={!formData.title}
+                label="Generate"
               />
             </div>
+
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent dark:bg-neutral-700 dark:text-white transition-colors"
               rows={3}
-              required
-              placeholder="Brief description of the service"
+              className="w-full p-3 rounded-lg border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
+              placeholder="Brief service description"
             />
           </div>
 
-          <div className="col-span-2">
-            <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
-              Service Items/Features
+          {/* Items */}
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-sm font-medium">
+              Service Items / Features
             </label>
-            <div className="flex gap-2 mb-3">
+
+            <div className="flex flex-wrap gap-3 mb-3">
               <input
-                type="text"
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
                 onKeyDown={(e) =>
                   e.key === "Enter" && (e.preventDefault(), addItem())
                 }
-                className="flex-1 p-3 border border-neutral-300 dark:border-neutral-600 rounded-lg focus:ring-2 focus:ring-neutral-500 focus:border-transparent dark:bg-neutral-700 dark:text-white transition-colors"
-                placeholder="Add a feature (e.g. Next.js, SEO)"
+                className="flex-1 min-w-[200px] p-3 rounded-lg border border-neutral-300 dark:border-neutral-600 dark:bg-neutral-700 dark:text-white focus:ring-2 focus:ring-neutral-500 focus:border-transparent"
+                placeholder="e.g. Next.js, SEO"
               />
+
               <button
                 type="button"
                 onClick={addItem}
-                className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors"
+                className="px-4 py-2 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 rounded-lg"
               >
                 <Plus size={20} />
               </button>
             </div>
 
+            {/* Items list */}
             <div className="space-y-2">
-              {formData.items.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-3 bg-neutral-100 dark:bg-neutral-700 rounded-lg"
-                >
-                  <span className="text-sm text-neutral-800 dark:text-neutral-200">
-                    {item}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => removeItem(index)}
-                    className="text-red-500 hover:text-red-700 p-1"
+              {formData.items.length ? (
+                formData.items.map((item, i) => (
+                  <div
+                    key={i}
+                    className="flex justify-between items-center p-3 bg-neutral-100 dark:bg-neutral-700 rounded-lg"
                   >
-                    <X size={16} />
-                  </button>
-                </div>
-              ))}
-              {formData.items.length === 0 && (
-                <p className="text-sm text-neutral-500 italic text-center py-2">
+                    <span>{item}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeItem(i)}
+                      className="text-red-500 hover:text-red-600"
+                    >
+                      <X size={18} />
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-neutral-500 italic text-center">
                   No items added yet
                 </p>
               )}
@@ -248,11 +236,12 @@ export default function ServiceEditorClient({ id }: { id?: string }) {
           </div>
         </div>
 
-        <div className="flex justify-end pt-4">
+        {/* Save */}
+        <div className="flex justify-end pt-3">
           <button
             type="submit"
             disabled={isLoading}
-            className="bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-8 py-3 rounded-lg hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50 flex items-center gap-2 font-medium transition-colors"
+            className="px-8 py-3 bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 rounded-lg flex items-center gap-2"
           >
             <Save size={20} />
             {isLoading ? "Saving..." : "Save Service"}
@@ -265,7 +254,6 @@ export default function ServiceEditorClient({ id }: { id?: string }) {
         onClose={() => setShowAiModal(false)}
         onGenerate={handleAiGenerated}
         initialPrompt={aiPrompt}
-        title="Generate Service Description"
       />
     </div>
   );

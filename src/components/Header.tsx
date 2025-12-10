@@ -31,8 +31,8 @@ const Header = ({
           >
             <Link href="/" className="">
               <Image
-                src="/logo.png"
-                alt="Logo"
+                src="/logo.webp"
+                alt="NM - Nadun Malwenna Logo"
                 width={70}
                 height={70}
                 unoptimized

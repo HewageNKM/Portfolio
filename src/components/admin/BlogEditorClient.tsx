@@ -112,9 +112,9 @@ export default function BlogEditorClient({ id }: { id?: string }) {
   };
 
   return (
-    <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">
+    <div className="max-w-5xl mx-auto p-4 sm:p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+        <h1 className="text-2xl sm:text-3xl font-bold">
           {id && id !== "new" ? "Edit Blog" : "Create Blog"}
         </h1>
         <AiAssistButton onClick={() => setShowAiModal(true)} />
@@ -122,7 +122,7 @@ export default function BlogEditorClient({ id }: { id?: string }) {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div>
           <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
@@ -152,7 +152,7 @@ export default function BlogEditorClient({ id }: { id?: string }) {
           <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Tags
           </label>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <input
               type="text"
               value={tags}

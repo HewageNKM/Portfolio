@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     type: "article",
     images: [
       {
-        url: "https://hewagenkm.com/og-home.png",
+        url: "https://hewagenkm.com/og-home.webp",
         width: 1200,
         height: 630,
         alt: "Terms of Service - Nadun Malwenna",
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     title: "Terms of Service | Nadun Malwenna",
     description:
       "Review the Terms of Service for Nadun Malwenna’s portfolio website.",
-    images: ["https://hewagenkm.com/og-home.png"],
+    images: ["https://hewagenkm.com/og-home.webp"],
   },
 };
 
 export default function TermsOfService() {
   return (
-    <div className="container mx-auto px-4 py-8 max-w-4xl mt-20">
+    <div className="container mx-auto px-4 max-w-4xl mt-20">
       <h1 className="text-3xl font-bold mb-6 text-neutral-900 dark:text-white">
         Terms of Service
       </h1>

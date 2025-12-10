@@ -63,7 +63,7 @@ export default function TechStackEditorClient({ id }: { id?: string }) {
   };
 
   return (
-    <div className="text-neutral-900 dark:text-neutral-100 max-w-2xl mx-auto p-8">
+    <div className="text-neutral-900 dark:text-neutral-100 max-w-5xl mx-auto p-4 sm:p-8">
       <div className="flex items-center gap-4 mb-8">
         <button
           onClick={() => router.push("/admin/tech-stacks")}
@@ -71,14 +71,14 @@ export default function TechStackEditorClient({ id }: { id?: string }) {
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl sm:text-3xl font-bold">
           {id && id !== "new" ? "Edit Tech Stack" : "Add Tech Stack"}
         </h1>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div>
           <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">

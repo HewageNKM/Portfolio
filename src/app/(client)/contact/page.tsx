@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: "https://hewagenkm.com/contact",
     images: [
       {
-        url: "https://hewagenkm.com/og-home.png",
+        url: "https://hewagenkm.com/og-home.webp",
         width: 1200,
         height: 630,
         alt: "Contact Nadun Malwenna - Portfolio",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "Contact Me | NKM Hewage",
     description:
       "Reach out to Nadun Malwenna for collaborations, inquiries, or general communication.",
-    images: ["https://hewagenkm.com/og-home.png"],
+    images: ["https://hewagenkm.com/og-home.webp"],
   },
 };
 

@@ -1,6 +1,6 @@
 "use client";
 import { motion, Variants } from "framer-motion";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Zap, Code, Database, Cloud, Wrench, Box } from "lucide-react";
 import TechCard from "../components/TechCard";
 
@@ -11,12 +11,11 @@ export interface TechStack {
   icon: string;
 }
 
-// Updated categories to match database values
 const categories = [
   { label: "All", value: "all", icon: Zap },
   { label: "Frontend", value: "Frontend", icon: Code },
   { label: "Backend", value: "Backend", icon: Database },
-  { label: "Database", value: "Database", icon: Database }, // Re-using Database icon
+  { label: "Database", value: "Database", icon: Database },
   { label: "DevOps", value: "DevOps", icon: Cloud },
   { label: "Tools", value: "Tools", icon: Wrench },
   { label: "Other", value: "Other", icon: Box },
@@ -50,10 +49,24 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const isLoading = false;
 
+  const normalizedStacks = useMemo(() => {
+    return stacks.flatMap((item: any) => {
+      if (item.items && Array.isArray(item.items)) {
+        return item.items.map((subItem: any) => ({
+          id: subItem.id || `${item.id}-${subItem.name}`,
+          name: subItem.name,
+          category: item.category || item.name,
+          icon: subItem.icon,
+        }));
+      }
+      return item;
+    });
+  }, [stacks]);
+
   const filteredStacks =
     selectedCategory === "all"
-      ? stacks
-      : stacks.filter((item) => item.category === selectedCategory);
+      ? normalizedStacks
+      : normalizedStacks.filter((item) => item.category === selectedCategory);
 
   return (
     <div className="font-sans">
@@ -61,8 +74,7 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
         id="stack"
         className="flex flex-col gap-10 px-4 py-16 max-w-7xl mx-auto w-full"
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate="visible"
         variants={containerVariants}
       >
         {/* Title */}
@@ -76,7 +88,7 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
           </p>
         </motion.div>
 
-        {/* Category Filter Tabs */}
+        {/* Category Filter */}
         <motion.div className="w-full px-2 md:px-0" variants={itemVariants}>
           <div className="bg-gray-200 dark:bg-gray-800 rounded-full p-2 shadow-inner w-full max-w-full md:max-w-max mx-auto overflow-hidden">
             <div className="flex gap-2 overflow-x-auto scrollbar-hide">
@@ -85,12 +97,12 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
                   key={cat.value}
                   onClick={() => setSelectedCategory(cat.value)}
                   className={`flex items-center gap-1 px-4 py-2 rounded-full font-medium text-sm md:text-base whitespace-nowrap transition-all
-            ${
-              selectedCategory === cat.value
-                ? "bg-[#111] dark:bg-gray-500 text-white shadow-lg"
-                : "text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"
-            }
-          `}
+                    ${
+                      selectedCategory === cat.value
+                        ? "bg-[#111] dark:bg-gray-500 text-white shadow-lg"
+                        : "text-gray-700 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700"
+                    }
+                  `}
                   whileTap={{ scale: 0.95 }}
                 >
                   <cat.icon className="w-4 h-4" />
@@ -106,11 +118,11 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
           <p className="text-center text-gray-500">Loading tech stack...</p>
         ) : (
           <motion.ul
+            key={selectedCategory} // ★ forces remount — fixes invisible bug
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6 mt-4 p-4"
             variants={containerVariants}
             initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
+            animate="visible"
           >
             {filteredStacks.map((item) => (
               <motion.li
@@ -129,18 +141,18 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
             ))}
           </motion.ul>
         )}
+
         {filteredStacks.length === 0 && (
           <p className="text-center text-gray-500 dark:text-gray-400 italic mt-8 p-4">
             No stacks found for this category!
           </p>
         )}
-        {/* Footer Note */}
+
         <motion.p
           className="text-center text-gray-500 dark:text-gray-400 mt-3 italic"
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
         >
           ...and always learning more 🚀
         </motion.p>

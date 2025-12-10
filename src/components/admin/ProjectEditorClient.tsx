@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
@@ -114,19 +115,28 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
   };
 
   return (
-    <div className="p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
-      <h1 className="text-3xl font-bold mb-8">
-        {id && id !== "new" ? "Edit Project" : "Add Project"}
-      </h1>
+    <div className="max-w-5xl mx-auto p-4 sm:p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
+      <div className="flex items-center gap-4 mb-8">
+        <button
+          onClick={() => router.push("/admin/projects")}
+          className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
+        >
+          <ArrowLeft size={24} />
+        </button>
+        <h1 className="text-2xl sm:text-3xl font-bold">
+          {id && id !== "new" ? "Edit Project" : "Add Project"}
+        </h1>
+      </div>
       <form
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
       >
         <div>
           <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Title
           </label>
           <input
+            placeholder="e.g. Project Title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -146,6 +156,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             />
           </div>
           <textarea
+            placeholder="e.g. This is a project description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
@@ -163,6 +174,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             onChange={(e) => setGithubUrl(e.target.value)}
             className="w-full p-2 border border-neutral-300 dark:border-neutral-600 rounded-lg dark:bg-neutral-700 dark:text-white focus:ring-neutral-500 focus:border-neutral-500 transition-colors"
             required
+            placeholder="e.g. https://github.com/username/repository"
           />
         </div>
         <div>
@@ -170,6 +182,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             Live URL (Optional)
           </label>
           <input
+            placeholder="e.g. https://example.com"
             type="url"
             value={liveUrl}
             onChange={(e) => setLiveUrl(e.target.value)}
@@ -208,7 +221,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             htmlFor="isFeatured"
             className="text-neutral-700 dark:text-neutral-300 font-medium select-none cursor-pointer"
           >
-            Feature this project on Landing Page
+            Featured
           </label>
         </div>
         <div className="flex justify-end pt-8">

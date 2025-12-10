@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     url: "https://hewagenkm.com/guestbook",
     images: [
       {
-        url: "https://hewagenkm.com/og-home.png",
+        url: "https://hewagenkm.com/og-home.webp",
         width: 1200,
         height: 630,
         alt: "Guestbook - Nadun Malwenna",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Guestbook | Nadun Malwenna",
     description: "Say hi or leave your thoughts in my portfolio guestbook!",
-    images: ["https://hewagenkm.com/og-home.png"],
+    images: ["https://hewagenkm.com/og-home.webp"],
   },
 };
 
