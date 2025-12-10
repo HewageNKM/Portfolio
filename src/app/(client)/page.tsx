@@ -254,7 +254,10 @@ export default async function Home() {
           }))}
         />
 
-        <Stack stacks={stacksData} />
+        <Stack
+          // @ts-ignore
+          stacks={stacksData}
+        />
 
         <Projects
           projects={projectsData
@@ -274,4 +277,4 @@ export default async function Home() {
   );
 }
 
-export const revalidate = 60 * 60 * 24;
+export const revalidate = 86400;
