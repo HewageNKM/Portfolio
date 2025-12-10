@@ -16,29 +16,28 @@ import { AchievementService } from "@/services/AchievementService";
 import { TechStackService } from "@/services/TechStackService";
 
 /* -------------------------------------------------------------------------- */
-/* SEO METADATA                                 */
+/*                                 SEO METADATA                               */
 /* -------------------------------------------------------------------------- */
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hewagenkm.com"),
-  // 'applicationName' helps Google identify the Brand Name instead of showing the domain
-  applicationName: "Nadun Malwenna",
+  applicationName: "NM — Nadun Malwenna",
   title: {
-    default: "Nadun Malwenna - Full-Stack Software Engineer",
-    template: "%s | Nadun Malwenna",
+    default: "NM — Nadun Malwenna | Full-Stack Software Engineer",
+    template: "%s | NM — Nadun Malwenna",
   },
   description:
-    "Explore the portfolio of Nadun Malwenna — a full-stack software engineer specializing in modern web development, cloud services, scalable backend systems, and mobile applications.",
+    "Explore the portfolio of NM — Nadun Malwenna, a full-stack software engineer skilled in modern web development, cloud services, scalable backend systems, and mobile applications.",
   keywords: [
+    "NM",
+    "Nadun Malwenna",
     "software engineer",
     "full-stack developer",
     "react developer",
     "nextjs developer",
-    "mobile app developer",
     "cloud developer",
     "API development",
-    "Sri Lanka software engineer",
-    "Nadun Malwenna",
+    "Sri Lanka developer",
   ],
   alternates: {
     canonical: "https://hewagenkm.com",
@@ -46,24 +45,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://hewagenkm.com",
-    title: "Nadun Malwenna - Portfolio",
-    siteName: "Nadun Malwenna",
+    title: "NM — Nadun Malwenna | Portfolio",
+    siteName: "NM — Nadun Malwenna",
     description:
-      "Portfolio of Nadun Malwenna — showcasing full-stack engineering, mobile apps, cloud solutions, and production-grade system design.",
+      "Portfolio of NM — Nadun Malwenna, showcasing full-stack engineering, cloud apps, mobile development, and production-ready system design.",
     images: [
       {
         url: "https://hewagenkm.com/og-home.webp",
         width: 1200,
         height: 630,
-        alt: "Nadun Malwenna Portfolio",
+        alt: "NM — Nadun Malwenna Portfolio",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nadun Malwenna - Portfolio",
+    title: "NM — Nadun Malwenna",
     description:
-      "Full-stack software engineer building scalable apps, cloud systems, and modern web experiences.",
+      "Full-stack software engineer specializing in scalable cloud systems and modern web experiences.",
     images: ["https://hewagenkm.com/og-home.webp"],
   },
   icons: {
@@ -73,7 +72,7 @@ export const metadata: Metadata = {
 };
 
 /* -------------------------------------------------------------------------- */
-/* PAGE                                     */
+/*                                    PAGE                                    */
 /* -------------------------------------------------------------------------- */
 
 export default async function Home() {
@@ -105,10 +104,10 @@ export default async function Home() {
   return (
     <>
       {/* ---------------------------------------------------------------------- */}
-      {/* GLOBAL RICH RESULTS (JSON-LD)                  */}
+      {/*                             GLOBAL JSON-LD                            */}
       {/* ---------------------------------------------------------------------- */}
 
-      {/* 1. Breadcrumb Schema (FIXED: Added this to solve breadcrumb errors) */}
+      {/* 1. Breadcrumb Schema */}
       <Script
         id="schema-breadcrumb"
         type="application/ld+json"
@@ -129,7 +128,7 @@ export default async function Home() {
         }}
       />
 
-      {/* 2. Person Schema (Primary Entity) */}
+      {/* 2. Person Schema — NM Branding */}
       <Script
         id="schema-person"
         type="application/ld+json"
@@ -138,7 +137,8 @@ export default async function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            name: "Nadun Malwenna",
+            name: "NM — Nadun Malwenna",
+            alternateName: "Nadun Malwenna",
             url: "https://hewagenkm.com",
             jobTitle: "Full-Stack Software Engineer",
             image: "https://hewagenkm.com/og-home.webp",
@@ -154,7 +154,7 @@ export default async function Home() {
         }}
       />
 
-      {/* 3. Website + Search Box Schema */}
+      {/* 3. WebSite + Search Schema */}
       <Script
         id="schema-website-search"
         type="application/ld+json"
@@ -164,7 +164,7 @@ export default async function Home() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             url: "https://hewagenkm.com",
-            name: "Nadun Malwenna", // Matches metadata applicationName
+            name: "NM — Nadun Malwenna",
             potentialAction: {
               "@type": "SearchAction",
               target: "https://hewagenkm.com/search?q={query}",
@@ -183,7 +183,7 @@ export default async function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Person",
-            name: "Nadun Malwenna",
+            name: "NM — Nadun Malwenna",
             hasOccupation: experiencesData.map((exp: any) => ({
               "@type": "Occupation",
               name: exp.role,
@@ -197,7 +197,7 @@ export default async function Home() {
         }}
       />
 
-      {/* 5. Project Schema */}
+      {/* 5. Project Schemas */}
       {projectsData.map((p: any) => (
         <Script
           key={p.id}
@@ -207,14 +207,14 @@ export default async function Home() {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "SoftwareSourceCode", // Specific for software projects
-              name: p.title,
+              "@type": "SoftwareSourceCode",
+              name: `${p.title} — by NM`,
               description: p.description,
               url: p.liveUrl || "https://hewagenkm.com",
               image: p.thumbnail,
               author: {
                 "@type": "Person",
-                name: "Nadun Malwenna",
+                name: "NM — Nadun Malwenna",
               },
               programmingLanguage: p.technologies?.join(", "),
             }),
@@ -223,11 +223,12 @@ export default async function Home() {
       ))}
 
       {/* ---------------------------------------------------------------------- */}
-      {/* MAIN PAGE                                 */}
+      {/*                                MAIN PAGE                               */}
       {/* ---------------------------------------------------------------------- */}
 
       <main className="relative">
         <Hero />
+
         <Services />
 
         <Experience
@@ -253,16 +254,7 @@ export default async function Home() {
           }))}
         />
 
-        <Stack
-          stacks={stacksData.flatMap((stack: any) =>
-            (stack.items || []).map((item: any) => ({
-              id: item.id || `${stack.id}-${item.name}`,
-              name: item.name,
-              category: stack.category,
-              icon: item.icon,
-            }))
-          )}
-        />
+        <Stack stacks={stacksData} />
 
         <Projects
           projects={projectsData

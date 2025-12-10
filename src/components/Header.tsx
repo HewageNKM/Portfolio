@@ -32,7 +32,7 @@ const Header = ({
             <Link href="/" className="">
               <Image
                 src="/logo.webp"
-                alt="Logo"
+                alt="NM - Nadun Malwenna Logo"
                 width={70}
                 height={70}
                 unoptimized
