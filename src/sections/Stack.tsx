@@ -50,6 +50,7 @@ export default function Stack({ stacks = [] }: { stacks: TechStack[] }) {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const isLoading = false;
 
+  console.log(stacks);
   const filteredStacks =
     selectedCategory === "all"
       ? stacks

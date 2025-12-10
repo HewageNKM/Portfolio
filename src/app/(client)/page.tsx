@@ -47,7 +47,6 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://hewagenkm.com",
     title: "Nadun Malwenna - Portfolio",
-    // This 'siteName' is what appears above the URL in Google Search
     siteName: "Nadun Malwenna",
     description:
       "Portfolio of Nadun Malwenna — showcasing full-stack engineering, mobile apps, cloud solutions, and production-grade system design.",
@@ -67,7 +66,6 @@ export const metadata: Metadata = {
       "Full-stack software engineer building scalable apps, cloud systems, and modern web experiences.",
     images: ["https://hewagenkm.com/og-home.webp"],
   },
-  // Adding icons ensures the brand logo appears next to the site name in search
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -283,3 +281,5 @@ export default async function Home() {
     </>
   );
 }
+
+export const revalidate = 60 * 60 * 3;
