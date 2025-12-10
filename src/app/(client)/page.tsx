@@ -16,11 +16,13 @@ import { AchievementService } from "@/services/AchievementService";
 import { TechStackService } from "@/services/TechStackService";
 
 /* -------------------------------------------------------------------------- */
-/*                               SEO METADATA                                 */
+/* SEO METADATA                                 */
 /* -------------------------------------------------------------------------- */
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hewagenkm.com"),
+  // 'applicationName' helps Google identify the Brand Name instead of showing the domain
+  applicationName: "Nadun Malwenna",
   title: {
     default: "Nadun Malwenna - Full-Stack Software Engineer",
     template: "%s | Nadun Malwenna",
@@ -45,12 +47,13 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://hewagenkm.com",
     title: "Nadun Malwenna - Portfolio",
-    siteName: "Nadun Malwenna Portfolio",
+    // This 'siteName' is what appears above the URL in Google Search
+    siteName: "Nadun Malwenna",
     description:
       "Portfolio of Nadun Malwenna — showcasing full-stack engineering, mobile apps, cloud solutions, and production-grade system design.",
     images: [
       {
-        url: "https://hewagenkm.com/og-home.png",
+        url: "https://hewagenkm.com/og-home.webp",
         width: 1200,
         height: 630,
         alt: "Nadun Malwenna Portfolio",
@@ -62,12 +65,17 @@ export const metadata: Metadata = {
     title: "Nadun Malwenna - Portfolio",
     description:
       "Full-stack software engineer building scalable apps, cloud systems, and modern web experiences.",
-    images: ["https://hewagenkm.com/og-home.png"],
+    images: ["https://hewagenkm.com/og-home.webp"],
+  },
+  // Adding icons ensures the brand logo appears next to the site name in search
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
 /* -------------------------------------------------------------------------- */
-/*                                   PAGE                                     */
+/* PAGE                                     */
 /* -------------------------------------------------------------------------- */
 
 export default async function Home() {
@@ -99,10 +107,31 @@ export default async function Home() {
   return (
     <>
       {/* ---------------------------------------------------------------------- */}
-      {/*                        GLOBAL RICH RESULTS (JSON-LD)                  */}
+      {/* GLOBAL RICH RESULTS (JSON-LD)                  */}
       {/* ---------------------------------------------------------------------- */}
 
-      {/* Person Schema */}
+      {/* 1. Breadcrumb Schema (FIXED: Added this to solve breadcrumb errors) */}
+      <Script
+        id="schema-breadcrumb"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://hewagenkm.com",
+              },
+            ],
+          }),
+        }}
+      />
+
+      {/* 2. Person Schema (Primary Entity) */}
       <Script
         id="schema-person"
         type="application/ld+json"
@@ -114,16 +143,20 @@ export default async function Home() {
             name: "Nadun Malwenna",
             url: "https://hewagenkm.com",
             jobTitle: "Full-Stack Software Engineer",
-            image: "https://hewagenkm.com/og-home.png",
+            image: "https://hewagenkm.com/og-home.webp",
             sameAs: [
               "https://github.com/HewageNKM",
               "https://linkedin.com/in/nadun-malwenna",
             ],
+            alumniOf: formattedEducations.map((edu) => ({
+              "@type": "CollegeOrUniversity",
+              name: edu.institution,
+            })),
           }),
         }}
       />
 
-      {/* Website + Search Box Schema */}
+      {/* 3. Website + Search Box Schema */}
       <Script
         id="schema-website-search"
         type="application/ld+json"
@@ -133,7 +166,7 @@ export default async function Home() {
             "@context": "https://schema.org",
             "@type": "WebSite",
             url: "https://hewagenkm.com",
-            name: "Nadun Malwenna Portfolio",
+            name: "Nadun Malwenna", // Matches metadata applicationName
             potentialAction: {
               "@type": "SearchAction",
               target: "https://hewagenkm.com/search?q={query}",
@@ -143,27 +176,7 @@ export default async function Home() {
         }}
       />
 
-      {/* Organization Schema */}
-      <Script
-        id="schema-organization"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Organization",
-            name: "Nadun Malwenna",
-            url: "https://hewagenkm.com",
-            logo: "https://hewagenkm.com/og-home.png",
-            sameAs: [
-              "https://linkedin.com/in/nadun-malwenna",
-              "https://github.com/HewageNKM",
-            ],
-          }),
-        }}
-      />
-
-      {/* Experience Schema */}
+      {/* 4. Experience Schema */}
       <Script
         id="schema-experience"
         type="application/ld+json"
@@ -186,26 +199,7 @@ export default async function Home() {
         }}
       />
 
-      {/* Education Schema */}
-      <Script
-        id="schema-education"
-        type="application/ld+json"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Person",
-            name: "Nadun Malwenna",
-            alumniOf: formattedEducations.map((edu) => ({
-              "@type": "CollegeOrUniversity",
-              name: edu.institution,
-              degree: edu.degree,
-            })),
-          }),
-        }}
-      />
-
-      {/* Project Schema (for each project) */}
+      {/* 5. Project Schema */}
       {projectsData.map((p: any) => (
         <Script
           key={p.id}
@@ -215,12 +209,12 @@ export default async function Home() {
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "CreativeWork",
+              "@type": "SoftwareSourceCode", // Specific for software projects
               name: p.title,
               description: p.description,
               url: p.liveUrl || "https://hewagenkm.com",
               image: p.thumbnail,
-              creator: {
+              author: {
                 "@type": "Person",
                 name: "Nadun Malwenna",
               },
@@ -231,7 +225,7 @@ export default async function Home() {
       ))}
 
       {/* ---------------------------------------------------------------------- */}
-      {/*                             MAIN PAGE                                 */}
+      {/* MAIN PAGE                                 */}
       {/* ---------------------------------------------------------------------- */}
 
       <main className="relative">

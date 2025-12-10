@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://hewagenkm.com/og-projects.png",
+        url: "https://hewagenkm.com/og-projects.webp",
         width: 1200,
         height: 630,
         alt: "Projects - NKM Hewage",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Projects | NKM Hewage",
     description: "Explore portfolio projects by Nadun Malwenna.",
-    images: ["https://hewagenkm.com/og-projects.png"],
+    images: ["https://hewagenkm.com/og-projects.webp"],
   },
 };
 
@@ -62,7 +62,7 @@ export default async function ProjectsPage() {
     name: project.title,
     description: project.description,
     url: `https://hewagenkm.com/projects/${project.id}`,
-    image: "https://hewagenkm.com/og-projects.png",
+    image: "https://hewagenkm.com/og-projects.webp",
     creator: {
       "@type": "Person",
       name: "Nadun Malwenna",
@@ -151,7 +151,7 @@ export default async function ProjectsPage() {
             "@type": "Organization",
             name: "Nadun Malwenna",
             url: "https://hewagenkm.com",
-            logo: "https://hewagenkm.com/og-home.png",
+            logo: "https://hewagenkm.com/og-home.webp",
             sameAs: [
               "https://github.com/HewageNKM",
               "https://linkedin.com/in/nadun-malwenna",

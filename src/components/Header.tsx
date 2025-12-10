@@ -31,7 +31,7 @@ const Header = ({
           >
             <Link href="/" className="">
               <Image
-                src="/logo.png"
+                src="/logo.webp"
                 alt="Logo"
                 width={70}
                 height={70}
