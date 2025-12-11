@@ -5,7 +5,6 @@ import {
 } from "@google/generative-ai";
 import { db } from "@/lib/firebase-admin";
 
-// Cache context to avoid hitting Firestore on every request (1 hr cache)
 let contextCache: string | null = null;
 let lastCacheTime = 0;
 const CACHE_DURATION = 60 * 60 * 1000;
@@ -18,12 +17,15 @@ export const ChatService = {
     }
 
     try {
-      const [experiences, projects, skills, education] = await Promise.all([
-        db.collection("experiences").get(),
-        db.collection("projects").get(),
-        db.collection("tech-stacks").get(),
-        db.collection("educations").get(),
-      ]);
+      const [experiences, projects, skills, education, achievements, services] =
+        await Promise.all([
+          db.collection("experiences").get(),
+          db.collection("projects").get(),
+          db.collection("techStacks").get(),
+          db.collection("educations").get(),
+          db.collection("achievements").get(),
+          db.collection("services").get(),
+        ]);
 
       let context =
         "You are an AI assistant for Nadun Malwenna's portfolio website. Answer questions as if you are his helpful assistant. use the following data:\n\n";
@@ -48,6 +50,18 @@ export const ChatService = {
       skills.forEach((doc) => {
         const data = doc.data();
         context += `- ${data.category}: ${data.name}\n`;
+      });
+
+      context += "\nAchievements:\n";
+      achievements.forEach((doc) => {
+        const data = doc.data();
+        context += `- ${data.title}: ${data.description}\n`;
+      });
+
+      context += "\nServices:\n";
+      services.forEach((doc) => {
+        const data = doc.data();
+        context += `- ${data.title}: ${data.description}\n`;
       });
 
       context += "\nEducation:\n";
