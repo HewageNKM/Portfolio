@@ -8,6 +8,7 @@ interface AiGenerationModalProps {
   onGenerate: (text: string) => void;
   initialPrompt?: string; // Optional predefined prompt
   title?: string; // Optional custom title
+  repoUrl?: string; // Optional repository URL for context
 }
 
 const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
@@ -16,6 +17,7 @@ const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
   onGenerate,
   initialPrompt = "",
   title = "AI Writing Assistant",
+  repoUrl,
 }) => {
   const [prompt, setPrompt] = useState(initialPrompt);
   const { generateText, isLoading } = useAiGenerate();
@@ -23,7 +25,7 @@ const AiGenerationModal: React.FC<AiGenerationModalProps> = ({
   if (!isOpen) return null;
 
   const handleGenerateClick = async () => {
-    const text = await generateText(prompt);
+    const text = await generateText(prompt, repoUrl);
     if (text) {
       onGenerate(text);
       onClose();

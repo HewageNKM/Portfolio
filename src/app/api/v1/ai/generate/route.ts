@@ -1,5 +1,5 @@
 import { verifyAuth } from "@/services/AuthService";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { AIService } from "@/services/AIService";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
 
   try {
-    const { prompt } = await req.json();
+    const { prompt, repoUrl } = await req.json();
 
     if (!prompt) {
       return NextResponse.json(
@@ -17,23 +17,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const geminiApiKey = process.env.GEMINI_API_KEY;
-
-    if (!geminiApiKey) {
-      console.error("GEMINI_API_KEY is not set");
-      return NextResponse.json(
-        { error: "AI service not configured" },
-        { status: 500 }
-      );
-    }
-
-    const genAI = new GoogleGenerativeAI(geminiApiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-
+    const text = await AIService.generateProjectContent(prompt, repoUrl);
     return NextResponse.json({ text });
   } catch (error) {
     console.error("Error generating content:", error);

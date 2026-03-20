@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { apiClient } from "@/lib/api-client";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
 import AiAssistButton from "@/components/admin/AiAssistButton";
-import AiGenerationModal from "@/components/admin/AiGenerationModal";
+import { useAiGenerate } from "@/hooks/useAiGenerate";
+import axios from "axios";
 
 export default function ProjectEditorClient({ id }: { id?: string }) {
   const router = useRouter();
@@ -20,37 +22,39 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
   const [isLoading, setIsLoading] = useState(false);
 
   // AI State
-  const [showAiModal, setShowAiModal] = useState(false);
-  const [aiTargetField, setAiTargetField] = useState<
+  const { generateText, isLoading: isAiLoading } = useAiGenerate();
+  const [aiLoadingField, setAiLoadingField] = useState<
     "description" | "technologies" | null
   >(null);
-  const [aiPrompt, setAiPrompt] = useState("");
 
-  const handleAiClick = (field: "description" | "technologies") => {
-    setAiTargetField(field);
+  const handleAiClick = async (field: "description" | "technologies") => {
+    let prompt = "";
     if (field === "description") {
-      setAiPrompt(
-        `Write a compelling project description for a project titled "${title}". Include details about potential features and the problem it solves.`
-      );
+      prompt = `Write a short, professional, and compelling project description for a project titled "${title}". Focus on the technical challenges solved and the core value. Direct response only, no preamble.`;
     } else if (field === "technologies") {
-      setAiPrompt(
-        `Suggest a comma-separated list of modern proprietary and open-source technologies suitable for a project titled "${title}" with description: "${description}". Return ONLY the comma-separated list.`
-      );
+      prompt = `Suggest a comma-separated list of modern technologies (languages, frameworks, tools) for a project titled "${title}" with description: "${description}". Return ONLY the comma-separated list.`;
     }
-    setShowAiModal(true);
-  };
 
-  const handleAiGenerated = (text: string) => {
-    if (aiTargetField === "description") {
-      setDescription((prev) => (prev ? prev + "\n\n" + text : text));
-      toast.success("Description generated");
-    } else if (aiTargetField === "technologies") {
-      // clean up potential extra text if AI is chatty
-      const cleanText = text.replace(/Technologies:/i, "").trim();
-      setTechnologies((prev) => (prev ? prev + ", " + cleanText : cleanText));
-      toast.success("Technologies suggested");
+    if (!prompt) return;
+
+    setAiLoadingField(field);
+    try {
+      const text = await generateText(prompt, githubUrl);
+      if (text) {
+        if (field === "description") {
+          setDescription(text.trim());
+          toast.success("Description generated");
+        } else if (field === "technologies") {
+          const cleanText = text.replace(/Technologies:/i, "").trim();
+          setTechnologies(cleanText);
+          toast.success("Technologies suggested");
+        }
+      }
+    } catch (error) {
+      toast.error("Failed to generate content");
+    } finally {
+      setAiLoadingField(null);
     }
-    setAiTargetField(null);
   };
 
   useEffect(() => {
@@ -116,21 +120,32 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
 
   return (
     <div className="max-w-5xl mx-auto p-4 sm:p-8 min-h-screen text-neutral-900 dark:text-neutral-100">
-      <div className="flex items-center gap-4 mb-8">
+      <motion.div 
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        className="flex items-center gap-4 mb-8"
+      >
         <button
           onClick={() => router.push("/admin/projects")}
-          className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
+          className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition shadow-sm border border-transparent hover:border-neutral-200 dark:hover:border-neutral-700"
         >
           <ArrowLeft size={24} />
         </button>
-        <h1 className="text-2xl sm:text-3xl font-bold">
+        <h1 className="text-2xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 to-neutral-500 dark:from-white dark:to-neutral-400">
           {id && id !== "new" ? "Edit Project" : "Add Project"}
         </h1>
-      </div>
-      <form
+      </motion.div>
+      <motion.form
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
         onSubmit={handleSubmit}
-        className="bg-white/60 dark:bg-neutral-800/60 backdrop-blur-sm p-4 sm:p-8 rounded-xl shadow-sm border border-neutral-200 dark:border-neutral-700 space-y-6"
+        className="bg-white/70 dark:bg-neutral-900/70 backdrop-blur-md p-6 sm:p-10 rounded-2xl shadow-xl border border-neutral-200/50 dark:border-neutral-800/50 space-y-8 relative overflow-hidden"
       >
+        {/* Subtle background glow */}
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-indigo-500/10 blur-3xl rounded-full" />
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 blur-3xl rounded-full" />
+
         <div>
           <label className="block text-neutral-700 dark:text-neutral-300 mb-2 font-medium">
             Title
@@ -153,6 +168,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
               onClick={() => handleAiClick("description")}
               label="Generate Description"
               disabled={!title}
+              isLoading={aiLoadingField === "description"}
             />
           </div>
           <textarea
@@ -198,6 +214,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
               onClick={() => handleAiClick("technologies")}
               label="Suggest Tech"
               disabled={!title}
+              isLoading={aiLoadingField === "technologies"}
             />
           </div>
           <input
@@ -240,19 +257,7 @@ export default function ProjectEditorClient({ id }: { id?: string }) {
             {isLoading ? "Saving..." : "Save"}
           </button>
         </div>
-      </form>
-
-      <AiGenerationModal
-        isOpen={showAiModal}
-        onClose={() => setShowAiModal(false)}
-        onGenerate={handleAiGenerated}
-        initialPrompt={aiPrompt}
-        title={
-          aiTargetField === "technologies"
-            ? "Suggest Technologies"
-            : "Generate Description"
-        }
-      />
+      </motion.form>
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
 
 interface UseAiGenerateResult {
-  generateText: (prompt: string) => Promise<string | null>;
+  generateText: (prompt: string, repoUrl?: string) => Promise<string | null>;
   isLoading: boolean;
   error: string | null;
 }
@@ -13,7 +13,10 @@ export const useAiGenerate = (): UseAiGenerateResult => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const generateText = async (prompt: string): Promise<string | null> => {
+  const generateText = async (
+    prompt: string,
+    repoUrl?: string
+  ): Promise<string | null> => {
     if (!prompt.trim()) {
       toast.error("Prompt cannot be empty");
       return null;
@@ -31,7 +34,7 @@ export const useAiGenerate = (): UseAiGenerateResult => {
       const headers = { Authorization: `Bearer ${token}` };
       const response = await apiClient.post(
         `/ai/generate`,
-        { prompt },
+        { prompt, repoUrl },
         { headers }
       );
 

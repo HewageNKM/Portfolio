@@ -90,4 +90,36 @@ export const GithubService = {
       commits: totalCommits,
     };
   },
+
+  async getRepoDetails(owner: string, repo: string) {
+    try {
+      const [repoData, readmeData] = await Promise.all([
+        axios.get(`${GITHUB_API}/repos/${owner}/${repo}`, { headers }),
+        axios.get(`${GITHUB_API}/repos/${owner}/${repo}/readme`, {
+          headers,
+          // Get raw content if possible, or we'll decode base64
+        }).catch(() => null),
+      ]);
+
+      let readmeContent = "";
+      if (readmeData) {
+        // GitHub API returns base64 content for readme
+        const content = readmeData.data.content;
+        if (content) {
+          readmeContent = Buffer.from(content, "base64").toString("utf8");
+        }
+      }
+
+      return {
+        name: repoData.data.name,
+        description: repoData.data.description,
+        topics: repoData.data.topics,
+        language: repoData.data.language,
+        readme: readmeContent.slice(0, 5000), // Limit to avoid token issues
+      };
+    } catch (error) {
+      console.error("Error fetching repo details:", error);
+      return null;
+    }
+  },
 };
